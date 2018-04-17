@@ -7,7 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <local:SlideClock Background="#51000000" Width="500" Height="500"></local:SlideClock>
+    <Grid Background="#2596dd">
+        <Viewbox>
+            <local:SlideClock Background="#01000000" Height="500" Width="500"/>
+        </Viewbox>
     </Grid>
 </Page>

@@ -7,23 +7,27 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:SlideClock">
-                    <Grid x:Name="RootGrid" RenderTransformOrigin=".5 .5" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"
+                    <Grid x:Name="RootGrid" RenderTransformOrigin=".5 .5" Width="500" Height="500"
                             Background="{TemplateBinding Background}">
                         <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup>
-                                <VisualState >
+                            <VisualStateGroup x:Name="SecGroup">
+                                <VisualState x:Name="Sec_count">
                                     <Storyboard x:Name="SecB_RotateTransform_Storyboard">
                                         <DoubleAnimation x:Name="SecB_RotateTransform_Storyboard_DoubleAnimation" Storyboard.TargetName="SecB_RotateTransform" 
-                                                         Storyboard.TargetProperty="Angle" To="0" Duration="0"/>
+                                                         Storyboard.TargetProperty="Angle" From="-90" To="270" Duration="0:1:0" RepeatBehavior="Forever"/>
                                     </Storyboard>
                                 </VisualState>
-                                <VisualState >
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="MinGroup">
+                                 <VisualState >
                                     <Storyboard x:Name="MinB_RotateTransform_Storyboard">
                                         <DoubleAnimation x:Name="MinB_RotateTransform_Storyboard_DoubleAnimation" Storyboard.TargetName="MinB_RotateTransform" 
                                                          Storyboard.TargetProperty="Angle" To="0" Duration="0"/>
                                     </Storyboard>
                                 </VisualState>
-                                <VisualState >
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="HourGroup">
+                                  <VisualState >
                                     <Storyboard x:Name="HourB_RotateTransform_Storyboard">
                                         <DoubleAnimation x:Name="HourB_RotateTransform_Storyboard_DoubleAnimation" Storyboard.TargetName="HourB_RotateTransform" 
                                                          Storyboard.TargetProperty="Angle" To="0" Duration="0"/>
@@ -31,37 +35,215 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Grid x:Name="SecB_Grid" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" RenderTransformOrigin=".5 .5">
+                        <Grid x:Name="SecB_Grid" Width="500" Height="500" RenderTransformOrigin=".5 .5">
                             <Grid.RenderTransform>
                                 <TransformGroup>
-                                    <ScaleTransform ScaleX=".6" ScaleY=".6"/>
                                     <RotateTransform x:Name="SecB_RotateTransform" Angle="0"/>
                                 </TransformGroup>
                             </Grid.RenderTransform>
-
-                            <Ellipse Width="20" Height="20" Fill="Black" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-
+                            <Polygon Fill="Black" Points="457.16 232.56 457.16 250.09 472.34 241.32 457.16 232.56"/>
                         </Grid>
-                        <Grid x:Name="MinB_Grid" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" RenderTransformOrigin=".5 .5">
-                            <Grid.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform ScaleX=".8" ScaleY=".8"/>
-                                    <RotateTransform x:Name="MinB_RotateTransform" Angle="0"/>
-                                </TransformGroup>
-                            </Grid.RenderTransform>
-
-                            <Ellipse Width="20" Height="20" Fill="Black" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                        </Grid>
-                        <Grid x:Name="HourB_Grid" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" RenderTransformOrigin=".5 .5">
+                        <Grid x:Name="HourB_Grid" Width="400" Height="400" RenderTransformOrigin=".5 .5">
                             <Grid.RenderTransform>
                                 <RotateTransform x:Name="HourB_RotateTransform" Angle="0"/>
                             </Grid.RenderTransform>
-
                             <Ellipse Width="20" Height="20" Fill="Black" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Grid x:Name="MinB_Grid" Width="300" Height="300" RenderTransformOrigin=".5 .5">
+                            <Grid.RenderTransform>
+                                <TransformGroup>
+                                    <RotateTransform x:Name="MinB_RotateTransform" Angle="0"/>
+                                </TransformGroup>
+                            </Grid.RenderTransform>
+                            <Ellipse Width="20" Height="20" Fill="Black" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Grid x:Name="ClockDesk">
+                            <Path  Stroke="White"  Data="M147.47,459.08,140,474.48l.9.44,7.51-15.4-.45-.22Z" />
+                            <Path  Stroke="White"  Data="M352.53,40.92,360,25.52l-.9-.44-7.51,15.4.45.22Z" />
+                            <Path  Stroke="White"  Data="M352.14,21.82l-.91-.41-7,15.66.92.41Z" />
+                            <Path  Stroke="White"  Data="M147.86,478.18l.91.41,7-15.66-.92-.41Z" />
+                            <Path  Stroke="White"  Data="M155.88,481.61l.93.37,6.42-15.88-.93-.38Z" />
+                            <Path  Stroke="White"  Data="M344.12,18.39l-.93-.37L336.77,33.9l.93.38Z" />
+                            <Path  Stroke="White"  Data="M336,15.25l-.93-.34L329.18,31l.94.34Z" />
+                            <Path  Stroke="White"  Data="M164,484.75l.93.34L170.82,469l-.94-.34Z" />
+                            <Path  Stroke="White"  Data="M172.27,487.61l.95.31,5.29-16.28-.95-.31Z" />
+                            <Path  Stroke="White"  Data="M327.73,12.39l-1-.31-5.29,16.28.95.31Z" />
+                            <Path  Stroke="White"  Data="M180.61,490.18l1,.27L186.28,474l-1-.28Z" />
+                            <Path  Stroke="White"  Data="M319.39,9.82l-1-.27L313.72,26l1,.28Z" />
+                            <Path  Stroke="White"  Data="M311,7.55l-1-.25-4.14,16.59,1,.24Z" />
+                            <Path  Stroke="White"  Data="M189,492.45l1,.24,4.14-16.58-1-.24Z" />
+                            <Path  Stroke="White"  Data="M302.47,5.57l-1-.21-3.55,16.71,1,.22Z" />
+                            <Path  Stroke="White"  Data="M197.53,494.43l1,.21,3.55-16.71-1-.22Z" />
+                            <Path  Stroke="White"  Data="M293.9,3.89l-1-.18-3,16.82,1,.16Z" />
+                            <Path  Stroke="White"  Data="M206.1,496.12l1,.17,3-16.82-1-.16Z" />
+                            <Path  Stroke="White"  Data="M285.29,2.5l-1-.14-2.38,16.92,1,.14Z" />
+                            <Path  Stroke="White"  Data="M214.71,497.5l1,.14,2.38-16.92-1-.14Z" />
+                            <Path  Stroke="White"  Data="M276.63,1.42l-1-.1-1.78,17,1,.11Z" />
+                            <Path  Stroke="White"  Data="M223.37,498.58l1,.1,1.79-17-1-.11Z" />
+                            <Path  Stroke="White"  Data="M267.94.64l-1-.07-1.19,17.05,1,.06Z" />
+                            <Path  Stroke="White"  Data="M232.06,499.36l1,.07,1.19-17.05-1-.06Z" />
+                            <Path  Stroke="White"  Data="M240.78,499.83l1,0,.59-17.07-1,0Z" />
+                            <Path  Stroke="White"  Data="M259.22.17l-1,0-.6,17.07,1,0Z" />
+                            <Path  Stroke="White"  Data="M249.5,500h1V482.91h-1Z" />
+                            <Path  Stroke="Black"  Data="M250.5,0h-1V17.09h1Z" /><!--90-->
+                            <Path  Stroke="White"  Data="M258.23,499.87l1,0-.59-17.09-1,0Z" />
+                            <Path  Stroke="White"  Data="M241.77.13l-1,0,.59,17.09,1,0Z" />
+                            <Path  Stroke="White"  Data="M233.06.57l-1,.07,1.2,17.06,1-.08Z" />
+                            <Path  Stroke="White"  Data="M266.94,499.43l1-.07-1.2-17.06-1,.08Z" />
+                            <Path  Stroke="White"  Data="M275.63,498.68l1-.1-1.79-17-1,.1Z" />
+                            <Path  Stroke="White"  Data="M224.36,1.32l-1,.1,1.79,17,1-.1Z" />
+                            <Path  Stroke="White"  Data="M284.3,497.64l1-.14-2.38-16.95-1,.14Z" />
+                            <Path  Stroke="White"  Data="M215.7,2.36l-1,.14,2.38,17,1-.14Z" />
+                            <Path  Stroke="White"  Data="M207.08,3.71l-1,.18,3,16.86,1-.17Z" />
+                            <Path  Stroke="White"  Data="M292.92,496.29l1-.17-3-16.87-1,.17Z" />
+                            <Path  Stroke="White"  Data="M301.49,494.64l1-.21-3.56-16.74-1,.2Z" />
+                            <Path  Stroke="White"  Data="M198.51,5.36l-1,.21,3.56,16.74,1-.2Z" />
+                            <Path  Stroke="White"  Data="M310,492.7l1-.25-4.15-16.63-1,.25Z" />
+                            <Path  Stroke="White"  Data="M190,7.31l-1,.24,4.15,16.63,1-.25Z" />
+                            <Path  Stroke="White"  Data="M318.43,490.45l1-.27-4.72-16.47-1,.27Z" />
+                            <Path  Stroke="White"  Data="M181.57,9.55l-1,.27,4.72,16.47,1-.27Z" />
+                            <Path  Stroke="White"  Data="M326.78,487.92l1-.31-5.3-16.31-.95.32Z" />
+                            <Path  Stroke="White"  Data="M173.22,12.08l-.95.31,5.3,16.31,1-.32Z" />
+                            <Path  Stroke="White"  Data="M165,14.91l-.93.34,5.86,16.1.94-.33Z" />
+                            <Path  Stroke="White"  Data="M335,485.09l1-.34-5.87-16.1-.94.33Z" />
+                            <Path  Stroke="White"  Data="M156.81,18l-.93.37,6.43,15.89.92-.38Z" />
+                            <Path  Stroke="White"  Data="M343.19,482l.93-.37-6.43-15.89-.92.38Z" />
+                            <Path  Stroke="White"  Data="M148.77,21.41l-.91.41,7,15.65.91-.4Z" />
+                            <Path  Stroke="White"  Data="M351.23,478.59l.91-.41-7-15.65-.91.4Z" />
+                            <Path  Stroke="White"  Data="M359.14,474.92l.9-.44-7.51-15.4c-.3.15-.59.31-.89.45Z" />
+                            <Path  Stroke="White"  Data="M140.86,25.08l-.9.44,7.51,15.4c.3-.15.59-.31.89-.45Z" />
+                            <Path  Stroke="White"  Data="M133.07,29l-.88.47,8,15.12.89-.47Z" />
+                            <Path  Stroke="White"  Data="M366.93,471l.88-.47-8-15.12-.89.47Z" />
+                            <Path  Stroke="White"  Data="M125.43,33.24l-.86.5,8.55,14.82.87-.5Z" />
+                            <Path  Stroke="White"  Data="M374.57,466.76l.86-.5-8.55-14.82-.87.5Z" />
+                            <Path  Stroke="White"  Data="M382.06,462.28l.84-.53-9.07-14.52-.84.53Z" />
+                            <Path  Stroke="White"  Data="M117.94,37.72l-.84.53,9.06,14.52.85-.53Z" />
+                            <Path  Stroke="White"  Data="M110.62,42.46l-.83.56,9.55,14.17.84-.55Z" />
+                            <Path  Stroke="White"  Data="M389.38,457.54l.83-.56-9.55-14.17-.84.55Z" />
+                            <Path  Stroke="White"  Data="M103.46,47.45l-.81.59,10,13.83.81-.59Z" />
+                            <Path  Stroke="White"  Data="M396.54,452.55l.81-.59L387.3,438.13l-.81.59Z" />
+                            <Path  Stroke="White"  Data="M403.52,447.31l.79-.62-10.52-13.46-.79.61Z" />
+                            <Path  Stroke="White"  Data="M96.48,52.69l-.79.61,10.52,13.47.79-.61Z" />
+                            <Path  Stroke="White"  Data="M410.31,441.83l.77-.64-11-13.09-.76.65Z" />
+                            <Path  Stroke="White"  Data="M89.69,58.17l-.77.64,11,13.09.76-.65Z" />
+                            <Path  Stroke="White"  Data="M416.91,436.12l.74-.67-11.43-12.69-.74.66Z" />
+                            <Path  Stroke="White"  Data="M83.09,63.88l-.74.67L93.77,77.24l.75-.66Z" />
+                            <Path  Stroke="White"  Data="M76.69,69.82l-.71.69L87.84,82.8l.71-.71Z" />
+                            <Path  Stroke="White"  Data="M423.3,430.18l.72-.69-11.86-12.28-.71.7Z" />
+                            <Path  Stroke="White"  Data="M429.49,424l.69-.72-12.29-11.86-.69.72Z" />
+                            <Path  Stroke="White"  Data="M70.51,76l-.69.72L82.11,88.56l.69-.72Z" />
+                            <Path  Stroke="White"  Data="M64.55,82.35l-.67.74L76.56,94.51c.23-.25.46-.49.68-.74Z" />
+                            <Path  Stroke="White"  Data="M435.45,417.65l.67-.74-12.68-11.42c-.23.25-.46.49-.68.74Z" />
+                            <Path  Stroke="White"  Data="M441.19,411.08l.64-.77-13.09-11-.64.77Z" />
+                            <Path  Stroke="White"  Data="M58.81,88.92l-.64.77,13.09,11,.64-.77Z" />
+                            <Path  Stroke="White"  Data="M53.3,95.69l-.61.79L66.16,107l.62-.78Z" />
+                            <Path  Stroke="White"  Data="M446.7,404.31l.61-.79L433.84,393l-.62.78Z" />
+                            <Path  Stroke="White"  Data="M48,102.65l-.59.81,13.84,10.05.58-.81Z" />
+                            <Path  Stroke="White"  Data="M452,397.35l.59-.81-13.84-10.05-.58.81Z" />
+                            <Path  Stroke="White"  Data="M457,390.21l.56-.83-14.19-9.57-.56.83Z" />
+                            <Path  Stroke="White"  Data="M43,109.79l-.56.83,14.19,9.57.56-.83Z" />
+                            <Path  Stroke="White"  Data="M38.25,117.1l-.53.84L52.23,127l.54-.84Z" />
+                            <Path  Stroke="White"  Data="M461.75,382.9l.53-.84L447.77,373l-.54.84Z" />
+                            <Path  Stroke="White"  Data="M33.74,124.57l-.5.86L48.08,134l.5-.87Z" />
+                            <Path  Stroke="White"  Data="M466.26,375.43l.5-.86L451.91,366c-.16.29-.32.58-.49.87Z" />
+                            <Path  Stroke="White"  Data="M470.5,367.81l.47-.88-15.13-8.05-.48.88Z" />
+                            <Path  Stroke="White"  Data="M29.5,132.19l-.47.88,15.13,8.05.48-.88Z" />
+                            <Path  Stroke="White"  Data="M40.92,147.47,25.52,140l-.44.9,15.4,7.51c.08-.15.14-.3.22-.45Z" />
+                            <Path  Stroke="White"  Data="M459.08,352.53l15.4,7.51.44-.9-15.4-7.51c-.08.15-.14.3-.22.45Z" />
+                            <Path  Stroke="White"  Data="M21.82,147.86l-.41.91,15.66,7,.41-.92Z" />
+                            <Path  Stroke="White"  Data="M478.18,352.14l.41-.91-15.66-7-.41.92Z" />
+                            <Path  Stroke="White"  Data="M18.39,155.88l-.37.93,15.88,6.42c.12-.31.25-.62.38-.93Z" />
+                            <Path  Stroke="White"  Data="M481.61,344.12l.37-.93-15.88-6.42c-.12.31-.25.62-.38.93Z" />
+                            <Path  Stroke="White"  Data="M15.25,164l-.34.93L31,170.82c.12-.31.22-.63.34-.94Z" />
+                            <Path  Stroke="White"  Data="M484.75,336l.34-.94L469,329.18c-.12.31-.22.63-.34.94Z" />
+                            <Path  Stroke="White"  Data="M487.61,327.73l.31-1-16.28-5.29c-.1.32-.21.63-.31.95Z" />
+                            <Path  Stroke="White"  Data="M12.39,172.27l-.31.95,16.28,5.29c.1-.32.21-.63.31-.95Z" />
+                            <Path  Stroke="White"  Data="M9.82,180.61l-.27,1L26,186.28c.09-.32.19-.64.28-1Z" />
+                            <Path  Stroke="White"  Data="M490.18,319.39l.27-1L474,313.72c-.09.32-.19.64-.28,1Z" />
+                            <Path  Stroke="White"  Data="M7.55,189l-.25,1,16.59,4.14.24-1Z" />
+                            <Path  Stroke="White"  Data="M492.45,311l.25-1-16.59-4.14-.24,1Z" />
+                            <Path  Stroke="White"  Data="M5.57,197.53l-.21,1,16.71,3.55c.07-.32.15-.65.22-1Z" />
+                            <Path  Stroke="White"  Data="M494.43,302.47l.21-1-16.71-3.55c-.07.32-.15.65-.22,1Z" />
+                            <Path  Stroke="White"  Data="M496.11,293.9l.18-1-16.82-3c-.06.33-.11.66-.16,1Z" />
+                            <Path  Stroke="White"  Data="M3.88,206.1l-.17,1,16.82,3c.06-.33.11-.66.16-1Z" />
+                            <Path  Stroke="White"  Data="M497.5,285.29l.14-1-16.92-2.38c-.05.33-.09.66-.14,1Z" />
+                            <Path  Stroke="White"  Data="M2.5,214.71l-.14,1,16.92,2.38c0-.33.09-.66.14-1Z" />
+                            <Path  Stroke="White"  Data="M1.42,223.37l-.1,1,17,1.79c0-.33.08-.66.11-1Z" />
+                            <Path  Stroke="White"  Data="M498.58,276.63l.1-1-17-1.79c0,.33-.08.66-.11,1Z" />
+                            <Path  Stroke="White"  Data="M.64,232.06l-.07,1,17.05,1.19.06-1Z" />
+                            <Path  Stroke="White"  Data="M499.36,267.94l.07-1-17.05-1.19-.06,1Z" />
+                            <Path  Stroke="White"  Data="M499.83,259.22l0-1-17.07-.59c0,.33,0,.67,0,1Z" />
+                            <Path  Stroke="White"  Data="M.17,240.78l0,1,17.07.6c0-.33,0-.67,0-1Z" />
+                            <Path  Stroke="White"  Data="M500,250.5v-1H482.91c0,.33,0,.67,0,1Z" /><!--0-->
+                            <Path  Stroke="White"  Data="M0,249.5v1H17.09c0-.33,0-.67,0-1Z" />
+                            <Path  Stroke="White"  Data="M.13,258.23l0,1,17.09-.59c0-.34,0-.67,0-1Z" />
+                            <Path  Stroke="White"  Data="M499.87,241.77l0-1-17.09.59c0,.34,0,.67,0,1Z" />
+                            <Path  Stroke="White"  Data="M499.43,233.06l-.07-1-17.06,1.2c0,.33.05.66.08,1Z" />
+                            <Path  Stroke="White"  Data="M.57,266.94l.07,1,17.06-1.19c0-.34-.05-.67-.08-1Z" />
+                            <Path  Stroke="White"  Data="M1.32,275.64l.1,1,17-1.79c0-.33-.07-.66-.1-1Z" />
+                            <Path  Stroke="White"  Data="M498.68,224.37l-.1-1-17,1.79c0,.33.07.66.1,1Z" />
+                            <Path  Stroke="White"  Data="M2.36,284.3l.14,1,17-2.38c-.05-.33-.1-.66-.14-1Z" />
+                            <Path  Stroke="White"  Data="M497.64,215.7l-.14-1-16.95,2.38c.05.33.1.66.14,1Z" />
+                            <Path  Stroke="White"  Data="M3.71,292.92l.17,1,16.87-3c-.05-.33-.11-.66-.17-1Z" />
+                            <Path  Stroke="White"  Data="M496.29,207.08l-.18-1-16.86,3c.05.33.11.66.17,1Z" />
+                            <Path  Stroke="White"  Data="M5.36,301.49l.21,1,16.74-3.56c-.07-.33-.13-.66-.2-1Z" />
+                            <Path  Stroke="White"  Data="M494.64,198.51l-.21-1-16.74,3.56c.07.33.13.66.2,1Z" />
+                            <Path  Stroke="White"  Data="M7.31,310l.24,1,16.63-4.15-.25-1Z" />
+                            <Path  Stroke="White"  Data="M492.69,190l-.24-1-16.63,4.15.25,1Z" />
+                            <Path  Stroke="White"  Data="M490.45,181.57l-.27-1-16.47,4.72.27,1Z" />
+                            <Path  Stroke="White"  Data="M9.55,318.43l.27,1,16.47-4.72-.27-1Z" />
+                            <Path  Stroke="White"  Data="M12.08,326.78l.31,1,16.31-5.3c-.11-.31-.22-.63-.32-.95Z" />
+                            <Path  Stroke="White"  Data="M487.92,173.22l-.31-.95-16.31,5.3c.11.31.22.63.32,1Z" />
+                            <Path  Stroke="White"  Data="M485.09,165l-.34-.94-16.1,5.86.33.94Z" />
+                            <Path  Stroke="White"  Data="M14.91,335l.34.93,16.1-5.86-.33-.94Z" />
+                            <Path  Stroke="White"  Data="M482,156.81l-.37-.93-15.89,6.43.38.92Z" />
+                            <Path  Stroke="White"  Data="M18,343.19l.37.93,15.89-6.43-.38-.92Z" />
+                            <Path  Stroke="White"  Data="M478.59,148.77l-.41-.91-15.65,7,.4.91Z" />
+                            <Path  Stroke="White"  Data="M21.41,351.23l.41.91,15.65-7-.4-.91Z" />
+                            <Path  Stroke="White"  Data="M474.92,140.86l-.44-.9-15.4,7.51c.15.3.31.59.45.89Z" />
+                            <Path  Stroke="White"  Data="M25.08,359.14l.44.9,15.4-7.51c-.15-.3-.31-.59-.45-.89Z" />
+                            <Path  Stroke="White"  Data="M471,133.07l-.47-.88-15.12,8,.47.89Z" />
+                            <Path  Stroke="White"  Data="M29,366.93l.47.88,15.12-8-.47-.89Z" />
+                            <Path  Stroke="White"  Data="M33.24,374.57l.5.86,14.82-8.55-.5-.87Z" />
+                            <Path  Stroke="White"  Data="M466.76,125.43l-.5-.86-14.82,8.55.5.87Z" />
+                            <Path  Stroke="White"  Data="M462.28,117.94l-.53-.84-14.52,9.07c.18.28.36.56.53.84Z" />
+                            <Path  Stroke="White"  Data="M37.72,382.06l.53.84,14.52-9.07c-.18-.28-.36-.56-.53-.84Z" />
+                            <Path  Stroke="White"  Data="M457.54,110.62l-.56-.83-14.17,9.55c.19.28.37.56.55.84Z" />
+                            <Path  Stroke="White"  Data="M42.46,389.38l.56.83,14.17-9.55c-.19-.28-.37-.56-.55-.84Z" />
+                            <Path  Stroke="White"  Data="M47.45,396.54l.59.81L61.87,387.3l-.59-.81Z" />
+                            <Path  Stroke="White"  Data="M452.55,103.46l-.59-.81-13.83,10,.59.81Z" />
+                            <Path  Stroke="White"  Data="M447.31,96.48l-.62-.79-13.46,10.52c.21.26.41.53.61.79Z" />
+                            <Path  Stroke="White"  Data="M52.69,403.52l.61.79,13.47-10.52c-.21-.26-.41-.53-.61-.79Z" />
+                            <Path  Stroke="White"  Data="M441.83,89.69l-.64-.77-13.09,11,.65.76Z" />
+                            <Path  Stroke="White"  Data="M58.17,410.31l.64.77,13.09-11-.65-.76Z" />
+                            <Path  Stroke="White"  Data="M436.12,83.09l-.67-.74L422.76,93.77l.66.75Z" />
+                            <Path  Stroke="White"  Data="M63.88,416.91l.67.74,12.69-11.43-.66-.74Z" />
+                            <Path  Stroke="White"  Data="M69.82,423.31l.69.71L82.8,412.16l-.71-.71Z" />
+                            <Path  Stroke="White"  Data="M430.18,76.7l-.69-.72L417.2,87.84l.71.71Z" />
+                            <Path  Stroke="White"  Data="M424,70.51l-.72-.69L411.44,82.11l.72.69Z" />
+                            <Path  Stroke="White"  Data="M76,429.49l.72.69,11.86-12.29-.72-.69Z" />
+                            <Path  Stroke="White"  Data="M417.65,64.55l-.74-.67L405.49,76.56l.74.68Z" />
+                            <Path  Stroke="White"  Data="M82.35,435.45l.74.67,11.42-12.68-.74-.68Z" />
+                            <Path  Stroke="White"  Data="M411.08,58.81l-.77-.64-11,13.09.77.64Z" />
+                            <Path  Stroke="White"  Data="M88.92,441.19l.77.64,11-13.09-.77-.64Z" />
+                            <Path  Stroke="White"  Data="M404.31,53.3l-.79-.61L393,66.16l.78.62Z" />
+                            <Path  Stroke="White"  Data="M95.69,446.69l.79.62L107,433.84l-.78-.62Z" />
+                            <Path  Stroke="White"  Data="M102.65,452l.81.59,10.05-13.84-.81-.58Z" />
+                            <Path  Stroke="White"  Data="M397.35,48l-.81-.59L386.49,61.29l.81.58Z" />
+                            <Path  Stroke="White"  Data="M109.79,457l.83.56,9.57-14.19-.83-.56Z" />
+                            <Path  Stroke="White"  Data="M390.21,43l-.83-.56-9.57,14.19.83.56Z" />
+                            <Path  Stroke="White"  Data="M117.1,461.75l.84.53L127,447.77l-.84-.54Z" />
+                            <Path  Stroke="White"  Data="M382.9,38.25l-.84-.53L373,52.23l.84.54Z" />
+                            <Path  Stroke="White"  Data="M375.43,33.74l-.86-.5L366,48.09l.87.49Z" />
+                            <Path  Stroke="White"  Data="M124.57,466.26l.86.5L134,451.92l-.87-.5Z" />
+                            <Path  Stroke="White"  Data="M132.19,470.5l.88.47,8.05-15.13-.88-.48Z" />
+                            <Path  Stroke="White"  Data="M367.81,29.5l-.88-.47-8.05,15.13.88.48Z" />
                         </Grid>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+    
+    
 </ResourceDictionary>

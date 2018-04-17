@@ -26,7 +26,18 @@ namespace UWPTeamWork
             Min = 1,
             Sec = 2
         }//当前选定指针
+        private DoubleAnimation SecB_RotateTransform_Storyboard_DoubleAnimation;
+        private Storyboard SecB_RotateTransform_Storyboard;
+        private DoubleAnimation MinB_RotateTransform_Storyboard_DoubleAnimation;
+        private Storyboard MinB_RotateTransform_Storyboard;
+        private DoubleAnimation HourB_RotateTransform_Storyboard_DoubleAnimation;
+        private Storyboard HourB_RotateTransform_Storyboard;
 
+        private DispatcherTimer Sec_Timer;
+        private double value;
+
+        //属性
+        #region 选中的指针
         public HandleType SelectedH
         {
             get { return (HandleType)GetValue(SelectedHProperty); }
@@ -38,65 +49,87 @@ namespace UWPTeamWork
         private static void OnSecBTappedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
         }
-
-        private DoubleAnimation SecB_RotateTransform_Storyboard_DoubleAnimation;
-        private Storyboard SecB_RotateTransform_Storyboard;
-
-        //属性
-        #region 时间
-        public TimeSpan Time
-        {
-            get { return (TimeSpan)GetValue(TimeProperty); }
-            set { SetValue(TimeProperty, value); }
-        }
-        public static readonly DependencyProperty TimeProperty =
-            DependencyProperty.Register("Time", typeof(TimeSpan), typeof(SlideClock), new PropertyMetadata(0));
         #endregion
+
+        #region 时间/s
+        public int Seconds
+        {
+            get { return (int)GetValue(SecondsProperty); }
+            set { SetValue(SecondsProperty, value); }
+        }
+        public static readonly DependencyProperty SecondsProperty =
+            DependencyProperty.Register("Seconds", typeof(int), typeof(SlideClock), new PropertyMetadata(0,new PropertyChangedCallback(OnSecondsChanged)));
+        private static void OnSecondsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        { 
+            SlideClock a = (SlideClock)d;
+            if ((int)e.OldValue == 60)
+                a.Seconds = 0;
+        }
+        #endregion
+
 
         protected override void OnApplyTemplate()
         {
             SecB_RotateTransform_Storyboard = GetTemplateChild("SecB_RotateTransform_Storyboard") as Storyboard;
             SecB_RotateTransform_Storyboard_DoubleAnimation = GetTemplateChild("SecB_RotateTransform_Storyboard_DoubleAnimation") as DoubleAnimation;
-            SecB_RotateTransform_Storyboard = GetTemplateChild("SecB_RotateTransform_Storyboard") as Storyboard;
-            SecB_RotateTransform_Storyboard_DoubleAnimation = GetTemplateChild("SecB_RotateTransform_Storyboard_DoubleAnimation") as DoubleAnimation;
-            SecB_RotateTransform_Storyboard = GetTemplateChild("SecB_RotateTransform_Storyboard") as Storyboard;
-            SecB_RotateTransform_Storyboard_DoubleAnimation = GetTemplateChild("SecB_RotateTransform_Storyboard_DoubleAnimation") as DoubleAnimation;
+            MinB_RotateTransform_Storyboard = GetTemplateChild("MinB_RotateTransform_Storyboard") as Storyboard;
+            MinB_RotateTransform_Storyboard_DoubleAnimation = GetTemplateChild("MinB_RotateTransform_Storyboard_DoubleAnimation") as DoubleAnimation;
+            HourB_RotateTransform_Storyboard = GetTemplateChild("HourB_RotateTransform_Storyboard") as Storyboard;
+            HourB_RotateTransform_Storyboard_DoubleAnimation = GetTemplateChild("HourB_RotateTransform_Storyboard_DoubleAnimation") as DoubleAnimation;
 
+           
             base.OnApplyTemplate();
         }
 
-        private void SecB_ManipulationStarted(object sender, RoutedEventArgs e)
-        {
-        }
-
-        protected override void OnPointerMoved(PointerRoutedEventArgs e)
-        {
-
-            base.OnPointerMoved(e);
-        }
-
-        protected override void OnTapped(TappedRoutedEventArgs e)
-        {
-
-            base.OnTapped(e);
-        }
+        
 
         protected override void OnManipulationDelta(ManipulationDeltaRoutedEventArgs e)
         {
             if (!e.IsInertial)
             {
                 double angleOfLine = Math.Atan2((e.Position.Y - ActualHeight / 2), (e.Position.X - ActualWidth / 2)) * 180 / Math.PI;
-                Debug.WriteLine(angleOfLine);
-                SecB_RotateTransform_Storyboard_DoubleAnimation.To = angleOfLine;
-                SecB_RotateTransform_Storyboard.Begin();
+                if (value > ActualHeight / 3)
+                {
+                    HourB_RotateTransform_Storyboard_DoubleAnimation.To = angleOfLine;
+                    HourB_RotateTransform_Storyboard.Begin();
+                }
+                else if (value > ActualHeight / 7)
+                {
+                    MinB_RotateTransform_Storyboard_DoubleAnimation.To = angleOfLine;
+                    MinB_RotateTransform_Storyboard.Begin();
+                }
+                
+                
             }
             base.OnManipulationDelta(e);
+        }
+
+        protected override void OnPointerPressed(PointerRoutedEventArgs e)
+        {
+            value = Math.Sqrt(Math.Abs(e.GetCurrentPoint(this).Position.X - ActualWidth / 2) * Math.Abs(e.GetCurrentPoint(this).Position.X - ActualWidth / 2)
+                  + Math.Abs(e.GetCurrentPoint(this).Position.Y - ActualHeight / 2) * Math.Abs(e.GetCurrentPoint(this).Position.Y - ActualHeight / 2));
+            base.OnPointerPressed(e);
         }
 
         public SlideClock()
         {
             this.DefaultStyleKey = typeof(SlideClock);
             this.ManipulationMode = ManipulationModes.All;
+            this.Loaded += OnLoaded;
+
+            Sec_Timer = new DispatcherTimer {  Interval = TimeSpan.FromSeconds(1) };
+            Sec_Timer.Tick += Sec_Timer_Tick;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            Sec_Timer.Start();
+            VisualStateManager.GoToState(this, "Sec_count", false);
+        }
+
+        private void Sec_Timer_Tick(object sender, object e)
+        {
+            Seconds++;
         }
 
         #region 属性变化通知
@@ -107,4 +140,6 @@ namespace UWPTeamWork
         }
         #endregion
     }
+
+    
 }

@@ -8,6 +8,6 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <local:SlideClock Background="#51000000" Width="500" Height="500"></local:SlideClock>
     </Grid>
 </Page>

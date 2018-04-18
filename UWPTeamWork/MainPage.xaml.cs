@@ -22,9 +22,30 @@ namespace UWPTeamWork
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        DispatcherTimer timer;
+        private int secAngle = 0;
+        public int SecAngle
+        {
+            get { return secAngle; }
+            set { secAngle = value > 59 ? 0 : value; }
+        }
+
         public MainPage()
         {
             this.InitializeComponent();
+            timer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(1) };
+            timer.Tick += timer_Tick;
+        }
+
+        private void timer_Tick(object sender, object e)
+        {
+            secAngle++;
+            text.Text = secAngle.ToString();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            timer.Start();
         }
     }
 }

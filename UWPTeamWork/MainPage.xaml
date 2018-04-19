@@ -8,9 +8,10 @@
     mc:Ignorable="d" Loaded="Page_Loaded">
 
     <Grid Background="Black">
+        <Grid.RowDefinitions>
+        </Grid.RowDefinitions>
         <Viewbox>
-            <local:SlideClock Background="#01000000" Height="500" Width="500"/>
+            <local:SlideClock Background="#237ead" />
         </Viewbox>
-        <TextBlock x:Name="text" FontSize="48" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
     </Grid>
 </Page>

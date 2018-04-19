@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -20,32 +22,16 @@ namespace UWPTeamWork
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage : Page 
     {
-        DispatcherTimer timer;
-        private int secAngle = 0;
-        public int SecAngle
-        {
-            get { return secAngle; }
-            set { secAngle = value > 59 ? 0 : value; }
-        }
 
         public MainPage()
         {
             this.InitializeComponent();
-            timer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(1) };
-            timer.Tick += timer_Tick;
-        }
-
-        private void timer_Tick(object sender, object e)
-        {
-            secAngle++;
-            text.Text = secAngle.ToString();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            timer.Start();
         }
     }
 }

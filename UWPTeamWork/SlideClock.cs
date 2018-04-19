@@ -29,8 +29,6 @@ namespace UWPTeamWork
             Min = 1,
             Sec = 2
         }//当前选定指针
-        private DoubleAnimation ClockDesk_RotateTransform_Storyboard_DoubleAnimation;
-        private Storyboard ClockDesk_RotateTransform_Storyboard;
         private DoubleAnimation SecB_RotateTransform_Storyboard_DoubleAnimation;
         private Storyboard SecB_RotateTransform_Storyboard;
         private DoubleAnimation MinB_RotateTransform_Storyboard_DoubleAnimation;
@@ -38,31 +36,10 @@ namespace UWPTeamWork
         private DoubleAnimation HourB_RotateTransform_Storyboard_DoubleAnimation;
         private Storyboard HourB_RotateTransform_Storyboard;
 
-        private DispatcherTimer Sec_Timer;
+        public static DispatcherTimer Sec_Timer;
 
         private double Pointliner;
 
-        private double secAngle = 0;
-        public double SecAngle
-        {
-            get { return secAngle; }
-            set { secAngle = value > 360 ? 0 : value; }
-        }
-        private double deskAngle = 0;
-        public double DeskAngle
-        {
-            get { return deskAngle; }
-            set
-            {
-                if (value > 360)
-                {
-                    value = 0;
-                    Sec_Timer.Stop();
-                    Sec_Timer.Start();
-                }
-                deskAngle = value;
-            }
-        }
 
         //属性
         #region 选中的指针
@@ -79,6 +56,33 @@ namespace UWPTeamWork
         }
         #endregion
 
+        #region 时间/h
+        public double HoursAng
+        {
+            get { return (double)GetValue(HoursProperty); }
+            set { SetValue(HoursProperty, value); }
+        }
+        public static readonly DependencyProperty HoursProperty =
+            DependencyProperty.Register("HoursAng", typeof(double), typeof(SlideClock), new PropertyMetadata(0, new PropertyChangedCallback(OnHoursChanged)));
+        private static void OnHoursChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+        }
+        #endregion
+
+        #region 时间/m
+        public double MinutesAng
+        {
+            get { return (double)GetValue(MinutesProperty); }
+            set { SetValue(MinutesProperty, value); }
+        }
+        public static readonly DependencyProperty MinutesProperty =
+            DependencyProperty.Register("MinutesAng", typeof(double), typeof(SlideClock), new PropertyMetadata(0, new PropertyChangedCallback(OnMinutesChanged)));
+        private static void OnMinutesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+
+        }
+        #endregion
+
         #region 时间/s
         public int Seconds
         {
@@ -89,25 +93,51 @@ namespace UWPTeamWork
             DependencyProperty.Register("Seconds", typeof(int), typeof(SlideClock), new PropertyMetadata(0, new PropertyChangedCallback(OnSecondsChanged)));
         private static void OnSecondsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            SlideClock a = (SlideClock)d;
-            //Debug.WriteLine(e.OldValue);
-            if ((int)e.NewValue == 40)
-                a.Seconds = 0;
+            if((int)e.NewValue > 59)
+            {
+                SlideClock k = (SlideClock)d;
+                k.SecB_RotateTransform_Storyboard.Begin();
+                k.Seconds = 0;
+            }
         }
         #endregion
 
         protected override void OnApplyTemplate()
         {
-            ClockDesk_RotateTransform_Storyboard = GetTemplateChild("ClockDesk_RotateTransform_Storyboard") as Storyboard;
-            ClockDesk_RotateTransform_Storyboard_DoubleAnimation = GetTemplateChild("ClockDesk_RotateTransform_Storyboard_DoubleAnimation") as DoubleAnimation;
             SecB_RotateTransform_Storyboard = GetTemplateChild("SecB_RotateTransform_Storyboard") as Storyboard;
             SecB_RotateTransform_Storyboard_DoubleAnimation = GetTemplateChild("SecB_RotateTransform_Storyboard_DoubleAnimation") as DoubleAnimation;
             MinB_RotateTransform_Storyboard = GetTemplateChild("MinB_RotateTransform_Storyboard") as Storyboard;
             MinB_RotateTransform_Storyboard_DoubleAnimation = GetTemplateChild("MinB_RotateTransform_Storyboard_DoubleAnimation") as DoubleAnimation;
             HourB_RotateTransform_Storyboard = GetTemplateChild("HourB_RotateTransform_Storyboard") as Storyboard;
             HourB_RotateTransform_Storyboard_DoubleAnimation = GetTemplateChild("HourB_RotateTransform_Storyboard_DoubleAnimation") as DoubleAnimation;
-            
+
+            var Pause = GetTemplateChild("Stop") as Button;
+            Pause.Click += Pause_Click;
+            var Resume = GetTemplateChild("Resume") as Button;
+            Resume.Click += Resume_Click;
+            var Start = GetTemplateChild("Start") as Button;
+            Start.Click += Start_Click;
+
             base.OnApplyTemplate();
+        }
+
+        private void Resume_Click(object sender, RoutedEventArgs e)
+        {
+            Sec_Timer.Start();
+            SecB_RotateTransform_Storyboard.Resume();
+        }
+
+        private void Pause_Click(object sender, RoutedEventArgs e)
+        {
+            Sec_Timer.Stop();
+            SecB_RotateTransform_Storyboard.Pause();
+        }
+
+        private void Start_Click(object sender, RoutedEventArgs e)
+        {
+            Seconds = 0;
+            Sec_Timer.Start(); 
+            SecB_RotateTransform_Storyboard.Begin();
         }
 
         protected override void OnManipulationDelta(ManipulationDeltaRoutedEventArgs e)
@@ -115,15 +145,16 @@ namespace UWPTeamWork
             if (!e.IsInertial)
             {
                 double angleOfLine = Math.Atan2((e.Position.Y - ActualHeight / 2), (e.Position.X - ActualWidth / 2)) * 180 / Math.PI;
-                if (Pointliner > ActualHeight / 3)
+                if (Pointliner < ActualHeight * 3 / 5)
                 {
-                    HourB_RotateTransform_Storyboard_DoubleAnimation.To = angleOfLine;
-                    HourB_RotateTransform_Storyboard.Begin();
-                }
-                else if (Pointliner > ActualHeight / 7)
-                {
-                    MinB_RotateTransform_Storyboard_DoubleAnimation.To = angleOfLine;
-                    MinB_RotateTransform_Storyboard.Begin();
+                    if (Pointliner > ActualHeight / 4)
+                    {
+                       HoursAng = angleOfLine;
+                    }
+                    else 
+                    {
+                       MinutesAng = angleOfLine;
+                    }
                 }
             }
             base.OnManipulationDelta(e);
@@ -142,27 +173,18 @@ namespace UWPTeamWork
             this.ManipulationMode = ManipulationModes.All;
             this.Loaded += OnLoaded;
 
-            Sec_Timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(25) };
+            Sec_Timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
             Sec_Timer.Tick += Sec_Timer_Tick;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            Sec_Timer.Start();
+            
         }
 
         private void Sec_Timer_Tick(object sender, object e)
         {
             Seconds++;
-            if (Seconds % 10 == 0)
-            {
-                DeskAngle += 3;
-                ClockDesk_RotateTransform_Storyboard_DoubleAnimation.To = DeskAngle;
-                ClockDesk_RotateTransform_Storyboard.Begin();
-            }
-            SecAngle += 0.3;
-            SecB_RotateTransform_Storyboard_DoubleAnimation.To = SecAngle;
-            SecB_RotateTransform_Storyboard.Begin();
         }
         #region 属性变化通知
         public event PropertyChangedEventHandler PropertyChanged;
@@ -172,6 +194,4 @@ namespace UWPTeamWork
         }
         #endregion
     }
-
-
 }

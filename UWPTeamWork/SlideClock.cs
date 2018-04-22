@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using System.Timers;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.UI.Core;
@@ -33,13 +34,12 @@ namespace UWPTeamWork
         private Storyboard SecB_RotateTransform_Storyboard;
         private DoubleAnimation MinB_RotateTransform_Storyboard_DoubleAnimation;
         private Storyboard MinB_RotateTransform_Storyboard;
-        private DoubleAnimation HourB_RotateTransform_Storyboard_DoubleAnimation;
-        private Storyboard HourB_RotateTransform_Storyboard;
 
-        public static DispatcherTimer Sec_Timer;
+        public static Timer Sec_Timer;
+        public static Timer MainTimer;
 
         private double Pointliner;
-
+        private int tiemdds = 0;
 
         //属性
         #region 选中的指针
@@ -84,32 +84,26 @@ namespace UWPTeamWork
         #endregion
 
         #region 时间/s
-        public int Seconds
+        public double SecondsAng
         {
-            get { return (int)GetValue(SecondsProperty); }
-            set { SetValue(SecondsProperty, value); }
+            get { return (double)GetValue(SecondsAngProperty); }
+            set { SetValue(SecondsAngProperty, value); }
         }
-        public static readonly DependencyProperty SecondsProperty =
-            DependencyProperty.Register("Seconds", typeof(int), typeof(SlideClock), new PropertyMetadata(0, new PropertyChangedCallback(OnSecondsChanged)));
+        public static readonly DependencyProperty SecondsAngProperty =
+            DependencyProperty.Register("SecondsAng", typeof(double), typeof(SlideClock), new PropertyMetadata(0, new PropertyChangedCallback(OnSecondsChanged)));
         private static void OnSecondsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if((int)e.NewValue > 59)
+            if((double)e.NewValue == 360)
             {
                 SlideClock k = (SlideClock)d;
                 k.SecB_RotateTransform_Storyboard.Begin();
-                k.Seconds = 0;
+                k.SecondsAng = 0;
             }
         }
         #endregion
 
         protected override void OnApplyTemplate()
         {
-            SecB_RotateTransform_Storyboard = GetTemplateChild("SecB_RotateTransform_Storyboard") as Storyboard;
-            SecB_RotateTransform_Storyboard_DoubleAnimation = GetTemplateChild("SecB_RotateTransform_Storyboard_DoubleAnimation") as DoubleAnimation;
-            MinB_RotateTransform_Storyboard = GetTemplateChild("MinB_RotateTransform_Storyboard") as Storyboard;
-            MinB_RotateTransform_Storyboard_DoubleAnimation = GetTemplateChild("MinB_RotateTransform_Storyboard_DoubleAnimation") as DoubleAnimation;
-            HourB_RotateTransform_Storyboard = GetTemplateChild("HourB_RotateTransform_Storyboard") as Storyboard;
-            HourB_RotateTransform_Storyboard_DoubleAnimation = GetTemplateChild("HourB_RotateTransform_Storyboard_DoubleAnimation") as DoubleAnimation;
 
             var Pause = GetTemplateChild("Stop") as Button;
             Pause.Click += Pause_Click;
@@ -123,25 +117,40 @@ namespace UWPTeamWork
 
         private void Resume_Click(object sender, RoutedEventArgs e)
         {
+            VisualStateManager.GoToState(this, "Handle_Show", false);
             Sec_Timer.Start();
-            SecB_RotateTransform_Storyboard.Resume();
+            MainTimer.Start();
         }
 
         private void Pause_Click(object sender, RoutedEventArgs e)
         {
+            VisualStateManager.GoToState(this, "Handle_Hide", false);
             Sec_Timer.Stop();
-            SecB_RotateTransform_Storyboard.Pause();
+            MainTimer.Stop();
+            SecondsAng = tiemdds*6;
         }
 
         private void Start_Click(object sender, RoutedEventArgs e)
         {
-            Seconds = 0;
-            Sec_Timer.Start(); 
-            SecB_RotateTransform_Storyboard.Begin();
+            VisualStateManager.GoToState(this, "Handle_Show", false);
+            SecondsAng = 0;
+            MainTimer.Start();
+            Sec_Timer.Start();
+        }
+
+        protected override void OnManipulationStarted(ManipulationStartedRoutedEventArgs e)
+        {
+            base.OnManipulationStarted(e);
+        }
+
+        protected override void OnManipulationCompleted(ManipulationCompletedRoutedEventArgs e)
+        {
+            base.OnManipulationCompleted(e);
         }
 
         protected override void OnManipulationDelta(ManipulationDeltaRoutedEventArgs e)
         {
+            
             if (!e.IsInertial)
             {
                 double angleOfLine = Math.Atan2((e.Position.Y - ActualHeight / 2), (e.Position.X - ActualWidth / 2)) * 180 / Math.PI;
@@ -149,11 +158,7 @@ namespace UWPTeamWork
                 {
                     if (Pointliner > ActualHeight / 4)
                     {
-                       HoursAng = angleOfLine;
-                    }
-                    else 
-                    {
-                       MinutesAng = angleOfLine;
+                        MinutesAng = angleOfLine + 90;
                     }
                 }
             }
@@ -173,8 +178,20 @@ namespace UWPTeamWork
             this.ManipulationMode = ManipulationModes.All;
             this.Loaded += OnLoaded;
 
-            Sec_Timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
-            Sec_Timer.Tick += Sec_Timer_Tick;
+            Sec_Timer = new Timer { Interval = 40 };
+            Sec_Timer.Elapsed += Sec_Timer_Tick;
+
+            MainTimer = new Timer { Interval = 1000 };
+            MainTimer.Elapsed += Sec_Timer_Tick1;
+        }
+
+        private async void Sec_Timer_Tick1(object sender, ElapsedEventArgs e)
+        {
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                tiemdds++;
+                Debug.WriteLine(SecondsAng + "  " + tiemdds);
+            });
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -182,10 +199,14 @@ namespace UWPTeamWork
             
         }
 
-        private void Sec_Timer_Tick(object sender, object e)
+        private async void Sec_Timer_Tick(object sender, object e)
         {
-            Seconds++;
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                SecondsAng += 0.24;
+            });
         }
+
         #region 属性变化通知
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)

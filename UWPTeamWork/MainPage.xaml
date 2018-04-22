@@ -7,11 +7,37 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Loaded="Page_Loaded">
 
-    <Grid Background="Black">
+    <Page.Resources>
+        <SolidColorBrush x:Key="ClockDaskBg_1" Color="#237ead"/>
+    </Page.Resources>
+    <Grid x:Name="RootGrid" Background="{StaticResource ClockDaskBg_1}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="LayoutStyle">
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="768"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ClockLayer.(Grid.RowSpan)" Value="3"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Viewbox>
-            <local:SlideClock Background="#237ead" />
-        </Viewbox>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="ClockLayer"  Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Stretch">
+            <Viewbox  MaxHeight="500" MaxWidth="500">
+                <local:SlideClock Background="{Binding ElementName=RootGrid,Path=Background,Mode=OneWay}" />
+            </Viewbox>
+        </Grid>
+        
     </Grid>
 </Page>

@@ -45,5 +45,20 @@ namespace UWPTeamWork
             //ToastNotification toast = new ToastNotification(content);
             //ToastNotificationManager.CreateToastNotifier().Show(toast);
         }
+
+        private void Stop_Click(object sender, RoutedEventArgs e)
+        {
+            SlideClock.Pause();
+        }
+
+        private void Resume_Click(object sender, RoutedEventArgs e)
+        {
+            SlideClock.Resume();
+        }
+
+        private void Start_Click(object sender, RoutedEventArgs e)
+        {
+            SlideClock.Start();
+        }
     }
 }

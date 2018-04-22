@@ -30,16 +30,12 @@ namespace UWPTeamWork
             Min = 1,
             Sec = 2
         }//当前选定指针
-        private DoubleAnimation SecB_RotateTransform_Storyboard_DoubleAnimation;
-        private Storyboard SecB_RotateTransform_Storyboard;
-        private DoubleAnimation MinB_RotateTransform_Storyboard_DoubleAnimation;
-        private Storyboard MinB_RotateTransform_Storyboard;
 
         public static Timer Sec_Timer;
         public static Timer MainTimer;
 
         private double Pointliner;
-        private int tiemdds = 0;
+        private int MainSeconds = 0;
 
         //属性
         #region 选中的指针
@@ -56,17 +52,14 @@ namespace UWPTeamWork
         }
         #endregion
 
-        #region 时间/h
-        public double HoursAng
+        #region 指针路径
+        public String MinPath
         {
-            get { return (double)GetValue(HoursProperty); }
-            set { SetValue(HoursProperty, value); }
+            get { return (String)GetValue(MinPathProperty); }
+            set { SetValue(MinPathProperty, value); }
         }
-        public static readonly DependencyProperty HoursProperty =
-            DependencyProperty.Register("HoursAng", typeof(double), typeof(SlideClock), new PropertyMetadata(0, new PropertyChangedCallback(OnHoursChanged)));
-        private static void OnHoursChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-        }
+        public static readonly DependencyProperty MinPathProperty =
+             DependencyProperty.Register("MinPath", typeof(String), typeof(SlideClock), new PropertyMetadata(""));
         #endregion
 
         #region 时间/m
@@ -93,10 +86,9 @@ namespace UWPTeamWork
             DependencyProperty.Register("SecondsAng", typeof(double), typeof(SlideClock), new PropertyMetadata(0, new PropertyChangedCallback(OnSecondsChanged)));
         private static void OnSecondsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if((double)e.NewValue == 360)
+            if((double)e.NewValue > 360)
             {
                 SlideClock k = (SlideClock)d;
-                k.SecB_RotateTransform_Storyboard.Begin();
                 k.SecondsAng = 0;
             }
         }
@@ -105,37 +97,44 @@ namespace UWPTeamWork
         protected override void OnApplyTemplate()
         {
 
-            var Pause = GetTemplateChild("Stop") as Button;
-            Pause.Click += Pause_Click;
-            var Resume = GetTemplateChild("Resume") as Button;
-            Resume.Click += Resume_Click;
-            var Start = GetTemplateChild("Start") as Button;
-            Start.Click += Start_Click;
-
             base.OnApplyTemplate();
         }
 
-        private void Resume_Click(object sender, RoutedEventArgs e)
+        public void Resume()
         {
             VisualStateManager.GoToState(this, "Handle_Show", false);
             Sec_Timer.Start();
             MainTimer.Start();
         }
 
-        private void Pause_Click(object sender, RoutedEventArgs e)
+        public void Pause()
         {
             VisualStateManager.GoToState(this, "Handle_Hide", false);
             Sec_Timer.Stop();
             MainTimer.Stop();
-            SecondsAng = tiemdds*6;
+            SecondsAng = MainSeconds * 6;
         }
 
-        private void Start_Click(object sender, RoutedEventArgs e)
+        public void Start()
         {
             VisualStateManager.GoToState(this, "Handle_Show", false);
             SecondsAng = 0;
+            MainSeconds = 0;
             MainTimer.Start();
             Sec_Timer.Start();
+        }
+
+        private void SetIconPathByAngle(double a)/*角度计算*/
+        {
+            var A = a * 2 * Math.PI / 360;
+            var x = 190 * Math.Sin(A);
+            var y = 190 * Math.Cos(A);
+            x = 200 + x;
+            y = 200 - y;
+            if (a <= 180)
+                MinPath = "M 200,10 A 190,190,0,0,1," + x.ToString() + "," + y.ToString();
+            else
+                MinPath = "M 200,10 A 190,190,0,1,1," + x.ToString() + "," + y.ToString();
         }
 
         protected override void OnManipulationStarted(ManipulationStartedRoutedEventArgs e)
@@ -153,12 +152,15 @@ namespace UWPTeamWork
             
             if (!e.IsInertial)
             {
-                double angleOfLine = Math.Atan2((e.Position.Y - ActualHeight / 2), (e.Position.X - ActualWidth / 2)) * 180 / Math.PI;
+                double angleOfLine = Math.Atan2((e.Position.Y - ActualHeight / 2), (e.Position.X - ActualWidth / 2)) * 180 / Math.PI + 90;
                 if (Pointliner < ActualHeight * 3 / 5)
                 {
                     if (Pointliner > ActualHeight / 4)
                     {
-                        MinutesAng = angleOfLine + 90;
+                        if (angleOfLine < 0)
+                            angleOfLine = 360 + angleOfLine;
+                        MinutesAng = angleOfLine;
+                        SetIconPathByAngle(angleOfLine);
                     }
                 }
             }
@@ -189,8 +191,8 @@ namespace UWPTeamWork
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                tiemdds++;
-                Debug.WriteLine(SecondsAng + "  " + tiemdds);
+                MainSeconds++;
+                Debug.WriteLine(SecondsAng + "  " + MainSeconds);
             });
         }
 

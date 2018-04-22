@@ -8,29 +8,29 @@ using Windows.UI.Xaml;
 
 namespace UWPTeamWork
 {
-    public class SecondHandleStateTrigger : StateTriggerBase
+    public class TickTextTrigger : StateTriggerBase
     {
-        public int TimeFlag
+        public int ActiveAngle
         {
-            get { return (int)GetValue(TimeFlagProperty); }
-            set { SetValue(TimeFlagProperty, value); }
+            get { return (int)GetValue(ActiveAngleProperty); }
+            set { SetValue(ActiveAngleProperty, value); }
         }
-        public static readonly DependencyProperty TimeFlagProperty =
-            DependencyProperty.Register("TimeFlag", typeof(int), typeof(SecondHandleStateTrigger), new PropertyMetadata(1));
+        public static readonly DependencyProperty ActiveAngleProperty =
+            DependencyProperty.Register("ActiveAngle", typeof(int), typeof(TickTextTrigger), new PropertyMetadata(0));
 
 
-        private static readonly DependencyProperty SecondHandleProperty = DependencyProperty.RegisterAttached("SecondHandle", typeof(int), typeof(SecondHandleStateTrigger),
-            new PropertyMetadata(1, new PropertyChangedCallback(TimeChanged)));
-        public int SecondHandle
+        private static readonly DependencyProperty AngelProperty = DependencyProperty.RegisterAttached("Angel", typeof(double), typeof(TickTextTrigger),
+        new PropertyMetadata(1, new PropertyChangedCallback(TimeChanged)));
+        public double Angel
         {
-            get { return (int)GetValue(SecondHandleProperty); }
-            set { SetValue(SecondHandleProperty, value); }
+            get { return (double)GetValue(AngelProperty); }
+            set { SetValue(AngelProperty, value); }
         }
         private static void TimeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            SecondHandleStateTrigger dat = (SecondHandleStateTrigger)d;
+            TickTextTrigger dat = (TickTextTrigger)d;
             //Debug.WriteLine(e.NewValue);
-            dat.SetActive((int)e.NewValue % dat.TimeFlag == 0);
+            dat.SetActive(Math.Abs((double)e.NewValue - dat.ActiveAngle) < 6);
         }
     }
 }

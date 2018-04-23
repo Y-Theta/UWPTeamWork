@@ -8,8 +8,9 @@
     mc:Ignorable="d" Loaded="Page_Loaded">
 
     <Page.Resources>
-        <SolidColorBrush x:Key="ClockDaskBg_1" Color="#039065"/>
+        <SolidColorBrush x:Key="ClockDaskBg_1" Color="#0aa065"/>
     </Page.Resources>
+    
     <Grid x:Name="RootGrid" Background="{StaticResource ClockDaskBg_1}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="LayoutStyle">

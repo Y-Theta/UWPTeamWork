@@ -35,7 +35,8 @@ namespace UWPTeamWork
         public static Timer MainTimer;
 
         private double Pointliner;
-        private int MainSeconds = 0;
+        private bool OnTimering;
+        private Point lastpos;
 
         //属性
         #region 选中的指针
@@ -62,6 +63,16 @@ namespace UWPTeamWork
              DependencyProperty.Register("MinPath", typeof(String), typeof(SlideClock), new PropertyMetadata(""));
         #endregion
 
+        #region        
+        public int MainSeconds
+        {
+            get { return (int)GetValue(MainSecondsProperty); }
+            set { SetValue(MainSecondsProperty, value); }
+        }
+        public static readonly DependencyProperty MainSecondsProperty =
+            DependencyProperty.Register("MainSeconds", typeof(int), typeof(SlideClock), new PropertyMetadata(0));
+        #endregion
+
         #region 时间/m
         public double MinutesAng
         {
@@ -69,10 +80,10 @@ namespace UWPTeamWork
             set { SetValue(MinutesProperty, value); }
         }
         public static readonly DependencyProperty MinutesProperty =
-            DependencyProperty.Register("MinutesAng", typeof(double), typeof(SlideClock), new PropertyMetadata(0, new PropertyChangedCallback(OnMinutesChanged)));
+            DependencyProperty.Register("MinutesAng", typeof(double), typeof(SlideClock), new PropertyMetadata(0.0, new PropertyChangedCallback(OnMinutesChanged)));
         private static void OnMinutesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-
+            SlideClock s = (SlideClock)d;
         }
         #endregion
 
@@ -83,7 +94,7 @@ namespace UWPTeamWork
             set { SetValue(SecondsAngProperty, value); }
         }
         public static readonly DependencyProperty SecondsAngProperty =
-            DependencyProperty.Register("SecondsAng", typeof(double), typeof(SlideClock), new PropertyMetadata(0, new PropertyChangedCallback(OnSecondsChanged)));
+            DependencyProperty.Register("SecondsAng", typeof(double), typeof(SlideClock), new PropertyMetadata(0.0, new PropertyChangedCallback(OnSecondsChanged)));
         private static void OnSecondsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if((double)e.NewValue > 360)
@@ -103,6 +114,7 @@ namespace UWPTeamWork
         public void Resume()
         {
             VisualStateManager.GoToState(this, "Handle_Show", false);
+            OnTimering = true;
             Sec_Timer.Start();
             MainTimer.Start();
         }
@@ -110,16 +122,16 @@ namespace UWPTeamWork
         public void Pause()
         {
             VisualStateManager.GoToState(this, "Handle_Hide", false);
+            OnTimering = false;
             Sec_Timer.Stop();
             MainTimer.Stop();
-            SecondsAng = MainSeconds * 6;
+            SecondsAng = MainSeconds % 60 * 6;
         }
 
         public void Start()
         {
             VisualStateManager.GoToState(this, "Handle_Show", false);
-            SecondsAng = 0;
-            MainSeconds = 0;
+            OnTimering = true;
             MainTimer.Start();
             Sec_Timer.Start();
         }
@@ -137,31 +149,46 @@ namespace UWPTeamWork
                 MinPath = "M 200,10 A 190,190,0,1,1," + x.ToString() + "," + y.ToString();
         }
 
+        private double OriginAngle = 0.0;
+        private bool firstRingF = true;
+        private double LastAngle = 0;
+
         protected override void OnManipulationStarted(ManipulationStartedRoutedEventArgs e)
         {
+            if (SecondsAng > 0)
+            {
+                VisualStateManager.GoToState(this, "SecNormal", false);
+                VisualStateManager.GoToState(this, "SecToO", false);
+                SecondsAng = 0;
+            }
+            OriginAngle = MinutesAng;
             base.OnManipulationStarted(e);
         }
 
         protected override void OnManipulationCompleted(ManipulationCompletedRoutedEventArgs e)
         {
+            if (MinutesAng.Equals(359.5))
+                MinutesAng = 360;
             base.OnManipulationCompleted(e);
         }
 
         protected override void OnManipulationDelta(ManipulationDeltaRoutedEventArgs e)
         {
-            
             if (!e.IsInertial)
             {
                 double angleOfLine = Math.Atan2((e.Position.Y - ActualHeight / 2), (e.Position.X - ActualWidth / 2)) * 180 / Math.PI + 90;
-                if (Pointliner < ActualHeight * 3 / 5)
+                if (Pointliner < ActualHeight * 3 / 5 && Pointliner > ActualHeight / 4)
                 {
-                    if (Pointliner > ActualHeight / 4)
-                    {
-                        if (angleOfLine < 0)
-                            angleOfLine = 360 + angleOfLine;
-                        MinutesAng = angleOfLine;
-                        SetIconPathByAngle(angleOfLine);
-                    }
+                    if (angleOfLine < 0)
+                        angleOfLine = 360 + angleOfLine;
+                   // Debug.WriteLine(e.Velocities.Linear + "  " + e.Delta.Translation.X + "  " + angleOfLine);
+                    if ((angleOfLine < LastAngle || angleOfLine - LastAngle > 40) && angleOfLine > 180 && LastAngle < 180)
+                        angleOfLine = 0;
+                    if ((angleOfLine > LastAngle || LastAngle - angleOfLine > 180) && angleOfLine < 270 && LastAngle > 270)
+                        angleOfLine = 359.5;
+                    MainSeconds = (int)(Math.Round((double)angleOfLine / 6)) * 60;
+                    MinutesAng = LastAngle = angleOfLine;
+                    SetIconPathByAngle(angleOfLine);
                 }
             }
             base.OnManipulationDelta(e);
@@ -179,6 +206,7 @@ namespace UWPTeamWork
             this.DefaultStyleKey = typeof(SlideClock);
             this.ManipulationMode = ManipulationModes.All;
             this.Loaded += OnLoaded;
+            lastpos = new Point(200, 10);
 
             Sec_Timer = new Timer { Interval = 40 };
             Sec_Timer.Elapsed += Sec_Timer_Tick;
@@ -191,7 +219,9 @@ namespace UWPTeamWork
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                MainSeconds++;
+                MainSeconds--;
+                MinutesAng -= 0.1;
+                SetIconPathByAngle(MinutesAng);
                 Debug.WriteLine(SecondsAng + "  " + MainSeconds);
             });
         }

@@ -12,7 +12,7 @@ namespace UWPTeamWork
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return (double)value/100;
+            return String.Format("{0:D2} : {1:D2}", (int)value / 60, (int)value % 60);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

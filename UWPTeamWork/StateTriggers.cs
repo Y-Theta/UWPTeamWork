@@ -29,7 +29,6 @@ namespace UWPTeamWork
         private static void TimeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             TickTextTrigger dat = (TickTextTrigger)d;
-            //Debug.WriteLine(e.NewValue);
             dat.SetActive(Math.Abs((double)e.NewValue - dat.ActiveAngle) < 6);
         }
     }

@@ -6,6 +6,7 @@
     <!--StaticResources-->
     <local:MinAngConverter x:Key="MinAngConverter"/>
     <x:Double x:Key="TextTickSize">24</x:Double>
+    <SolidColorBrush x:Key="MinHButtonForeGround" Color="#e0ffffff"/>
     <SolidColorBrush x:Key="ClockdeskBg_L2" Color="#80ffffff"/>
     <SolidColorBrush x:Key="ClockdeskBg_L3" Color="#30ffffff"/>
 
@@ -187,10 +188,90 @@
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="MinHStates">
                                 <VisualState x:Name="MinHNormal">
-                                    
+                                    <VisualState.StateTriggers>
+                                        <local:BoolTrigger BindValue="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=MinHDieection}" ReferenceValue="True"/>
+                                    </VisualState.StateTriggers>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MinHActive_RotateTransform" Storyboard.TargetProperty="Angle">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <CircleEase EasingMode="EaseIn"/>
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="MinHArrow">
-                                    
+                                    <VisualState.StateTriggers>
+                                        <local:BoolTrigger BindValue="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=MinHDieection}" ReferenceValue="False"/>
+                                    </VisualState.StateTriggers>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MinHActive_RotateTransform" Storyboard.TargetProperty="Angle">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1" Value="180">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <CircleEase EasingMode="EaseOut"/>
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="MinHButtonStates">
+                                <VisualState x:Name="MinHButton_Active">
+                                    <VisualState.StateTriggers>
+                                        <local:BoolTrigger BindValue="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Focused}" ReferenceValue="True"/>
+                                    </VisualState.StateTriggers>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MinHInactive" Storyboard.TargetProperty="Opacity">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.8"  Value="0">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <SineEase EasingMode="EaseInOut"/>
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MinHInactive" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.8" Value="Collapsed"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MinHActive" Storyboard.TargetProperty="Opacity">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.8"  Value="1">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <SineEase EasingMode="EaseInOut"/>
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MinHActive" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="MinHButton_InActive">
+                                    <VisualState.StateTriggers>
+                                        <local:BoolTrigger BindValue="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Focused}" ReferenceValue="False"/>
+                                    </VisualState.StateTriggers>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MinHInactive" Storyboard.TargetProperty="Opacity">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="1">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <SineEase EasingMode="EaseInOut"/>
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MinHInactive" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MinHActive" Storyboard.TargetProperty="Opacity">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0"  Value="1"/>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.8"  Value="0">
+                                                    <EasingDoubleKeyFrame.EasingFunction>
+                                                    <SineEase EasingMode="EaseInOut"/>
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MinHActive" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.8" Value="Collapsed"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
@@ -211,13 +292,13 @@
                                         <RotateTransform x:Name="MinH_RotateTransform" Angle="{Binding MinutesAng, RelativeSource={RelativeSource Mode=TemplatedParent},Mode=TwoWay}"/>
                                     </TransformGroup>
                                 </Grid.RenderTransform>
-                                <Ellipse x:Name="MinHInactive" Width="20" Height="20" Fill="White" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Collapsed"/>
-                                <Canvas x:Name="MinHActive" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Top" >
-                                    <Path Data="M19,10a9,9,0,1,1-9-9A9,9,0,0,1,19,10ZM7.69,5.88v7.93l6.87-4Z" Stroke="White" StrokeThickness="2" RenderTransformOrigin=".5 .5">
-                                        <Path.RenderTransform>
-                                            <RotateTransform x:Name="MinHActive_RotateTransform"/>
-                                        </Path.RenderTransform>
-                                    </Path>
+                                <Ellipse x:Name="MinHInactive" Width="20" Height="20" Fill="{StaticResource MinHButtonForeGround}" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Visible" Opacity="1"/>
+                                <Canvas x:Name="MinHActive" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin=".5 .5"
+                                        Opacity="0" Visibility="Collapsed">
+                                    <Canvas.RenderTransform>
+                                        <RotateTransform x:Name="MinHActive_RotateTransform" Angle="0"/>
+                                    </Canvas.RenderTransform>
+                                    <Path Data="M4,1.63V18.06L18.24,9.84Z" Stroke="{StaticResource MinHButtonForeGround}" StrokeThickness="4" />
                                 </Canvas>
                             </Grid>
                             <Grid x:Name="MinH_Grid_Bg" Width="400" Height="400" HorizontalAlignment="Center" VerticalAlignment="Center">

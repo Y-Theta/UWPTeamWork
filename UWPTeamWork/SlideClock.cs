@@ -1,22 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
 using System.Timers;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Media.Media3D;
 
 
 namespace UWPTeamWork
@@ -31,18 +22,34 @@ namespace UWPTeamWork
         private Point lastpos;
 
         //属性
-        #region
-
-
-        public bool TimerRuning
+        #region 是否有焦点
+        public bool Focused
         {
-            get { return (bool)GetValue(TimerRuningProperty); }
-            set { SetValue(TimerRuningProperty, value); }
+            get { return (bool)GetValue(FocusedProperty); }
+            set { SetValue(FocusedProperty, value); }
         }
-        public static readonly DependencyProperty TimerRuningProperty =
-            DependencyProperty.Register("TimerRuning", typeof(bool), typeof(SlideClock), new PropertyMetadata(false));
+        public static readonly DependencyProperty FocusedProperty =
+            DependencyProperty.Register("Focused", typeof(bool), typeof(SlideClock), new PropertyMetadata(false));
+        #endregion
+    
+        #region 指针运动方向
+        public bool MinHDieection
+        {
+            get { return (bool)GetValue(MinHDieectionProperty); }
+            set { SetValue(MinHDieectionProperty, value); }
+        }
+        public static readonly DependencyProperty MinHDieectionProperty =
+            DependencyProperty.Register("MinHDieection", typeof(bool), typeof(SlideClock), new PropertyMetadata(true));
+        #endregion
 
-
+        #region 计时器是否计时
+        public bool IsTimerRuning
+        {
+            get { return (bool)GetValue(IsTimerRuningProperty); }
+            set { SetValue(IsTimerRuningProperty, value); }
+        }
+        public static readonly DependencyProperty IsTimerRuningProperty =
+            DependencyProperty.Register("IsTimerRuning", typeof(bool), typeof(SlideClock), new PropertyMetadata(false));
         #endregion
 
         #region 指针路径
@@ -110,7 +117,7 @@ namespace UWPTeamWork
 
         public void Resume()
         {
-            TimerRuning = true;
+            IsTimerRuning = true;
             Sec_Timer.Start();
             MainTimer.Start();
             VisualStateManager.GoToState(this, "Handle_Show", false);
@@ -118,7 +125,7 @@ namespace UWPTeamWork
 
         public void Pause()
         {
-            TimerRuning = false;
+            IsTimerRuning = false;
             Sec_Timer.Stop();
             MainTimer.Stop();
             SecondsAng = 360 - MainSeconds % 60 * 6;
@@ -129,7 +136,7 @@ namespace UWPTeamWork
         {
             if (MainSeconds == 0)
                 return;
-            TimerRuning = true;
+            IsTimerRuning = true;
             MainTimer.Start();
             Sec_Timer.Start();
             VisualStateManager.GoToState(this, "Handle_Show", false);
@@ -152,19 +159,37 @@ namespace UWPTeamWork
         //private bool firstRingF = true;
         private double LastAngle = 0;
 
+        //指针进入
+        protected override void OnPointerEntered(PointerRoutedEventArgs e)
+        {
+            Focused = true;
+            base.OnPointerEntered(e);
+        }
+
+        //指针移出
+        protected override void OnPointerExited(PointerRoutedEventArgs e)
+        {
+            Focused = false;
+            base.OnPointerExited(e);
+        }
+
+        //滑动开始
         protected override void OnManipulationStarting(ManipulationStartingRoutedEventArgs e)
         {
-            Debug.WriteLine(SecondsAng);
-            if (SecondsAng != 0)
+            if (!IsTimerRuning)
             {
-                VisualStateManager.GoToState(this, "SecNormal", false);
-                VisualStateManager.GoToState(this, "SecToO", false);
-                SecondsAng = 0;
+                if (SecondsAng != 0 && SecondsAng != 360)
+                {
+                    VisualStateManager.GoToState(this, "SecNormal", false);
+                    VisualStateManager.GoToState(this, "SecToO", false);
+                    SecondsAng = 0;
+                }
+                OriginAngle = MinutesAng;
             }
-            OriginAngle = MinutesAng;
             base.OnManipulationStarting(e);
         }
 
+        //滑动完成
         protected override void OnManipulationCompleted(ManipulationCompletedRoutedEventArgs e)
         {
             if (MinutesAng.Equals(359.5))
@@ -172,33 +197,64 @@ namespace UWPTeamWork
             base.OnManipulationCompleted(e);
         }
 
+        //滑动
         protected override void OnManipulationDelta(ManipulationDeltaRoutedEventArgs e)
         {
-            if (!e.IsInertial)
+            if (!e.IsInertial && !IsTimerRuning)
             {
                 double angleOfLine = Math.Atan2((e.Position.Y - ActualHeight / 2), (e.Position.X - ActualWidth / 2)) * 180 / Math.PI + 90;
                 if (Pointliner < ActualHeight * 3 / 5 && Pointliner > ActualHeight / 4)
                 {
                     if (angleOfLine < 0)
                         angleOfLine = 360 + angleOfLine;
-                   // Debug.WriteLine(e.Velocities.Linear + "  " + e.Delta.Translation.X + "  " + angleOfLine);
+                    // Debug.WriteLine(e.Velocities.Linear + "  " + e.Delta.Translation.X + "  " + angleOfLine);
                     if ((angleOfLine < LastAngle || angleOfLine - LastAngle > 40) && angleOfLine > 180 && LastAngle < 180)
                         angleOfLine = 0;
                     if ((angleOfLine > LastAngle || LastAngle - angleOfLine > 180) && angleOfLine < 270 && LastAngle > 270)
                         angleOfLine = 359.5;
+                    MinHDieection = angleOfLine > LastAngle;
                     MainSeconds = (int)(Math.Round((double)angleOfLine / 6)) * 60;
                     MinutesAng = LastAngle = angleOfLine;
                     SetIconPathByAngle(angleOfLine);
                 }
+                base.OnManipulationDelta(e);
             }
-            base.OnManipulationDelta(e);
         }
 
+        //按下
         protected override void OnPointerPressed(PointerRoutedEventArgs e)
         {
-            Pointliner = Math.Sqrt(Math.Abs(e.GetCurrentPoint(this).Position.X - ActualWidth / 2) * Math.Abs(e.GetCurrentPoint(this).Position.X - ActualWidth / 2)
-                  + Math.Abs(e.GetCurrentPoint(this).Position.Y - ActualHeight / 2) * Math.Abs(e.GetCurrentPoint(this).Position.Y - ActualHeight / 2));
+            if (!IsTimerRuning)
+                Pointliner = Math.Sqrt(Math.Abs(e.GetCurrentPoint(this).Position.X - ActualWidth / 2) * Math.Abs(e.GetCurrentPoint(this).Position.X - ActualWidth / 2)
+                      + Math.Abs(e.GetCurrentPoint(this).Position.Y - ActualHeight / 2) * Math.Abs(e.GetCurrentPoint(this).Position.Y - ActualHeight / 2));
             base.OnPointerPressed(e);
+        }
+
+        #region 计时器事件
+
+        private async void Sec_Timer_Tick1(object sender, ElapsedEventArgs e)
+        {
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                MainSeconds--;
+                MinutesAng -= 0.1;
+                SetIconPathByAngle(MinutesAng);
+                Debug.WriteLine(SecondsAng + "  " + MainSeconds);
+            });
+        }
+
+        private async void Sec_Timer_Tick(object sender, object e)
+        {
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                SecondsAng += 0.24;
+            });
+        }
+        #endregion
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+
         }
 
         public SlideClock()
@@ -215,36 +271,5 @@ namespace UWPTeamWork
             MainTimer.Elapsed += Sec_Timer_Tick1;
         }
 
-        private async void Sec_Timer_Tick1(object sender, ElapsedEventArgs e)
-        {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                MainSeconds--;
-                MinutesAng -= 0.1;
-                SetIconPathByAngle(MinutesAng);
-                Debug.WriteLine(SecondsAng + "  " + MainSeconds);
-            });
-        }
-
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private async void Sec_Timer_Tick(object sender, object e)
-        {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                SecondsAng += 0.24;
-            });
-        }
-
-        #region 属性变化通知
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
     }
 }

@@ -9,8 +9,10 @@
 
     <Page.Resources>
         <SolidColorBrush x:Key="ClockDaskBg_1" Color="#0aa065"/>
+        <SolidColorBrush x:Key="TitleBar_Fg" Color="#ffffff"/>
+        <x:Double x:Key="TitleBarText">16</x:Double>
     </Page.Resources>
-    
+
     <Grid x:Name="RootGrid" Background="{StaticResource ClockDaskBg_1}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="LayoutStyle">
@@ -19,26 +21,26 @@
                         <AdaptiveTrigger MinWindowWidth="768"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="ClockLayer.(Grid.RowSpan)" Value="2"/>
-                        <Setter Target="ClockLayer.Margin" Value="0"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="5*"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <Grid x:Name="ClockLayer"  Grid.Row="0" Grid.RowSpan="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="20,40,20,0">
-            <Viewbox  MaxHeight="500" MaxWidth="500">
-                <local:SlideClock x:Name="SlideClock" Background="{Binding ElementName=RootGrid,Path=Background,Mode=OneWay}" />
-            </Viewbox>
-        </Grid>
+        <TextBlock x:Name="Title" Text="title" TextAlignment="Center" FontWeight="Light"
+                   Foreground="{StaticResource TitleBar_Fg}" 
+                   FontSize="{StaticResource TitleBarText}" 
+                   Margin="10,0,0,0" Grid.Column="0" />
+        <Viewbox x:Name="ClockLayer"   Grid.RowSpan="2" Grid.ColumnSpan="3" MaxHeight="500" MaxWidth="500">
+            <local:SlideClock x:Name="SlideClock" Background="{Binding ElementName=RootGrid,Path=Background,Mode=OneWay}" />
+        </Viewbox>
         <Button Grid.Row="1" Grid.ColumnSpan="3" x:Name="Stop" Width="50" Height="50" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="Stop_Click"/>
         <Button Grid.Row="1" Grid.ColumnSpan="3" x:Name="Resume" Width="50" Height="50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Resume_Click"/>
         <Button Grid.Row="1" Grid.ColumnSpan="3" x:Name="Start" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="Start_Click"/>

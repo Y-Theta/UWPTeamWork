@@ -3,16 +3,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:UWPTeamWork">
 
+    <!--StaticResources-->
     <local:MinAngConverter x:Key="MinAngConverter"/>
     <x:Double x:Key="TextTickSize">24</x:Double>
     <SolidColorBrush x:Key="ClockdeskBg_L2" Color="#80ffffff"/>
     <SolidColorBrush x:Key="ClockdeskBg_L3" Color="#30ffffff"/>
 
+    <!--Styles-->
     <Style TargetType="local:SlideClock" >
+        <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:SlideClock">
-                    <Grid x:Name="RootGrid" Background="{TemplateBinding Background}" UseLayoutRounding="True">
+                    <Grid x:Name="RootGrid" UseLayoutRounding="True">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="SecHState">
                                 <VisualState x:Name="SecToO">
@@ -182,6 +185,14 @@
                                 </VisualState>
 
                             </VisualStateGroup>
+                            <VisualStateGroup x:Name="MinHStates">
+                                <VisualState x:Name="MinHNormal">
+                                    
+                                </VisualState>
+                                <VisualState x:Name="MinHArrow">
+                                    
+                                </VisualState>
+                            </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid x:Name="ContentLayer" Width="700" Height="700" RenderTransformOrigin="0 0" >
                             <Grid x:Name="SecH_Grid" Height="500" Width="500" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin=".5 .5">
@@ -194,16 +205,23 @@
                                 <Image x:Name="HandleBG" Source="Assets/ClockDeskbg.png" HorizontalAlignment="Center" VerticalAlignment="Center"
                                            Opacity="0"/>
                             </Grid>
-                            <Grid x:Name="MinB_Grid" Width="400" Height="400" RenderTransformOrigin=".5 .5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Grid x:Name="MinH_Grid" Width="380" Height="380" RenderTransformOrigin=".5 .5" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <Grid.RenderTransform>
                                     <TransformGroup>
-                                        <RotateTransform x:Name="MinB_RotateTransform" Angle="{Binding MinutesAng, RelativeSource={RelativeSource Mode=TemplatedParent},Mode=TwoWay}"/>
+                                        <RotateTransform x:Name="MinH_RotateTransform" Angle="{Binding MinutesAng, RelativeSource={RelativeSource Mode=TemplatedParent},Mode=TwoWay}"/>
                                     </TransformGroup>
                                 </Grid.RenderTransform>
-                                <Ellipse Width="20" Height="20" Fill="White" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                <Ellipse x:Name="MinHInactive" Width="20" Height="20" Fill="White" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Collapsed"/>
+                                <Canvas x:Name="MinHActive" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                                    <Path Data="M19,10a9,9,0,1,1-9-9A9,9,0,0,1,19,10ZM7.69,5.88v7.93l6.87-4Z" Stroke="White" StrokeThickness="2" RenderTransformOrigin=".5 .5">
+                                        <Path.RenderTransform>
+                                            <RotateTransform x:Name="MinHActive_RotateTransform"/>
+                                        </Path.RenderTransform>
+                                    </Path>
+                                </Canvas>
                             </Grid>
-                            <Grid x:Name="MinB_Grid_Bg" Width="400" Height="400" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Path x:Name="MinB_Grid_Pace" Data="{Binding MinPath, RelativeSource={RelativeSource Mode=TemplatedParent},Mode=OneWay}" Stroke="{StaticResource ClockdeskBg_L3}" StrokeThickness="20" StrokeStartLineCap="Round"/>
+                            <Grid x:Name="MinH_Grid_Bg" Width="400" Height="400" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Path x:Name="MinH_Grid_Pace" Data="{Binding MinPath, RelativeSource={RelativeSource Mode=TemplatedParent},Mode=OneWay}" Stroke="{StaticResource ClockdeskBg_L3}" StrokeThickness="20" StrokeStartLineCap="Round"/>
                             </Grid>
                             <Grid x:Name="DeskBg" Width="700" Height="700" RenderTransformOrigin=".5 .5">
                                 <TextBlock x:Name="Tick_Zero" Text="0" FontSize="{StaticResource TextTickSize}" Foreground="{StaticResource ClockdeskBg_L2}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0" RenderTransformOrigin=".5 .5">
@@ -227,8 +245,7 @@
                                     </TextBlock.RenderTransform>
                                 </TextBlock>
                                 <Path Data="M24.69,321.54C38.3,163.9,163.9,38.3,321.54,24.69M24.69,378.46C38.3,536.1,163.9,661.7,321.54,675.31
-                                      m56.92,0C536.1,661.7,661.7,536.1,675.31,378.46m0-56.92C661.7,163.9,536.1,38.3,378.46,24.69" StrokeThickness="4" 
-                                      StrokeStartLineCap="Round" Stroke="{StaticResource ClockdeskBg_L2}"/>
+                                      m56.92,0C536.1,661.7,661.7,536.1,675.31,378.46m0-56.92C661.7,163.9,536.1,38.3,378.46,24.69" StrokeThickness="4"  StrokeStartLineCap="Round" Stroke="{StaticResource ClockdeskBg_L2}"/>
                                 <Canvas Width="500" Height="500" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Path Data="M250,0C111.93,0,0,111.93,0,250S111.93,500,250,500,500,388.07,500,250,388.07,0,250,0Zm0,480C123,480,20,377,20,250
                                       S123,20,250,20,480,123,480,250,377,480,250,480Z" Fill="{StaticResource ClockdeskBg_L3}" />
@@ -236,6 +253,9 @@
                                 </Canvas>
                             </Grid>
                             <TextBlock Text="{Binding MainSeconds, RelativeSource={RelativeSource Mode=TemplatedParent},Mode=OneWay,Converter={StaticResource MinAngConverter}}" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                        </Grid>
+                        <Grid>
+                            
                         </Grid>
                     </Grid>
                 </ControlTemplate>

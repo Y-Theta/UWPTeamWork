@@ -18,39 +18,31 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Media3D;
 
-// The Templated Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234235
 
 namespace UWPTeamWork
 {
     public sealed class SlideClock : Control
     {
-        public enum HandleType
-        {
-            Hour = 0,
-            Min = 1,
-            Sec = 2
-        }//当前选定指针
 
-        public static Timer Sec_Timer;
-        public static Timer MainTimer;
+        public Timer Sec_Timer;
+        public Timer MainTimer;
 
         private double Pointliner;
-        private bool OnTimering;
         private Point lastpos;
 
         //属性
-        #region 选中的指针
-        public HandleType SelectedH
-        {
-            get { return (HandleType)GetValue(SelectedHProperty); }
-            set { SetValue(SelectedHProperty, value); }
-        }
-        public static readonly DependencyProperty SelectedHProperty =
-            DependencyProperty.Register("SelectedH", typeof(HandleType), typeof(SlideClock), new PropertyMetadata(false, new PropertyChangedCallback(OnSecBTappedChanged)));
+        #region
 
-        private static void OnSecBTappedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+
+        public bool TimerRuning
         {
+            get { return (bool)GetValue(TimerRuningProperty); }
+            set { SetValue(TimerRuningProperty, value); }
         }
+        public static readonly DependencyProperty TimerRuningProperty =
+            DependencyProperty.Register("TimerRuning", typeof(bool), typeof(SlideClock), new PropertyMetadata(false));
+
+
         #endregion
 
         #region 指针路径
@@ -63,14 +55,20 @@ namespace UWPTeamWork
              DependencyProperty.Register("MinPath", typeof(String), typeof(SlideClock), new PropertyMetadata(""));
         #endregion
 
-        #region        
+        #region 主计时     
         public int MainSeconds
         {
             get { return (int)GetValue(MainSecondsProperty); }
             set { SetValue(MainSecondsProperty, value); }
         }
         public static readonly DependencyProperty MainSecondsProperty =
-            DependencyProperty.Register("MainSeconds", typeof(int), typeof(SlideClock), new PropertyMetadata(0));
+            DependencyProperty.Register("MainSeconds", typeof(int), typeof(SlideClock), new PropertyMetadata(0,
+                new PropertyChangedCallback(OnMainSecondsCHanged)));
+        private static void OnMainSecondsCHanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if ((int)e.NewValue == 0)
+                ((SlideClock)d).Pause();
+        }
         #endregion
 
         #region 时间/m
@@ -107,62 +105,64 @@ namespace UWPTeamWork
 
         protected override void OnApplyTemplate()
         {
-
             base.OnApplyTemplate();
         }
 
         public void Resume()
         {
-            VisualStateManager.GoToState(this, "Handle_Show", false);
-            OnTimering = true;
+            TimerRuning = true;
             Sec_Timer.Start();
             MainTimer.Start();
+            VisualStateManager.GoToState(this, "Handle_Show", false);
         }
 
         public void Pause()
         {
-            VisualStateManager.GoToState(this, "Handle_Hide", false);
-            OnTimering = false;
+            TimerRuning = false;
             Sec_Timer.Stop();
             MainTimer.Stop();
-            SecondsAng = MainSeconds % 60 * 6;
+            SecondsAng = 360 - MainSeconds % 60 * 6;
+            VisualStateManager.GoToState(this, "Handle_Hide", false);
         }
 
         public void Start()
         {
-            VisualStateManager.GoToState(this, "Handle_Show", false);
-            OnTimering = true;
+            if (MainSeconds == 0)
+                return;
+            TimerRuning = true;
             MainTimer.Start();
             Sec_Timer.Start();
+            VisualStateManager.GoToState(this, "Handle_Show", false);
         }
 
         private void SetIconPathByAngle(double a)/*角度计算*/
         {
             var A = a * 2 * Math.PI / 360;
-            var x = 190 * Math.Sin(A);
-            var y = 190 * Math.Cos(A);
+            var x = 180 * Math.Sin(A);
+            var y = 180 * Math.Cos(A);
             x = 200 + x;
             y = 200 - y;
             if (a <= 180)
-                MinPath = "M 200,10 A 190,190,0,0,1," + x.ToString() + "," + y.ToString();
+                MinPath = "M 200,20 A 180,180,0,0,1," + x.ToString() + "," + y.ToString();
             else
-                MinPath = "M 200,10 A 190,190,0,1,1," + x.ToString() + "," + y.ToString();
+                MinPath = "M 200,20 A 180,180,0,1,1," + x.ToString() + "," + y.ToString();
         }
 
         private double OriginAngle = 0.0;
-        private bool firstRingF = true;
+        //private bool firstRingF = true;
         private double LastAngle = 0;
 
-        protected override void OnManipulationStarted(ManipulationStartedRoutedEventArgs e)
+        protected override void OnManipulationStarting(ManipulationStartingRoutedEventArgs e)
         {
-            if (SecondsAng > 0)
+            Debug.WriteLine(SecondsAng);
+            if (SecondsAng != 0)
             {
                 VisualStateManager.GoToState(this, "SecNormal", false);
                 VisualStateManager.GoToState(this, "SecToO", false);
                 SecondsAng = 0;
             }
             OriginAngle = MinutesAng;
-            base.OnManipulationStarted(e);
+            base.OnManipulationStarting(e);
         }
 
         protected override void OnManipulationCompleted(ManipulationCompletedRoutedEventArgs e)

@@ -1,21 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Data.Xml.Dom;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Notifications;
+﻿using System.Diagnostics;
+using Windows.ApplicationModel.Core;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x804 上介绍了“空白页”项模板
 
@@ -29,7 +17,23 @@ namespace UWPTeamWork
 
         public MainPage()
         {
+            InitTitleBar();
             this.InitializeComponent();
+        }
+
+        private void InitTitleBar()
+        {
+            var view = ApplicationView.GetForCurrentView();
+            view.TitleBar.ButtonBackgroundColor = Colors.Transparent;
+            view.TitleBar.ButtonForegroundColor = Colors.Transparent;
+
+            view.TitleBar.ButtonHoverBackgroundColor = Color.FromArgb(100, 0, 0, 0);
+            view.TitleBar.ButtonHoverForegroundColor = Colors.Transparent;
+
+            view.TitleBar.ButtonPressedBackgroundColor = Color.FromArgb(160, 0, 0, 0);
+            view.TitleBar.ButtonPressedForegroundColor = Colors.Transparent;
+
+            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

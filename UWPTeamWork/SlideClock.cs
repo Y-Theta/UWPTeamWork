@@ -14,7 +14,6 @@ namespace UWPTeamWork
 {
     public sealed class SlideClock : Control
     {
-
         public Timer Sec_Timer;
         public Timer MainTimer;
 
@@ -120,14 +119,6 @@ namespace UWPTeamWork
             base.OnApplyTemplate();
         }
 
-        public void Resume()
-        {
-            IsTimerRuning = true;
-            Sec_Timer.Start();
-            MainTimer.Start();
-            VisualStateManager.GoToState(this, "Handle_Show", false);
-        }
-
         public void Pause()
         {
             IsTimerRuning = false;
@@ -164,6 +155,16 @@ namespace UWPTeamWork
         //private bool firstRingF = true;
         private double LastAngle = 0;
 
+        protected override void OnDoubleTapped(DoubleTappedRoutedEventArgs e)
+        {
+            if (IsTimerRuning)
+            {
+                Pause();
+            }
+            else { Start(); }
+            base.OnDoubleTapped(e);
+        }
+
         //指针进入
         protected override void OnPointerEntered(PointerRoutedEventArgs e)
         {
@@ -181,7 +182,7 @@ namespace UWPTeamWork
         //滑动开始
         protected override void OnManipulationStarting(ManipulationStartingRoutedEventArgs e)
         {
-            if (!IsTimerRuning)
+            if (!IsTimerRuning && (Pointliner < ActualHeight * 3 / 5 && Pointliner > ActualHeight / 4))
             {
                 if (SecondsAng != 0 && SecondsAng != 360)
                 {

@@ -23,6 +23,19 @@ namespace UWPTeamWork
         }
     }
 
+    public class MinAngConverterSim : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            return String.Format("{0:D}", (int)value / 60);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            return (bool)value;
+        }
+    }
+
     public class HourAngConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)

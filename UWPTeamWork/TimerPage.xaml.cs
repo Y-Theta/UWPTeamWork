@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Windows.ApplicationModel.Core;
 using Windows.Data.Xml.Dom;
+using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Notifications;
 using Windows.UI.ViewManagement;
@@ -36,6 +37,7 @@ namespace UWPTeamWork
             TitleBar.ButtonPressedBackgroundColor = Color.FromArgb(160, 0, 0, 0);
             TitleBar.ButtonPressedForegroundColor = Colors.Transparent;
 
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size { Width = 200, Height = 200 });
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
         }
 
@@ -48,31 +50,14 @@ namespace UWPTeamWork
                                "<binding template=\"ToastGeneric\">" +
                                    "<text>Title</text>" +
                                    "<text>Content</text>" +
+                                   "<text> </text>" +
                                    "<image placement=\"appLogoOverride\" src=\"ms-appx:///Assets/Square150x150Logo.scale-200.png\" />" +
                                "</binding>" +
                            "</visual>" +
                     "</toast>";
-            doc.LoadXml(xml);
-            //需要using Windows.Data.Xml.Dom;  
-
-            //需要using Windows.UI.Notifications;  
+            doc.LoadXml(xml); 
             ToastNotification toast = new ToastNotification(doc);
             ToastNotificationManager.CreateToastNotifier().Show(toast);
-        }
-
-        private void Stop_Click(object sender, RoutedEventArgs e)
-        {
-            SlideClock.Pause();
-        }
-
-        private void Resume_Click(object sender, RoutedEventArgs e)
-        {
-            SlideClock.Resume();
-        }
-
-        private void Start_Click(object sender, RoutedEventArgs e)
-        {
-            SlideClock.Start();
         }
     }
 }

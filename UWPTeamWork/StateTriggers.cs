@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 
 namespace UWPTeamWork
@@ -51,7 +53,7 @@ namespace UWPTeamWork
             set { SetValue(BindValueProperty, value); }
         }
         public static readonly DependencyProperty BindValueProperty =
-            DependencyProperty.Register("BindValue", typeof(bool), typeof(BoolTrigger), new PropertyMetadata(false,new PropertyChangedCallback(OnBindValueChanged)));
+            DependencyProperty.Register("BindValue", typeof(bool), typeof(BoolTrigger), new PropertyMetadata(false, new PropertyChangedCallback(OnBindValueChanged)));
         private static void OnBindValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             BoolTrigger b = (BoolTrigger)d;
@@ -59,5 +61,84 @@ namespace UWPTeamWork
         }
     }
 
-    //
+    public class WindowSizeOverTrigger : StateTriggerBase
+    {
+        private bool flag = false;
+        public double MinWindowHeight
+        {
+            get { return (double)GetValue(MinWindowHeightProperty); }
+            set { SetValue(MinWindowHeightProperty, value); }
+        }
+        public static readonly DependencyProperty MinWindowHeightProperty =
+            DependencyProperty.Register("MinWindowHeight", typeof(double), typeof(WindowSizeOverTrigger), new PropertyMetadata(0.0));
+
+        public double MinWidowWidth
+        {
+            get { return (double)GetValue(MinWidowWidthProperty); }
+            set { SetValue(MinWidowWidthProperty, value); }
+        }
+        public static readonly DependencyProperty MinWidowWidthProperty =
+            DependencyProperty.Register("MinWidowWidth", typeof(double), typeof(WindowSizeOverTrigger), new PropertyMetadata(0.0));
+
+        public WindowSizeOverTrigger()
+        {
+            CoreApplication.GetCurrentView().CoreWindow.SizeChanged += CoreWindow_SizeChanged;
+        }
+
+        private void CoreWindow_SizeChanged(CoreWindow sender, WindowSizeChangedEventArgs args)
+        {
+            if ((args.Size.Width > MinWidowWidth && args.Size.Height > MinWindowHeight) && !flag)
+            {
+                Debug.WriteLine("b");
+                SetActive(true);
+                flag = true;
+            }
+            if (args.Size.Width < MinWidowWidth || args.Size.Height < MinWindowHeight && flag)
+            {
+                flag = false;
+                SetActive(false);
+            }
+        }
+    }
+
+    public class WindowSizeLessTrigger : StateTriggerBase
+    {
+        #region
+        private bool flag = false;
+        public double MinWindowHeight
+        {
+            get { return (double)GetValue(MinWindowHeightProperty); }
+            set { SetValue(MinWindowHeightProperty, value); }
+        }
+        public static readonly DependencyProperty MinWindowHeightProperty =
+            DependencyProperty.Register("MinWindowHeight", typeof(double), typeof(WindowSizeLessTrigger), new PropertyMetadata(0.0));
+
+        public double MinWidowWidth
+        {
+            get { return (double)GetValue(MinWidowWidthProperty); }
+            set { SetValue(MinWidowWidthProperty, value); }
+        }
+        public static readonly DependencyProperty MinWidowWidthProperty =
+            DependencyProperty.Register("MinWidowWidth", typeof(double), typeof(WindowSizeLessTrigger), new PropertyMetadata(0.0));
+        #endregion
+        public WindowSizeLessTrigger()
+        {
+            CoreApplication.GetCurrentView().CoreWindow.SizeChanged += CoreWindow_SizeChanged;
+        }
+
+        private void CoreWindow_SizeChanged(CoreWindow sender, WindowSizeChangedEventArgs args)
+        {
+            if (!flag && (args.Size.Width < MinWidowWidth || args.Size.Height < MinWindowHeight))
+            {
+                Debug.WriteLine("a");
+                SetActive(true);
+                flag = true;
+            }
+            else if (flag && (args.Size.Width > MinWidowWidth && args.Size.Height > MinWindowHeight))
+            {
+                flag = false;
+                SetActive(false);
+            }
+        }
+    }
 }

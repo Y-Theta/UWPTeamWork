@@ -15,22 +15,31 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 
-// https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
-
 namespace UWPTeamWork
 {
-    /// <summary>
-    /// 可用于自身或导航至 Frame 内部的空白页。
-    /// </summary>
-    public sealed partial class BlankPage1 : Page
+    public sealed partial class MainPage : Page
     {
-        public BlankPage1()
+        public MainPage()
         {
             var TitleBar = ApplicationView.GetForCurrentView().TitleBar;
-            // button  
             TitleBar.ButtonBackgroundColor = Colors.Transparent;
+            TitleBar.ButtonForegroundColor = Colors.Transparent;
+
+            TitleBar.ButtonHoverBackgroundColor = Color.FromArgb(100, 0, 0, 0);
+            TitleBar.ButtonHoverForegroundColor = Colors.Transparent;
+
+            TitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+            TitleBar.ButtonInactiveForegroundColor = Colors.Transparent;
+
+            TitleBar.ButtonPressedBackgroundColor = Color.FromArgb(160, 0, 0, 0);
+            TitleBar.ButtonPressedForegroundColor = Colors.Transparent;
+
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size { Width = 200, Height = 200 });
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+
             this.InitializeComponent();
         }
+
+ 
     }
 }

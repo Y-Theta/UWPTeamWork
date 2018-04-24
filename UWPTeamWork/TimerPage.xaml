@@ -5,7 +5,7 @@
     xmlns:local="using:UWPTeamWork"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Loaded="Page_Loaded">
+    mc:Ignorable="d" Loaded="Page_Loaded" MinWidth="100">
 
     <Page.Resources>
         <SolidColorBrush x:Key="ClockDaskBg_1" Color="#0aa065"/>
@@ -26,7 +26,7 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="32"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -34,15 +34,12 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <TextBlock x:Name="Title" Text="title" TextAlignment="Center" FontWeight="Light"
+        <TextBlock x:Name="Title" Text="{Binding ElementName=SlideClock,Path=MainSeconds,Converter={StaticResource MinAngConverter}}" TextAlignment="Center" FontWeight="Light"
                    Foreground="{StaticResource TitleBar_Fg}" 
                    FontSize="{StaticResource TitleBarText}" 
-                   Margin="10,0,0,0" Grid.Column="0" />
-        <Viewbox x:Name="ClockLayer"   Grid.RowSpan="2" Grid.ColumnSpan="3" MaxHeight="500" MaxWidth="500">
+                   Margin="10,0,0,0" />
+        <Viewbox x:Name="ClockLayer"   Grid.RowSpan="2" Grid.ColumnSpan="3" MaxHeight="600" MaxWidth="600">
             <local:SlideClock x:Name="SlideClock" Background="{Binding ElementName=RootGrid,Path=Background,Mode=OneWay}" />
         </Viewbox>
-        <Button Grid.Row="1" Grid.ColumnSpan="3" x:Name="Stop" Width="50" Height="50" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="Stop_Click"/>
-        <Button Grid.Row="1" Grid.ColumnSpan="3" x:Name="Resume" Width="50" Height="50" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Resume_Click"/>
-        <Button Grid.Row="1" Grid.ColumnSpan="3" x:Name="Start" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="Start_Click"/>
     </Grid>
 </Page>

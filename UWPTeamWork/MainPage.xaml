@@ -1,0 +1,25 @@
+﻿<Page
+    x:Class="UWPTeamWork.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UWPTeamWork"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    
+    <Page.Resources>
+        <local:NavigateToClockCommand x:Key="NavigateToClock"/>
+    </Page.Resources>
+    
+    <Grid>
+        <Frame x:Name="Container">
+            
+        </Frame>
+        <CommandBar x:Name="MainControl" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" OverflowButtonVisibility="Visible" ClosedDisplayMode="Minimal" IsOpen="False" Style="{StaticResource ControlBarSettingPanel}">
+            <AppBarButton Icon="Clock" Label="Accept" Command="{StaticResource NavigateToClock}" CommandParameter="{Binding ElementName=Container}"/>
+            <AppBarButton Label="Edit"/>
+            <AppBarButton Icon="Pause" Label="Save"/>
+            <AppBarButton Icon="Cancel" Label="Cancel"/>
+        </CommandBar>
+    </Grid>
+</Page>

@@ -49,7 +49,12 @@ namespace UWPTeamWork
             set { SetValue(IsTimerRuningProperty, value); }
         }
         public static readonly DependencyProperty IsTimerRuningProperty =
-            DependencyProperty.Register("IsTimerRuning", typeof(bool), typeof(SlideClock), new PropertyMetadata(false));
+            DependencyProperty.Register("IsTimerRuning", typeof(bool), typeof(SlideClock), new PropertyMetadata(false,new PropertyChangedCallback(OnIsTimerRuningCHanged)));
+
+        private static void OnIsTimerRuningCHanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((SlideClock)d).MinHDieection = (bool)e.NewValue ? false : ((SlideClock)d).MinHDieection;
+        }
         #endregion
 
         #region 指针路径

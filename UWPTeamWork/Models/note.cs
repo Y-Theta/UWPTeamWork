@@ -19,10 +19,25 @@ namespace xBindDataExample.Models
 
     public class NoteManager
     {
+        static List<Note> notes = new List<Note>();
+        static int id;
+        public static void init()
+        {
+            id=0;
+        }
+        public static void add(Note x)
+        {
+            notes.Add(x);
+            id++;
+        }
+        public static int getid()
+        {
+            return id;
+        }
         public static List<Note> GetNotes()
         {
-            var notes = new List<Note>();
-            notes.Add(new Note { NoteID = 1, MyTime = DateTime.Now, MyText = "sadasd", CoverImage = "Assets/timg.jpg" });
+            //var notes = new List<Note>();
+            //notes.Add(new Note { NoteID = 1, MyTime = DateTime.Now, MyText = "sadasd", CoverImage = "Assets/timg.jpg" });
            // notes.Add(new Note { NoteID = 0x3f3f3f3f, MyText="", CoverImage = "Assets/add.jpg" });
 
             return notes;

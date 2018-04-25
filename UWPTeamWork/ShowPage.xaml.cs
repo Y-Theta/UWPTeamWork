@@ -24,7 +24,7 @@ namespace UWPTeamWork
     /// </summary>
     public sealed partial class ShowPage : Page
     {
-        Note note = new Note();
+        Note note;
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -41,6 +41,10 @@ namespace UWPTeamWork
             //ShowBox.Text = note.MyText;
         }
 
-        
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            note.MyText = ShowBox.Text;
+            Frame.Navigate(typeof(NotePage));
+        }
     }
 }

@@ -256,6 +256,6 @@
             <ColumnDefinition Width="200" />
         </Grid.ColumnDefinitions>
         <TextBox Name="ShowBox" AcceptsReturn="True" TextWrapping="Wrap" Grid.Column="1" Grid.Row="1" Style="{StaticResource TextBoxStyle1}" ></TextBox>
-        
+        <AppBarButton Icon="Back" Click="AppBarButton_Click"> </AppBarButton>
     </Grid>
 </Page>

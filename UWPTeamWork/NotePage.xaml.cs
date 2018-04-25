@@ -35,5 +35,16 @@ namespace UWPTeamWork
             Frame.Navigate(typeof(ShowPage),Note);
            
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Note note = new Note{ NoteID = NoteManager.getid(), MyTime = DateTime.Now, MyText = "", CoverImage = "Assets/timg.jpg" } ;
+            NoteManager.add(note);
+            Frame.Navigate(typeof(ShowPage),note);
+        }
+        private void Return_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MainPage));
+        }
     }
 }

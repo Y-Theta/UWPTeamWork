@@ -12,11 +12,11 @@
         <SolidColorBrush x:Key="CommandBarFg" Color="#80ffffff"/>
     </Page.Resources>
     
-    <Grid>
+    <Grid Background="{StaticResource MainThemeColor}">
         <Frame x:Name="Container">
             
         </Frame>
-        <CommandBar x:Name="MainControl" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" OverflowButtonVisibility="Visible" ClosedDisplayMode="Minimal" IsOpen="False" Style="{StaticResource ControlBarSettingPanel}" >
+        <CommandBar x:Name="MainControl" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" OverflowButtonVisibility="Visible" ClosedDisplayMode="Minimal" IsOpen="False" Style="{StaticResource ControlBarSettingPanel}" Foreground="{StaticResource CommandBarFg}">
             <AppBarButton Icon="Clock" Label="Timer" Command="{StaticResource NavigateToClock}" CommandParameter="{Binding ElementName=Container}" Foreground="{StaticResource CommandBarFg}"/>
             <AppBarButton Label="Edit" Foreground="{StaticResource CommandBarFg}"/>
             <AppBarButton Icon="Pause" Label="Save" Foreground="{StaticResource CommandBarFg}"/>

@@ -78,6 +78,7 @@ namespace UWPTeamWork
         }
     }
 
+
     public class WindowSizeOverTrigger : StateTriggerBase
     {
         private bool flag = false;
@@ -117,6 +118,7 @@ namespace UWPTeamWork
         }
     }
 
+
     public class WindowSizeLessTrigger : StateTriggerBase
     {
         #region
@@ -155,5 +157,34 @@ namespace UWPTeamWork
                 SetActive(false);
             }
         }
+    }
+
+
+    public class SlideClockModeTrigger : StateTriggerBase
+    {
+        public TimerMode Mode
+        {
+            get { return (TimerMode)GetValue(modeProperty); }
+            set { SetValue(modeProperty, value); }
+        }
+        public static readonly DependencyProperty modeProperty =
+            DependencyProperty.Register("Mode", typeof(TimerMode), typeof(SlideClockModeTrigger), new PropertyMetadata(TimerMode.Timer,new PropertyChangedCallback(OnModeChanged)));
+
+        private static void OnModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((SlideClockModeTrigger)d).SetActive(((SlideClockModeTrigger)d).Mode.Equals(((SlideClockModeTrigger)d).Reference));
+        }
+
+        public TimerMode Reference
+        {
+            get { return (TimerMode)GetValue(referenceProperty); }
+            set { SetValue(referenceProperty, value); }
+        }
+        public static readonly DependencyProperty referenceProperty =
+            DependencyProperty.Register("Reference", typeof(TimerMode), typeof(SlideClockModeTrigger), new PropertyMetadata(TimerMode.Timer));
+
+
+
+
     }
 }

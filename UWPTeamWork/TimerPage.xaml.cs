@@ -35,10 +35,10 @@ namespace UWPTeamWork
             TitleBar.ButtonInactiveForegroundColor = Colors.Transparent;
 
             TitleBar.ButtonPressedBackgroundColor = Color.FromArgb(160, 0, 0, 0);
-            TitleBar.ButtonPressedForegroundColor = Colors.Transparent;
+            TitleBar.ButtonPressedForegroundColor = Colors.Transparent;           
 
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size { Width = 200, Height = 200 });
-            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;        
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -61,10 +61,10 @@ namespace UWPTeamWork
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (SlideClock.Mode.Equals(SlideClock.TimerMode.Timer))
-                SlideClock.SetMode(SlideClock.TimerMode.StopWatch);
-            else
+            if (SlideClock.Mode.Equals(SlideClock.TimerMode.StopWatch))
                 SlideClock.SetMode(SlideClock.TimerMode.Timer);
+            else
+                SlideClock.SetMode(SlideClock.TimerMode.StopWatch);
 
         }
     }

@@ -43,21 +43,29 @@ namespace UWPTeamWork
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            XmlDocument doc = new XmlDocument();
-            //在模板添加xml要的标题  
-            string xml = "<toast>" +
-                   "<visual>" +
-                               "<binding template=\"ToastGeneric\">" +
-                                   "<text>Title</text>" +
-                                   "<text>Content</text>" +
-                                   "<text> </text>" +
-                                   "<image placement=\"appLogoOverride\" src=\"ms-appx:///Assets/Square150x150Logo.scale-200.png\" />" +
-                               "</binding>" +
-                           "</visual>" +
-                    "</toast>";
-            doc.LoadXml(xml); 
-            ToastNotification toast = new ToastNotification(doc);
-            ToastNotificationManager.CreateToastNotifier().Show(toast);
+            //XmlDocument doc = new XmlDocument();
+            ////在模板添加xml要的标题  
+            //string xml = "<toast>" +
+            //       "<visual>" +
+            //                   "<binding template=\"ToastGeneric\">" +
+            //                       "<text>Title</text>" +
+            //                       "<text>Content</text>" +
+            //                       "<image placement=\"appLogoOverride\" src=\"ms-appx:///Assets/Square150x150Logo.scale-200.png\" />" +
+            //                   "</binding>" +
+            //               "</visual>" +
+            //        "</toast>";
+            //doc.LoadXml(xml); 
+            //ToastNotification toast = new ToastNotification(doc);
+            //ToastNotificationManager.CreateToastNotifier().Show(toast);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (SlideClock.Mode.Equals(SlideClock.TimerMode.Timer))
+                SlideClock.SetMode(SlideClock.TimerMode.StopWatch);
+            else
+                SlideClock.SetMode(SlideClock.TimerMode.Timer);
+
         }
     }
 }

@@ -7,12 +7,21 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
+using static UWPTeamWork.SlideClock;
 
 namespace UWPTeamWork
 {
     //刻度文字控制触发器
     public class TickTextTrigger : StateTriggerBase
     {
+        public TimerMode Mode
+        {
+            get { return (TimerMode)GetValue(ModeProperty); }
+            set { SetValue(ModeProperty, value); }
+        }
+        public static readonly DependencyProperty ModeProperty =
+            DependencyProperty.Register("Mode", typeof(TimerMode), typeof(TickTextTrigger), new PropertyMetadata(TimerMode.Timer));
+
         public int ActiveAngle
         {
             get { return (int)GetValue(ActiveAngleProperty); }
@@ -32,7 +41,15 @@ namespace UWPTeamWork
         private static void TimeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             TickTextTrigger dat = (TickTextTrigger)d;
-            dat.SetActive(Math.Abs((double)e.NewValue - dat.ActiveAngle) < 6);
+            switch (dat.Mode)
+            {
+                case TimerMode.Timer:
+                    dat.SetActive(Math.Abs(360 + (double)e.NewValue - dat.ActiveAngle) < 6);
+                    break;
+                case TimerMode.StopWatch:
+                    dat.SetActive(Math.Abs((double)e.NewValue - dat.ActiveAngle) < 6);
+                    break;
+            }
         }
     }
 
@@ -89,7 +106,6 @@ namespace UWPTeamWork
         {
             if ((args.Size.Width > MinWidowWidth && args.Size.Height > MinWindowHeight) && !flag)
             {
-                Debug.WriteLine("b");
                 SetActive(true);
                 flag = true;
             }
@@ -130,7 +146,6 @@ namespace UWPTeamWork
         {
             if (!flag && (args.Size.Width < MinWidowWidth || args.Size.Height < MinWindowHeight))
             {
-                Debug.WriteLine("a");
                 SetActive(true);
                 flag = true;
             }

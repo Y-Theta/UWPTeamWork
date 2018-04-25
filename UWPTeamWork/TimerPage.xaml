@@ -35,11 +35,10 @@
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         <TextBlock x:Name="Title" Text="{Binding ElementName=SlideClock,Path=MainSeconds,Converter={StaticResource MinAngConverter}}" TextAlignment="Center" FontWeight="Light"
-                   Foreground="{StaticResource TitleBar_Fg}" 
-                   FontSize="{StaticResource TitleBarText}" 
-                   Margin="10,0,0,0" />
+                   VerticalAlignment="Center" Foreground="{StaticResource TitleBar_Fg}" FontSize="{StaticResource TitleBarText}" Margin="10,0,0,0" />
         <Viewbox x:Name="ClockLayer"   Grid.RowSpan="2" Grid.ColumnSpan="3" MaxHeight="600" MaxWidth="600">
             <local:SlideClock x:Name="SlideClock" Background="{Binding ElementName=RootGrid,Path=Background,Mode=OneWay}" />
         </Viewbox>
+        <Button Width="50" Height="50" Grid.Row="1" Background="#a0000000" Click="Button_Click" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
     </Grid>
 </Page>

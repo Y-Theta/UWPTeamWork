@@ -14,13 +14,28 @@ namespace UWPTeamWork
 {
     public sealed class SlideClock : Control
     {
+        public enum TimerMode
+        {
+            Timer,
+            StopWatch
+        }
         public Timer Sec_Timer;
         public Timer MainTimer;
+        public Timer StopwatchTimer;
 
         private double Pointliner;
-        private Point lastpos;
 
         //属性
+        #region 计时模式
+        public TimerMode Mode
+        {
+            get { return (TimerMode)GetValue(ModeProperty); }
+            set { SetValue(ModeProperty, value); }
+        }
+        public static readonly DependencyProperty ModeProperty =
+            DependencyProperty.Register("Mode", typeof(TimerMode), typeof(SlideClock), new PropertyMetadata(TimerMode.Timer));
+        #endregion
+
         #region 是否有焦点
         public bool Focused
         {
@@ -106,17 +121,66 @@ namespace UWPTeamWork
             DependencyProperty.Register("SecondsAng", typeof(double), typeof(SlideClock), new PropertyMetadata(0.0, new PropertyChangedCallback(OnSecondsChanged)));
         private static void OnSecondsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if((double)e.NewValue > 360)
+            SlideClock k = (SlideClock)d;
+            if ((double)e.NewValue < -360 || (double)e.NewValue > 360)
             {
-                SlideClock k = (SlideClock)d;
                 k.SecondsAng = 0;
             }
         }
         #endregion
 
-        protected override void OnApplyTemplate()
+        #region 时间/ms
+        public int MillionSec
         {
-            base.OnApplyTemplate();
+            get { return (int)GetValue(MillionSecProperty); }
+            set { SetValue(MillionSecProperty, value); }
+        }
+        public static readonly DependencyProperty MillionSecProperty =
+            DependencyProperty.Register("MillionSec", typeof(int), typeof(SlideClock), new PropertyMetadata(0));
+        #endregion
+
+
+        #region 公共方法
+        public void SetMode(TimerMode mode)
+        {
+            Mode = mode;
+            switch (mode)
+            {
+                case TimerMode.Timer:
+                    SwitchToTimer(true);
+                    break;
+                case TimerMode.StopWatch:
+                    VisualStateManager.GoToState(this, "SwitchtoStopwatch", false);
+                    SwitchToTimer(false);
+                    break;
+            }
+        }
+
+        public void Reset()
+        {
+            
+        }
+
+        public void CatchStop()
+        {
+
+        }
+
+        public void StopwatchStart()
+        {
+            IsTimerRuning = true;
+            MainTimer.Start();
+            StopwatchTimer.Start();
+            VisualStateManager.GoToState(this, "Handle_Show", false);
+        }
+
+        public void StopWatchPause()
+        {
+            IsTimerRuning = false;
+            MainTimer.Stop();
+            StopwatchTimer.Stop();
+            SecondsAng = MainSeconds % 60 * 6 - 360;
+            VisualStateManager.GoToState(this, "Handle_Hide", false);
         }
 
         public void Pause()
@@ -124,7 +188,7 @@ namespace UWPTeamWork
             IsTimerRuning = false;
             Sec_Timer.Stop();
             MainTimer.Stop();
-            SecondsAng = 360 - MainSeconds % 60 * 6;
+            SecondsAng = MainSeconds % 60 * 6 - 360;
             VisualStateManager.GoToState(this, "Handle_Hide", false);
         }
 
@@ -137,6 +201,7 @@ namespace UWPTeamWork
             Sec_Timer.Start();
             VisualStateManager.GoToState(this, "Handle_Show", false);
         }
+        #endregion
 
         private void SetIconPathByAngle(double a)/*角度计算*/
         {
@@ -152,16 +217,21 @@ namespace UWPTeamWork
         }
 
         private double OriginAngle = 0.0;
-        //private bool firstRingF = true;
         private double LastAngle = 0;
 
         protected override void OnDoubleTapped(DoubleTappedRoutedEventArgs e)
         {
-            if (IsTimerRuning)
+            switch (Mode)
             {
-                Pause();
+                case TimerMode.Timer:
+                    if (IsTimerRuning) Pause();
+                    else Start();
+                    break;
+                case TimerMode.StopWatch:
+                    if (IsTimerRuning) StopWatchPause();
+                    else StopwatchStart();
+                    break;
             }
-            else { Start(); }
             base.OnDoubleTapped(e);
         }
 
@@ -238,14 +308,21 @@ namespace UWPTeamWork
 
         #region 计时器事件
 
-        private async void Sec_Timer_Tick1(object sender, ElapsedEventArgs e)
+        private async void MainTimer_Tick(object sender, ElapsedEventArgs e)
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                MainSeconds--;
-                MinutesAng -= 0.1;
+                switch (Mode)
+                {
+                    case TimerMode.Timer:
+                        MainSeconds--;
+                        MinutesAng -= 0.1;break;
+                    case TimerMode.StopWatch:
+                        MainSeconds++;
+                        MinutesAng += 0.1;break;
+                }
                 SetIconPathByAngle(MinutesAng);
-                Debug.WriteLine(SecondsAng + "  " + MainSeconds);
+               // Debug.WriteLine(SecondsAng + "  " + MainSeconds);
             });
         }
 
@@ -253,14 +330,43 @@ namespace UWPTeamWork
         {
             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                SecondsAng += 0.24;
+                SecondsAng -= 0.24;
+            });
+        }
+
+        private async void StopwatchTimer_Tick(object sender, object e)
+        {
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                SecondsAng += 0.06;
+                MillionSec += 10;
             });
         }
         #endregion
 
+        private void SwitchToTimer(bool t)
+        {
+            if (t)
+            {
+                StopwatchTimer.Dispose();
+                Sec_Timer = new Timer { Interval = 40 };
+                Sec_Timer.Elapsed += Sec_Timer_Tick;
+            }
+            else
+            {
+                Sec_Timer.Dispose();
+                StopwatchTimer = new Timer { Interval = 10 };
+                StopwatchTimer.Elapsed += StopwatchTimer_Tick;
+            }
+        }
+
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            Sec_Timer = new Timer { Interval = 40 };
+            Sec_Timer.Elapsed += Sec_Timer_Tick;
 
+            MainTimer = new Timer { Interval = 1000 };
+            MainTimer.Elapsed += MainTimer_Tick;
         }
 
         public SlideClock()
@@ -268,14 +374,7 @@ namespace UWPTeamWork
             this.DefaultStyleKey = typeof(SlideClock);
             this.ManipulationMode = ManipulationModes.All;
             this.Loaded += OnLoaded;
-            lastpos = new Point(200, 10);
 
-            Sec_Timer = new Timer { Interval = 40 };
-            Sec_Timer.Elapsed += Sec_Timer_Tick;
-
-            MainTimer = new Timer { Interval = 1000 };
-            MainTimer.Elapsed += Sec_Timer_Tick1;
         }
-
     }
 }

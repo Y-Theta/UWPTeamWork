@@ -9,17 +9,18 @@
     
     <Page.Resources>
         <local:NavigateToClockCommand x:Key="NavigateToClock"/>
+        <SolidColorBrush x:Key="CommandBarFg" Color="#80ffffff"/>
     </Page.Resources>
     
     <Grid>
         <Frame x:Name="Container">
             
         </Frame>
-        <CommandBar x:Name="MainControl" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" OverflowButtonVisibility="Visible" ClosedDisplayMode="Minimal" IsOpen="False" Style="{StaticResource ControlBarSettingPanel}">
-            <AppBarButton Icon="Clock" Label="Accept" Command="{StaticResource NavigateToClock}" CommandParameter="{Binding ElementName=Container}"/>
-            <AppBarButton Label="Edit"/>
-            <AppBarButton Icon="Pause" Label="Save"/>
-            <AppBarButton Icon="Cancel" Label="Cancel"/>
+        <CommandBar x:Name="MainControl" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" OverflowButtonVisibility="Visible" ClosedDisplayMode="Minimal" IsOpen="False" Style="{StaticResource ControlBarSettingPanel}" >
+            <AppBarButton Icon="Clock" Label="Timer" Command="{StaticResource NavigateToClock}" CommandParameter="{Binding ElementName=Container}" Foreground="{StaticResource CommandBarFg}"/>
+            <AppBarButton Label="Edit" Foreground="{StaticResource CommandBarFg}"/>
+            <AppBarButton Icon="Pause" Label="Save" Foreground="{StaticResource CommandBarFg}"/>
+            <AppBarButton Icon="Cancel" Label="Cancel" Foreground="{StaticResource CommandBarFg}"/>
         </CommandBar>
     </Grid>
 </Page>

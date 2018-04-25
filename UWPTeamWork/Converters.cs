@@ -27,7 +27,12 @@ namespace UWPTeamWork
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return String.Format("{0:D}", (int)value / 60);
+            string s;
+            if((int)value / 60 == 0)
+                s = String.Format(".{0:D}", (int)value % 60);
+            else
+                s = String.Format("{0:D}", (int)value / 60);
+            return s;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

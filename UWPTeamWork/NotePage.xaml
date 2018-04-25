@@ -1,0 +1,40 @@
+﻿<Page
+    x:Class="UWPTeamWork.NotePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UWPTeamWork"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="using:xBindDataExample.Models"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <DataTemplate x:DataType="data:Note" x:Key="NoteDataTemplate">
+            <StackPanel HorizontalAlignment="Center">
+
+                <Image Width="150" Source="{x:Bind CoverImage}" />
+                <TextBlock FontSize="16" Text="{x:Bind MyTime}" HorizontalAlignment="Center" />
+                <RadioButton 
+                         GroupName="MyGroup" 
+                         FontSize="28" Opacity="0.8" 
+                         HorizontalAlignment="Center"
+                         />
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="100" />
+        </Grid.RowDefinitions>
+        <GridView ItemsSource="{x:Bind Notes}" 
+                  IsItemClickEnabled="True" 
+                  ItemClick="GridView_ItemClick"
+                  ItemTemplate="{StaticResource NoteDataTemplate}">
+        </GridView>
+        <Button Grid.Row="1" Background="White">
+            <Image Source="Assets/add.jpg">
+            </Image>
+        </Button>
+    </Grid>
+</Page>

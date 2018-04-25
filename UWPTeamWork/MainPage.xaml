@@ -13,6 +13,7 @@
     </Page.Resources>
     
     <Grid Background="{StaticResource MainThemeColor}">
+        <Button Content="click"  Click="Button_Click"></Button>
         <Frame x:Name="Container">
             
         </Frame>

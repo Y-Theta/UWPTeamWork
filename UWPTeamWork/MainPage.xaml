@@ -14,25 +14,10 @@
         <SolidColorBrush x:Key="CommandBarFg" Color="#80ffffff"/>
         
     </Page.Resources>
-
-    <Grid x:Name="RootGrid" Background="{ThemeResource MainThemeColor}">
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="LayoutStyle">
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="768"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="32"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Frame x:Name="Container" Grid.RowSpan="2">
-
+    
+    <Grid Background="{StaticResource MainThemeColor}">
+        <Frame x:Name="Container">
+            
         </Frame>
         <Grid x:Name="TitleBarBack" Grid.Row="0" HorizontalAlignment="Stretch" Background="#01ffffff"/>
         <local:OverallStateBar x:Name="OverallStateBar" />

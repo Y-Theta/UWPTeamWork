@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using xBindDataExample.Models;
 
 namespace UWPTeamWork
 {
@@ -28,6 +29,7 @@ namespace UWPTeamWork
 
         public MainPage()
         {
+            NoteManager.init();
             var TitleBar = ApplicationView.GetForCurrentView().TitleBar;
             TitleBar.ButtonBackgroundColor = Colors.Transparent;
             TitleBar.ButtonForegroundColor = Colors.Transparent;
@@ -49,15 +51,6 @@ namespace UWPTeamWork
             this.Loaded += MainPage_Loaded;
         }
 
-        private void MainPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            WindowHandle = GetForegroundWindow();
-            Window.Current.SetTitleBar(TitleBarBack);
-        }
-
-        private async void AppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay);
-        }
+ 
     }
 }

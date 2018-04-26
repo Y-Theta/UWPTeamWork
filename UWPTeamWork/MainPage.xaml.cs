@@ -51,6 +51,10 @@ namespace UWPTeamWork
             this.Loaded += MainPage_Loaded;
         }
 
- 
+
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

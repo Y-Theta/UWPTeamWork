@@ -1,0 +1,45 @@
+﻿<Page
+    x:Class="UWPTeamWork.TaskManage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UWPTeamWork"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource MainThemeColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <TextBlock FontSize="48" FontFamily="black"
+                   Grid.Column="0" Grid.ColumnSpan="2"
+                   Text="TaskManage" HorizontalTextAlignment="Center"
+                   Margin="10"></TextBlock>
+
+        <ListView Name="TaskView" 
+                  IsItemClickEnabled="True"
+                  IsSwipeEnabled="False"
+                  CanDragItems="False"
+                  SelectionMode="Single"
+                  ItemClick="TaskView_OnItemClick"
+                  Grid.Row="1" Background="{ThemeResource SystemControlAcrylicElementBrush}">
+
+        </ListView>
+
+        <StackPanel Orientation="Horizontal" 
+                    HorizontalAlignment="Right"
+                    Grid.Row="2" Grid.Column="1">
+            <Button Margin="5" Click="ButtonBase_OnClick">
+                <TextBlock FontFamily="Segoe MDL2 Assets"
+                           Text="&#57609;" FontSize="36"></TextBlock>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Page>

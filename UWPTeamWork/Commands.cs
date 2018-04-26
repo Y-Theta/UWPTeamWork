@@ -19,10 +19,39 @@ namespace UWPTeamWork
         {
             return true;
         }
-
         public void Execute(object parameter)
         {
             ((Frame)parameter).Navigate(typeof(TimerPage));
+        }
+    }
+
+    public class SwitchToStopwatchCommand /* 切换 */ : ICommand
+    {
+        public event EventHandler CanExecuteChanged;
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+        public void Execute(object parameter)
+        {
+            SlideClock s = (SlideClock)parameter;
+            s.SetMode(SlideClock.TimerMode.StopWatch);
+        }
+    }
+
+    public class SwitchToTimerCommand /* 切换 */ : ICommand
+    {
+        public event EventHandler CanExecuteChanged;
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+        public void Execute(object parameter)
+        {
+            SlideClock s = (SlideClock)parameter;
+            s.SetMode(SlideClock.TimerMode.Timer);
         }
     }
 
@@ -34,7 +63,6 @@ namespace UWPTeamWork
         {
             return true;
         }
-
         public void Execute(object parameter)
         {
             ((OverallStateBar)parameter).AdditionButtonVisiblity =

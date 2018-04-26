@@ -4,29 +4,25 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:UWPTeamWork"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     
     mc:Ignorable="d" >
     
     <Page.Resources>
         <local:NavigateToClockCommand x:Key="NavigateToClock"/>
         <SolidColorBrush x:Key="CommandBarFg" Color="#80ffffff"/>
-        
     </Page.Resources>
-    
+
     <Grid Background="{StaticResource MainThemeColor}">
-        <Frame x:Name="Container">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Frame x:Name="Container" Grid.RowSpan="2">
             
         </Frame>
         <Grid x:Name="TitleBarBack" Grid.Row="0" HorizontalAlignment="Stretch" Background="#01ffffff"/>
-        <local:OverallStateBar x:Name="OverallStateBar" />
-        <CommandBar Grid.Row="1" x:Name="MainControl" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" OverflowButtonVisibility="Visible" ClosedDisplayMode="Minimal" IsOpen="False" Style="{StaticResource ControlBarSettingPanel}" Foreground="{StaticResource CommandBarFg}">
-            <AppBarButton Icon="Clock" Label="Timer" Command="{StaticResource NavigateToClock}" CommandParameter="{Binding ElementName=Container}" Foreground="{StaticResource CommandBarFg}"/>
-            <AppBarButton Label="Edit" Foreground="{StaticResource CommandBarFg}" Click="AppBarButton_Click"/>
-            <AppBarButton Icon="Pause" Label="Save" Foreground="{StaticResource CommandBarFg}"/>
-            <AppBarButton Icon="Cancel" Label="Cancel" Foreground="{StaticResource CommandBarFg}"/>
-        </CommandBar>
+        <local:OverallStateBar x:Name="OverallStateBar" Grid.Row="0" CommandParameter="{Binding ElementName=Container}"/>
     </Grid>
 
 </Page>

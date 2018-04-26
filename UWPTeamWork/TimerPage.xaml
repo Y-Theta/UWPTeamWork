@@ -6,11 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Loaded="Page_Loaded" MinWidth="100">
-
-    
     <Page.Resources>
-        <SolidColorBrush x:Key="TitleBar_Fg" Color="#ffffff"/>
-        <x:Double x:Key="TitleBarText">16</x:Double>
+        <local:SwitchToStopwatchCommand x:Key="SwitchToStopwatch"/>
+        <local:SwitchToTimerCommand x:Key="SwitchToTimer"/>
     </Page.Resources>
 
     <Grid x:Name="RootGrid" Background="{StaticResource MainThemeColor}">
@@ -36,7 +34,17 @@
         <Viewbox x:Name="ClockLayer"   Grid.RowSpan="2" Grid.ColumnSpan="3" MaxHeight="600" MaxWidth="600">
             <local:SlideClock x:Name="SlideClock" Background="{Binding ElementName=RootGrid,Path=Background,Mode=OneWay}" />
         </Viewbox>
-        <Button Width="50" Height="50" Background="#a0000000" Click="Button_Click" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-        
+        <CommandBar Grid.Row="1" Grid.ColumnSpan="3" x:Name="MainControl" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" OverflowButtonVisibility="Visible" ClosedDisplayMode="Minimal" IsOpen="False" Style="{StaticResource ControlBarSettingPanel}" Foreground="{ThemeResource ClockdeskBg_L2}">
+            <AppBarButton Command="{StaticResource SwitchToStopwatch}" CommandParameter="{Binding ElementName=SlideClock}">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="&#xE916;" Foreground="{ThemeResource ClockdeskBg_L2}"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton Command="{StaticResource SwitchToTimer}" CommandParameter="{Binding ElementName=SlideClock}">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="&#xE81C;" Foreground="{ThemeResource ClockdeskBg_L2}"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+        </CommandBar>
     </Grid>
 </Page>

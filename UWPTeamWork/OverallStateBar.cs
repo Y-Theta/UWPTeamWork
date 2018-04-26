@@ -31,8 +31,17 @@ namespace UWPTeamWork
                 VisualStateManager.GoToState((OverallStateBar)d, "AdditionButtons_Hide", false);
             else
                 VisualStateManager.GoToState((OverallStateBar)d, "AdditionButtons_Show", false);
-
         }
+        #endregion
+
+        #region 命令参数
+        public object CommandParameter
+        {
+            get { return (object)GetValue(CommandParameterProperty); }
+            set { SetValue(CommandParameterProperty, value); }
+        }
+        public static readonly DependencyProperty CommandParameterProperty =
+            DependencyProperty.Register("CommandParameter", typeof(object), typeof(OverallStateBar), new PropertyMetadata(null));
         #endregion
 
         public OverallStateBar()

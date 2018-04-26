@@ -9,6 +9,7 @@
     <local:MutexVisConverter x:Key="MutexVisConverter"/>
 
     <local:ShowAdditionsCommand x:Key="ShowAdditionsCommand"/>
+    <local:NavigateToClockCommand x:Key="NavigateToClockCommand"/>
     <!--Styles-->
     <!--SliderClock-->
     <Style TargetType="local:SlideClock" >
@@ -684,7 +685,27 @@
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="AdditionButtons_Hide">
-                                    
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Timer" Storyboard.TargetProperty="Opacity">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Stopwatch" Storyboard.TargetProperty="Opacity">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="1"/>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Nnte" Storyboard.TargetProperty="Opacity">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1.2" Value="1"/>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1.6" Value="0"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Settings" Storyboard.TargetProperty="Opacity">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:1.8" Value="1"/>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:2.2" Value="0"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="AdditionButtons" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:2.2" Value="Collapsed"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimation Storyboard.TargetName="AdditionButtons_TranslateTransform" Storyboard.TargetProperty="X" To="-144" Duration="0:0:2.2"/>
+                                    </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
@@ -693,7 +714,7 @@
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <ToggleButton x:Name="MenuButton" Width="40" VerticalAlignment="Stretch" Content="&#xEC49;" Style="{StaticResource IconToggleButton}" Command="{StaticResource ShowAdditionsCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                        <ToggleButton x:Name="MenuButton" Width="40" VerticalAlignment="Stretch" Content="&#xE713;" Style="{StaticResource IconToggleButton}" Command="{StaticResource ShowAdditionsCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                         <Grid x:Name="AdditionButtons" Grid.Column="1" Visibility="Collapsed" >
                             <Grid.RenderTransform>
                                 <TranslateTransform x:Name="AdditionButtons_TranslateTransform" X="-144"/>
@@ -704,13 +725,11 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="Timer" Content="&#xEC49;" Grid.Column="0" Style="{StaticResource IconButton}" Opacity="0" Width="{StaticResource OverallStateBarButtonSize}" Height="{StaticResource OverallStateBarButtonSize}" Foreground="{ThemeResource ClockdeskBg_L2}"/>
-                            <Button x:Name="Stopwatch" Content="&#xEC49;" Grid.Column="1" Style="{StaticResource IconButton}" Opacity="0"
-                                    Width="{StaticResource OverallStateBarButtonSize}" Height="{StaticResource OverallStateBarButtonSize}" Foreground="{ThemeResource ClockdeskBg_L2}" />
-                            <Button x:Name="Nnte" Content="&#xEC49;" Grid.Column="2" Style="{StaticResource IconButton}" Opacity="0" 
-                                    Width="{StaticResource OverallStateBarButtonSize}" Height="{StaticResource OverallStateBarButtonSize}"  Foreground="{ThemeResource ClockdeskBg_L2}"/>
-                            <Button x:Name="Settings" Content="&#xEC49;" Grid.Column="3" Style="{StaticResource IconButton}" Opacity="0" 
-                                    Width="{StaticResource OverallStateBarButtonSize}" Height="{StaticResource OverallStateBarButtonSize}" Foreground="{ThemeResource ClockdeskBg_L2}"/>
+                            <Button x:Name="Timer" Content="&#xE81C;" Grid.Column="0" Style="{StaticResource IconButton}" Opacity="0" Foreground="{ThemeResource ClockdeskBg_L2}" CommandParameter="{TemplateBinding CommandParameter}" Command="{StaticResource NavigateToClockCommand}"/>
+                            <Button x:Name="Stopwatch" Content="&#xE916;" Grid.Column="1" Style="{StaticResource IconButton}" Opacity="0"
+                                    Foreground="{ThemeResource ClockdeskBg_L2}" CommandParameter="{TemplateBinding CommandParameter}"/>
+                            <Button x:Name="Nnte" Content="&#xE70B;" Grid.Column="2" Style="{StaticResource IconButton}" Opacity="0"  Foreground="{ThemeResource ClockdeskBg_L2}" CommandParameter="{TemplateBinding CommandParameter}"/>
+                            <Button x:Name="Settings" Content="&#xE90F;" Grid.Column="3" Style="{StaticResource IconButton}" Opacity="0"  Foreground="{ThemeResource ClockdeskBg_L2}" CommandParameter="{TemplateBinding CommandParameter}"/>
                         </Grid>
                         <Grid Grid.Column="1" IsHitTestVisible="False">
                             

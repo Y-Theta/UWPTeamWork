@@ -22,10 +22,7 @@ using xBindDataExample.Models;
 namespace UWPTeamWork
 {
     public sealed partial class MainPage : Page
-    { 
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        private static extern IntPtr GetForegroundWindow();
-        private IntPtr WindowHandle;
+    {
 
         public MainPage()
         {
@@ -45,16 +42,14 @@ namespace UWPTeamWork
 
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size { Width = 200, Height = 200 });
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-            
 
             this.InitializeComponent();
             this.Loaded += MainPage_Loaded;
         }
 
-
-        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            Window.Current.SetTitleBar(TitleBarBack);
         }
     }
 }

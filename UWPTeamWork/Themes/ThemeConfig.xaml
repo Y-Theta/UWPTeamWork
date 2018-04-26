@@ -3,30 +3,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:UWPTeamWork">
     <ResourceDictionary.ThemeDictionaries>
-        <ResourceDictionary x:Key="Orign">
-            <SolidColorBrush x:Key="MainThemeColor" Color="#68cc93"/>
-            <SolidColorBrush x:Key="MainThemeColorD1" Color="#629e82"/>
-            <SolidColorBrush x:Key="MainThemeColorD2" Color="#658073"/>
-            <SolidColorBrush x:Key="MainThemeColorB1" Color="#93e87d"/>
-            <SolidColorBrush x:Key="MainThemeColorB2" Color="#2ADE87"/>
-            <SolidColorBrush x:Key="DarkMask_C0" Color="#C0000000"/>
-            <SolidColorBrush x:Key="DarkMask_A0" Color="#A0000000"/>
-            <SolidColorBrush x:Key="DarkMask_80" Color="#80000000"/>
-            <SolidColorBrush x:Key="DarkMask_40" Color="#40000000"/>
-            <SolidColorBrush x:Key="BrightMask_C0" Color="#C0FFFFFF"/>
-            <SolidColorBrush x:Key="BrightMask_A0" Color="#A0FFFFFF"/>
-            <SolidColorBrush x:Key="BrightMask_80" Color="#80FFFFFF"/>
-            <SolidColorBrush x:Key="BrightMask_40" Color="#40FFFFFF"/>
-            <SolidColorBrush x:Key="MinHButtonForeGround" Color="#e0ffffff"/>
-            <SolidColorBrush x:Key="ClockdeskBg_L2" Color="#80ffffff"/>
-            <SolidColorBrush x:Key="ClockdeskBg_L3" Color="#30ffffff"/>
-        </ResourceDictionary>
         <ResourceDictionary x:Key="Light">
-            <SolidColorBrush x:Key="MainThemeColor" Color="#658073"/>
-            <SolidColorBrush x:Key="MainThemeColorD1" Color="#629e82"/>
-            <SolidColorBrush x:Key="MainThemeColorD2" Color="#658073"/>
-            <SolidColorBrush x:Key="MainThemeColorB1" Color="#93e87d"/>
-            <SolidColorBrush x:Key="MainThemeColorB2" Color="#2ADE87"/>
+            <SolidColorBrush x:Key="MainThemeColor" Color="#42A881"/>
+            <SolidColorBrush x:Key="MainThemeColorD1" Color="#39906f"/>
+            <SolidColorBrush x:Key="MainThemeColorD2" Color="#256e52"/>
+            <SolidColorBrush x:Key="MainThemeColorB1" Color="#4bc798"/>
+            <SolidColorBrush x:Key="MainThemeColorB2" Color="#3ccfae"/>
             <SolidColorBrush x:Key="DarkMask_C0" Color="#C0000000"/>
             <SolidColorBrush x:Key="DarkMask_A0" Color="#A0000000"/>
             <SolidColorBrush x:Key="DarkMask_80" Color="#80000000"/>
@@ -38,6 +20,7 @@
             <SolidColorBrush x:Key="MinHButtonForeGround" Color="#e0ffffff"/>
             <SolidColorBrush x:Key="ClockdeskBg_L2" Color="#80ffffff"/>
             <SolidColorBrush x:Key="ClockdeskBg_L3" Color="#30ffffff"/>
+            <SolidColorBrush x:Key="TitleBar_Fg" Color="#ffffff"/>
         </ResourceDictionary>
         <ResourceDictionary x:Key="Dark">
             <SolidColorBrush x:Key="MainThemeColor" Color="#658073"/>
@@ -56,6 +39,8 @@
             <SolidColorBrush x:Key="MinHButtonForeGround" Color="#e0ffffff"/>
             <SolidColorBrush x:Key="ClockdeskBg_L2" Color="#80ffffff"/>
             <SolidColorBrush x:Key="ClockdeskBg_L3" Color="#30ffffff"/>
+            <SolidColorBrush x:Key="TitleBar_Fg" Color="#ffffff"/>
+
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 
@@ -63,5 +48,6 @@
     <x:Double x:Key="OverallStateBarButtonSize">32</x:Double>
     <x:Double x:Key="TextTickSize">24</x:Double>
     <x:Double x:Key="ClockCircleThickness">4</x:Double>
+    <x:Double x:Key="TitleBarText">16</x:Double>
 
 </ResourceDictionary>

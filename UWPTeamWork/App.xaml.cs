@@ -25,7 +25,6 @@ namespace UWPTeamWork
     /// </summary>
     sealed partial class App : Application
     {
-        static int id;
         /// <summary>
         /// 初始化单一实例应用程序对象。这是执行的创作代码的第一行，
         /// 已执行，逻辑上等同于 main() 或 WinMain()。
@@ -62,8 +61,6 @@ namespace UWPTeamWork
 
                 // 将框架放在当前窗口中
                 Window.Current.Content = rootFrame;
-                Window.Current.Closed += Current_Closed;
-                id = ApplicationView.GetForCurrentView().Id;
             }
 
             if (e.PrelaunchActivated == false)
@@ -77,13 +74,7 @@ namespace UWPTeamWork
                 }
                 // 确保当前窗口处于活动状态
                 Window.Current.Activate();
-                
             }
-        }
-
-        private void Current_Closed(object sender, Windows.UI.Core.CoreWindowEventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
 

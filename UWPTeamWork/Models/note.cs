@@ -15,6 +15,7 @@ namespace xBindDataExample.Models
         public string MyText { get; set; }
         public string CoverImage { get; set; }
         public int NoteID { get; set; }
+        public string summary { get; set; }
     }
 
     public class NoteManager
@@ -41,6 +42,17 @@ namespace xBindDataExample.Models
            // notes.Add(new Note { NoteID = 0x3f3f3f3f, MyText="", CoverImage = "Assets/add.jpg" });
 
             return notes;
+        }
+
+        public static void DeleteNote(Note note)
+        {
+            for(int i=0; i < notes.Count; i++)
+            {
+                if(notes[i].NoteID == note.NoteID)
+                {
+                    notes.Remove(notes[i]);
+                }
+            }
         }
     }
 }

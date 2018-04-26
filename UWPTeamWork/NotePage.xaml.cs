@@ -24,27 +24,64 @@ namespace UWPTeamWork
     public sealed partial class NotePage : Page
     {
         private List<Note> Notes;
+        //private HashSet<Note> set; 
+
         public NotePage()
         {
             this.InitializeComponent();
             Notes = NoteManager.GetNotes();
         }
-        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
+        private void GridView_ItemClick(object sender, ItemClickEventArgs ee)
         {
-            var Note = (Note)e.ClickedItem;
-            Frame.Navigate(typeof(ShowPage),Note);
-           
+            /*try
+            {
+                var box = (CheckBox)ee.ClickedItem;
+                var myNote = (Note)ee.ClickedItem;
+                if (box.IsChecked == true)
+                {
+                    set.Add(myNote);
+                }
+                else
+                {
+                    set.Remove(myNote);
+                }
+                return;
+            }
+            catch (Exception e)
+            {
+                var myNote = (Note)ee.ClickedItem;
+                Frame.Navigate(typeof(ShowPage), myNote);
+            }*/
+            var myNote = (Note)ee.ClickedItem;
+            Frame.Navigate(typeof(ShowPage), myNote);
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Note note = new Note{ NoteID = NoteManager.getid(), MyTime = DateTime.Now, MyText = "", CoverImage = "Assets/timg.jpg" } ;
+            Note note = new Note{ summary = "Summary",NoteID = NoteManager.getid(), MyTime = DateTime.Now, MyText = "", CoverImage = "Assets/timg.jpg" } ;
             NoteManager.add(note);
+            Notes = NoteManager.GetNotes();
+           // Frame.Navigate(typeof(NotePage));
             Frame.Navigate(typeof(ShowPage),note);
         }
         private void Return_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(MainPage));
         }
+
+        /*private void delete_button(object sender, RoutedEventArgs e)
+        {
+            /*foreach (Note de in set)
+            {
+                NoteManager.DeleteNote(de);
+            }
+            set.Clear();
+            for(int i = 0; i < Notes.Count; i++)
+            {
+                myGridView.Selec
+            }
+            Frame.Navigate(typeof(NotePage));
+        }*/
     }
 }

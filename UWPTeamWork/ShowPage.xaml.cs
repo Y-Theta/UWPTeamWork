@@ -44,6 +44,20 @@ namespace UWPTeamWork
         private void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
             note.MyText = ShowBox.Text;
+            note.summary = Title.Text;
+            Frame.Navigate(typeof(NotePage));
+        }
+
+        private void MySlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            double x = MySlider.Value;
+            int y = (int)(x / 10.0) * 4 + 16;
+            ShowBox.FontSize = y;
+        }
+
+        private void Delete_Button(object sender, RoutedEventArgs e)
+        {
+            NoteManager.DeleteNote(note);
             Frame.Navigate(typeof(NotePage));
         }
     }

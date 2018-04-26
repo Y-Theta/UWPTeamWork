@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Timers;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
@@ -17,12 +19,13 @@ namespace UWPTeamWork
         {
             Timer,
             StopWatch,
-            Unknown
+            Unknown//初始状态，不然触发器会触发动画
         }
         public Timer Sec_Timer;
         public Timer MainTimer;
 
         private double Pointliner;
+        private int Stoppoints = 0;
 
         //属性
         #region 计时模式
@@ -81,6 +84,17 @@ namespace UWPTeamWork
              DependencyProperty.Register("MinPath", typeof(String), typeof(SlideClock), new PropertyMetadata(""));
         #endregion
 
+        #region 秒表停点
+        public ObservableCollection<StopNode> StopList
+        {
+            get { return (ObservableCollection<StopNode>)GetValue(StopListProperty); }
+            set { SetValue(StopListProperty, value); }
+        }
+        public static readonly DependencyProperty StopListProperty =
+            DependencyProperty.Register("StopList", typeof(ObservableCollection<StopNode>), typeof(SlideClock), 
+                new PropertyMetadata(new ObservableCollection<StopNode>()));
+        #endregion
+
         #region 主计时 /s 
         public int MainSeconds
         {
@@ -92,8 +106,13 @@ namespace UWPTeamWork
                 new PropertyChangedCallback(OnMainSecondsCHanged)));
         private static void OnMainSecondsCHanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if ((int)e.NewValue == 0)
-                ((SlideClock)d).Pause();
+            SlideClock s = (SlideClock)d;
+            if ((int)e.NewValue == 0 && s.IsTimerRuning)
+            {
+                s.Pause();
+                //发出通知
+            }
+                
         }
         #endregion
 
@@ -128,7 +147,7 @@ namespace UWPTeamWork
         }
         #endregion
 
-        #region 时间/100ms
+        #region 时间/40ms
         public int HMsec
         {
             get { return (int)GetValue(HMsecProperty); }
@@ -147,60 +166,79 @@ namespace UWPTeamWork
             }
             VisualStateManager.GoToState(this, "SecNormal", false);
             VisualStateManager.GoToState(this, "SecToO", false);
-            SecondsAng = 0;
-            MainSeconds = 0;
-            MinutesAng = 0;
-            HMsec = 0;
-            SetIconPathByAngle(0);
+            InitTimer();
             Mode = mode;
         }
 
+        //秒表重置
         public void Reset()
         {
-            
+            IsTimerRuning = false;
+            StopTimer();
+            InitTimer();
         }
 
+        //秒表抓停
         public void CatchStop()
         {
-
+            StopList.Add(new StopNode() { Stoppoint = TimeSpan.FromMilliseconds(HMsec * 40), NO = Stoppoints++ });               
         }
 
+        //秒表启动
         public void StopwatchStart()
         {
             IsTimerRuning = true;
-            MainTimer.Start();
-            Sec_Timer.Start();
-            VisualStateManager.GoToState(this, "Handle_Show", false);
+            StartTimer();
         }
 
+        //秒表暂停
         public void StopWatchPause()
         {
             IsTimerRuning = false;
-            MainTimer.Stop();
-            Sec_Timer.Stop();
+            StopTimer();
             SecondsAng = HMsec % 1500 / 1500.0 * 360;
-            VisualStateManager.GoToState(this, "Handle_Hide", false);
         }
 
+        //计时器停止
         public void Pause()
         {
             IsTimerRuning = false;
-            Sec_Timer.Stop();
-            MainTimer.Stop();
+            StopTimer();
             SecondsAng = MainSeconds % 60 * 6 - 360;
-            VisualStateManager.GoToState(this, "Handle_Hide", false);
         }
 
+        //计时器启动
         public void Start()
         {
             if (MainSeconds == 0)
                 return;
             IsTimerRuning = true;
-            MainTimer.Start();
-            Sec_Timer.Start();
-            VisualStateManager.GoToState(this, "Handle_Show", false);
+            StartTimer();
         }
         #endregion
+
+        private void InitTimer()
+        {
+            SecondsAng = 0;
+            MainSeconds = 0;
+            MinutesAng = 0;
+            HMsec = 0;
+            Stoppoints = 0;
+            StopList.Clear();
+            SetIconPathByAngle(0);
+        }
+
+        private void StopTimer()
+        {
+            Sec_Timer.Stop();
+            MainTimer.Stop();
+        }
+
+        private void StartTimer()
+        {
+            MainTimer.Start();
+            Sec_Timer.Start();
+        }
 
         private void SetIconPathByAngle(double a)/*角度计算*/
         {
@@ -218,6 +256,14 @@ namespace UWPTeamWork
         private double OriginAngle = 0.0;
         private double LastAngle = 0;
 
+        //单击事件
+        protected override void OnTapped(TappedRoutedEventArgs e)
+        {
+            if (Mode.Equals(TimerMode.StopWatch) && IsTimerRuning)
+                CatchStop();
+        }
+
+        //双击事件
         protected override void OnDoubleTapped(DoubleTappedRoutedEventArgs e)
         {
             switch (Mode)
@@ -278,11 +324,10 @@ namespace UWPTeamWork
             if (!e.IsInertial && !IsTimerRuning)
             {
                 double angleOfLine = Math.Atan2((e.Position.Y - ActualHeight / 2), (e.Position.X - ActualWidth / 2)) * 180 / Math.PI + 90;
-                if (Pointliner < ActualHeight * 3 / 5 && Pointliner > ActualHeight / 4)
+                if (Pointliner < ActualHeight * 3 / 5 && Pointliner > ActualHeight / 4 && (Mode.Equals(TimerMode.Timer) || Mode.Equals(TimerMode.Unknown)))
                 {
                     if (angleOfLine < 0)
                         angleOfLine = 360 + angleOfLine;
-                    // Debug.WriteLine(e.Velocities.Linear + "  " + e.Delta.Translation.X + "  " + angleOfLine);
                     if ((angleOfLine < LastAngle || angleOfLine - LastAngle > 40) && angleOfLine > 180 && LastAngle < 180)
                         angleOfLine = 0;
                     if ((angleOfLine > LastAngle || LastAngle - angleOfLine > 180) && angleOfLine < 270 && LastAngle > 270)
@@ -363,7 +408,13 @@ namespace UWPTeamWork
             this.ManipulationMode = ManipulationModes.All;
             
             this.Loaded += OnLoaded;
-
         }
+    }
+
+
+    public class StopNode
+    {
+        public TimeSpan Stoppoint { get; set; }
+        public int NO { get; set; }
     }
 }

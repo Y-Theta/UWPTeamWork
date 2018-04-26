@@ -43,11 +43,11 @@ namespace UWPTeamWork
             TickTextTrigger dat = (TickTextTrigger)d;
             switch (dat.Mode)
             {
-                case TimerMode.Timer:
-                    dat.SetActive(Math.Abs(360 + (double)e.NewValue - dat.ActiveAngle) < 6);
-                    break;
                 case TimerMode.StopWatch:
                     dat.SetActive(Math.Abs((double)e.NewValue - dat.ActiveAngle) < 6);
+                    break;
+                default:
+                    dat.SetActive(Math.Abs(360 + (double)e.NewValue - dat.ActiveAngle) < 6);
                     break;
             }
         }

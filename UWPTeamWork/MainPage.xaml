@@ -5,22 +5,43 @@
     xmlns:local="using:UWPTeamWork"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    
+    
+    mc:Ignorable="d" >
     
     <Page.Resources>
         <local:NavigateToClockCommand x:Key="NavigateToClock"/>
         <SolidColorBrush x:Key="CommandBarFg" Color="#80ffffff"/>
+        
     </Page.Resources>
-    
-    <Grid Background="{StaticResource MainThemeColor}">
-        <Frame x:Name="Container">
-            
+
+    <Grid x:Name="RootGrid" Background="{ThemeResource MainThemeColor}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="LayoutStyle">
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="768"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Frame x:Name="Container" Grid.RowSpan="2">
+
         </Frame>
-        <CommandBar x:Name="MainControl" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" OverflowButtonVisibility="Visible" ClosedDisplayMode="Minimal" IsOpen="False" Style="{StaticResource ControlBarSettingPanel}" Foreground="{StaticResource CommandBarFg}">
+        <Grid x:Name="TitleBarBack" Grid.Row="0" HorizontalAlignment="Stretch" Background="#01ffffff"/>
+        <local:OverallStateBar x:Name="OverallStateBar" />
+        <CommandBar Grid.Row="1" x:Name="MainControl" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" OverflowButtonVisibility="Visible" ClosedDisplayMode="Minimal" IsOpen="False" Style="{StaticResource ControlBarSettingPanel}" Foreground="{StaticResource CommandBarFg}">
             <AppBarButton Icon="Clock" Label="Timer" Command="{StaticResource NavigateToClock}" CommandParameter="{Binding ElementName=Container}" Foreground="{StaticResource CommandBarFg}"/>
-            <AppBarButton Label="Edit" Foreground="{StaticResource CommandBarFg}"/>
+            <AppBarButton Label="Edit" Foreground="{StaticResource CommandBarFg}" Click="AppBarButton_Click"/>
             <AppBarButton Icon="Pause" Label="Save" Foreground="{StaticResource CommandBarFg}"/>
             <AppBarButton Icon="Cancel" Label="Cancel" Foreground="{StaticResource CommandBarFg}"/>
         </CommandBar>
     </Grid>
+
 </Page>

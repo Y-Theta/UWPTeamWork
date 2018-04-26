@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Loaded="Page_Loaded" MinWidth="100">
 
+    
     <Page.Resources>
         <SolidColorBrush x:Key="TitleBar_Fg" Color="#ffffff"/>
         <x:Double x:Key="TitleBarText">16</x:Double>
@@ -25,7 +26,6 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
-            <RowDefinition Height="32"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -36,7 +36,7 @@
         <Viewbox x:Name="ClockLayer"   Grid.RowSpan="2" Grid.ColumnSpan="3" MaxHeight="600" MaxWidth="600">
             <local:SlideClock x:Name="SlideClock" Background="{Binding ElementName=RootGrid,Path=Background,Mode=OneWay}" />
         </Viewbox>
-        <Button Width="50" Height="50" Grid.Row="1" Background="#a0000000" Click="Button_Click" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-        <Button Content="&#xF158;" FontSize="15" VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Foreground="{StaticResource TitleBar_Fg}" Style="{StaticResource IconButton}"/>
+        <Button Width="50" Height="50" Background="#a0000000" Click="Button_Click" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+        
     </Grid>
 </Page>

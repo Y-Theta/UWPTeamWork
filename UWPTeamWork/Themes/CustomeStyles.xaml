@@ -3,11 +3,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:UWPTeamWork">
 
-    <SolidColorBrush x:Key="MainThemeColor" Color="#0aa065"/>
-
-    <!--ButtonStyle2-->
+    <!--IconButton-->
     <Style x:Key="IconButton" TargetType="Button">
         <Setter Property="Padding" Value="0"/>
+        <Setter Property="FocusVisualMargin" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -21,11 +22,9 @@
                                 </VisualState>
                                 <VisualState x:Name="PointerOver">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="ContentIcon_RotateTransform" Storyboard.TargetProperty="Angle" From="0" To="90" Duration="0:0:0.8" AutoReverse="True">
-                                            <DoubleAnimation.EasingFunction>
-                                                <CircleEase EasingMode="EaseInOut"/>
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource DarkMask_80}"/>
+                                        </ObjectAnimationUsingKeyFrames>
                                         <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
                                     </Storyboard>
                                 </VisualState>
@@ -41,10 +40,7 @@
                         </VisualStateManager.VisualStateGroups>
                         <FontIcon x:Name="ContentIcon" Glyph="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Content}" Foreground="{TemplateBinding Foreground}" FontSize="{TemplateBinding FontSize}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RenderTransformOrigin=".5 .5">
                             <FontIcon.RenderTransform>
-                                <TransformGroup>
-                                    <RotateTransform x:Name="ContentIcon_RotateTransform"/>
                                     <ScaleTransform x:Name="ContentIcon_ScaleTransform"/>
-                                </TransformGroup>
                               </FontIcon.RenderTransform>
                         </FontIcon>
                     </Grid>
@@ -53,6 +49,125 @@
         </Setter>
     </Style>
 
+    <!--IconToggleButton-->
+    <Style x:Key="IconToggleButton" TargetType="ToggleButton">
+        <Setter Property="Foreground" Value="{ThemeResource MinHButtonForeGround}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid x:Name="RootGrid" Background="Transparent">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="PointerOver">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ContentIcon_ScaleTransform" Storyboard.TargetProperty="ScaleX"
+                                                         To="1.2" Duration="0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseIn"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation Storyboard.TargetName="ContentIcon_ScaleTransform" Storyboard.TargetProperty="ScaleY"
+                                                         To="1.2" Duration="0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseIn"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ContentIcon_RotateTransform" Storyboard.TargetProperty="Angle"
+                                                         To="90" Duration="0:0:0.8">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseIn"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled"/>
+                                <VisualState x:Name="Checked">
+                                    <VisualState.Setters>
+                                        <Setter Target="ContentIcon_RotateTransform.Angle" Value="90"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="CheckedPointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Target="ContentIcon_RotateTransform.Angle" Value="90"/>
+                                    </VisualState.Setters>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ContentIcon_ScaleTransform" Storyboard.TargetProperty="ScaleX"
+                                                         To="1.2" Duration="0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseIn"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation Storyboard.TargetName="ContentIcon_ScaleTransform" Storyboard.TargetProperty="ScaleY"
+                                                         To="1.2" Duration="0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseIn"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="CheckedPressed">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ContentIcon_RotateTransform" Storyboard.TargetProperty="Angle"
+                                                        From="90" To="0" Duration="0:0:0.8">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseIn"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="CheckedDisabled">
+                                </VisualState>
+                                <VisualState x:Name="Indeterminate">
+                                </VisualState>
+                                <VisualState x:Name="IndeterminatePointerOver">
+                                </VisualState>
+                                <VisualState x:Name="IndeterminatePressed">
+                                </VisualState>
+                                <VisualState x:Name="IndeterminateDisabled">
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <FontIcon x:Name="ContentIcon" Glyph="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Content}" Foreground="{TemplateBinding Foreground}" FontSize="{TemplateBinding FontSize}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RenderTransformOrigin=".5 .5">
+                            <FontIcon.RenderTransform>
+                                <TransformGroup>
+                                    <RotateTransform x:Name="ContentIcon_RotateTransform"/>
+                                    <ScaleTransform x:Name="ContentIcon_ScaleTransform"/>
+                                </TransformGroup>
+                            </FontIcon.RenderTransform>
+                        </FontIcon>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--NumberTextblock-->
+    <Style x:Key="NumberTextblock" TargetType="TextBlock">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{ThemeResource ClockdeskBg_L2}"/>
+        <Setter Property="FontFamily" Value="{StaticResource LineNumber}"/>
+        <Setter Property="FontSize" Value="48"/>
+    </Style>
+    
+    <!--IconTextblock-->
+    <Style x:Key="IconTextblock" TargetType="TextBlock">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+        <Setter Property="Foreground" Value="{ThemeResource ClockdeskBg_L2}"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+    </Style>
+ 
     <!--ControlBarSettingPanel-->
     <Style x:Key="ControlBarSettingPanel" TargetType="CommandBar">
         <Setter Property="Background" Value="Transparent"/>
@@ -825,4 +940,6 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
+    <!---->    
 </ResourceDictionary>

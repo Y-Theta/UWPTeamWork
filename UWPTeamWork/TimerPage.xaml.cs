@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using Windows.ApplicationModel.Core;
 using Windows.Data.Xml.Dom;
 using Windows.Foundation;
@@ -13,7 +14,7 @@ namespace UWPTeamWork
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class TimerPage : Page 
+    public sealed partial class TimerPage : Page ,IDisposable
     {
 
         public TimerPage()
@@ -24,21 +25,7 @@ namespace UWPTeamWork
 
         private void InitTitleBar()
         {
-            var TitleBar = ApplicationView.GetForCurrentView().TitleBar;
-            TitleBar.ButtonBackgroundColor = Colors.Transparent;
-            TitleBar.ButtonForegroundColor = Colors.Transparent;
 
-            TitleBar.ButtonHoverBackgroundColor = Color.FromArgb(100, 0, 0, 0);
-            TitleBar.ButtonHoverForegroundColor = Colors.Transparent;
-
-            TitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-            TitleBar.ButtonInactiveForegroundColor = Colors.Transparent;
-
-            TitleBar.ButtonPressedBackgroundColor = Color.FromArgb(160, 0, 0, 0);
-            TitleBar.ButtonPressedForegroundColor = Colors.Transparent;           
-
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size { Width = 200, Height = 200 });
-            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;        
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -67,5 +54,31 @@ namespace UWPTeamWork
                 SlideClock.SetMode(SlideClock.TimerMode.StopWatch);
 
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // 要检测冗余调用
+
+        void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                }
+
+                SlideClock.Dispose();
+                disposedValue = true;
+            }
+        }
+
+        // 添加此代码以正确实现可处置模式。
+        public void Dispose()
+        {
+            // 请勿更改此代码。将清理代码放入以上 Dispose(bool disposing) 中。
+            Dispose(true);
+            // TODO: 如果在以上内容中替代了终结器，则取消注释以下行。
+            // GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

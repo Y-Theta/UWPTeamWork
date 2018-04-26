@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -24,6 +25,7 @@ namespace UWPTeamWork
     /// </summary>
     sealed partial class App : Application
     {
+        static int id;
         /// <summary>
         /// 初始化单一实例应用程序对象。这是执行的创作代码的第一行，
         /// 已执行，逻辑上等同于 main() 或 WinMain()。
@@ -31,7 +33,8 @@ namespace UWPTeamWork
         public App()
         {
             this.InitializeComponent();
-            this.Suspending += OnSuspending;           
+            this.Suspending += OnSuspending;       
+            
         }
 
         /// <summary>
@@ -42,7 +45,7 @@ namespace UWPTeamWork
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
-
+            
             // 不要在窗口已包含内容时重复应用程序初始化，
             // 只需确保窗口处于活动状态
             if (rootFrame == null)
@@ -59,6 +62,8 @@ namespace UWPTeamWork
 
                 // 将框架放在当前窗口中
                 Window.Current.Content = rootFrame;
+                Window.Current.Closed += Current_Closed;
+                id = ApplicationView.GetForCurrentView().Id;
             }
 
             if (e.PrelaunchActivated == false)
@@ -72,8 +77,15 @@ namespace UWPTeamWork
                 }
                 // 确保当前窗口处于活动状态
                 Window.Current.Activate();
+                
             }
         }
+
+        private void Current_Closed(object sender, Windows.UI.Core.CoreWindowEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
 
         /// <summary>
         /// 导航到特定页失败时调用
@@ -94,7 +106,6 @@ namespace UWPTeamWork
         /// <param name="e">有关挂起请求的详细信息。</param>
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
-
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: 保存应用程序状态并停止任何后台活动
             deferral.Complete();

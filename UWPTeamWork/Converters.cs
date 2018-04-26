@@ -17,10 +17,9 @@ namespace UWPTeamWork
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (parameter != null)
-                return String.Format("{0:D2} : {1:D2} : {2:D2}", (int)value / 1500, (int)value % 1500 / 25, (int)value % 1500 % 25);
+                return String.Format("{0:D2}:{1:D2}:{2:D2}", (int)value / 1500, (int)value % 1500 / 25, (int)value % 1500 % 25 * 4);
             else
-                return String.Format("{0:D2} : {1:D2}", (int)value / 60, (int)value % 60);
-
+                return String.Format("{0:D2}:{1:D2}", (int)value / 60, (int)value % 60);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
@@ -35,7 +34,7 @@ namespace UWPTeamWork
         {
             if (parameter != null)
             {
-                return String.Format("{0:D2} : {1:D2} : {2:D2}", (int)value / 1500, (int)value % 1500 / 25, (int)value % 1500 % 25);
+                return String.Format("{0:D2}:{1:D2}:{2:D2}", (int)value / 1500, (int)value % 1500 / 25, (int)value % 1500 % 25 * 4);
             }
             else
             {

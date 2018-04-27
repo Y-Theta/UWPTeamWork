@@ -34,7 +34,7 @@ namespace UWPTeamWork
         }
         #endregion
 
-        #region 命令参数
+        #region 命令参数1
         public object CommandParameter
         {
             get { return (object)GetValue(CommandParameterProperty); }
@@ -43,6 +43,8 @@ namespace UWPTeamWork
         public static readonly DependencyProperty CommandParameterProperty =
             DependencyProperty.Register("CommandParameter", typeof(object), typeof(OverallStateBar), new PropertyMetadata(null));
         #endregion
+
+
 
         public OverallStateBar()
         {

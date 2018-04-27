@@ -7,8 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Loaded="Page_Loaded" MinWidth="100">
     <Page.Resources>
-        <local:SwitchToStopwatchCommand x:Key="SwitchToStopwatch"/>
-        <local:SwitchToTimerCommand x:Key="SwitchToTimer"/>
+        <local:SwitchCommand x:Key="Switch"/>
     </Page.Resources>
 
     <Grid x:Name="RootGrid" Background="{StaticResource MainThemeColor}">
@@ -19,6 +18,26 @@
                         <AdaptiveTrigger MinWindowWidth="768"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="SwitchButtonState">
+                <VisualState x:Name="Timerstate">
+                    <VisualState.StateTriggers>
+                        <local:SlideClockModeTrigger Mode="{Binding ElementName=SlideClock,Path=Mode,Mode=OneWay}" Reference="Timer"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SwitchButton.Label" Value="Tostopwatch"/>
+                        <Setter Target="SwitchButton_Icon.Glyph" Value="&#xE916;"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Stopwatchstate">
+                    <VisualState.StateTriggers>
+                        <local:SlideClockModeTrigger Mode="{Binding ElementName=SlideClock,Path=Mode,Mode=OneWay}" Reference="StopWatch"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SwitchButton.Label" Value="ToTimer"/>
+                        <Setter Target="SwitchButton_Icon.Glyph" Value="&#xE81C;"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -35,14 +54,9 @@
             <local:SlideClock x:Name="SlideClock" Background="{Binding ElementName=RootGrid,Path=Background,Mode=OneWay}" />
         </Viewbox>
         <CommandBar Grid.Row="1" Grid.ColumnSpan="3" x:Name="MainControl" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" OverflowButtonVisibility="Visible" ClosedDisplayMode="Minimal" IsOpen="False" Style="{StaticResource ControlBarSettingPanel}" Foreground="{ThemeResource ClockdeskBg_L2}">
-            <AppBarButton Command="{StaticResource SwitchToStopwatch}" CommandParameter="{Binding ElementName=SlideClock}">
+            <AppBarButton x:Name="SwitchButton" Label="ToStopwatch" Command="{StaticResource Switch}" CommandParameter="{Binding ElementName=SlideClock}" Foreground="{ThemeResource ClockdeskBg_L2}">
                 <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE916;" Foreground="{ThemeResource ClockdeskBg_L2}"/>
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton Command="{StaticResource SwitchToTimer}" CommandParameter="{Binding ElementName=SlideClock}">
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE81C;" Foreground="{ThemeResource ClockdeskBg_L2}"/>
+                    <FontIcon x:Name="SwitchButton_Icon" Glyph="&#xE916;" Foreground="{ThemeResource ClockdeskBg_L2}"/>
                 </AppBarButton.Icon>
             </AppBarButton>
         </CommandBar>

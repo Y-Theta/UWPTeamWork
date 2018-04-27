@@ -81,10 +81,13 @@
                   ItemClick="GridView_ItemClick"
                   ItemTemplate="{StaticResource NoteDataTemplate}">
         </GridView>
-        <Button Grid.Row="2" Background="White" Click="Button_Click">
-            <Image Source="Assets/add.jpg">
-            </Image>
-        </Button>
+        <AppBarButton Icon ="Add" 
+                      Grid.Row="2" 
+                      Click="Button_Click"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center">
+            
+        </AppBarButton>
         <!--
         <AppBarButton Icon="Delete"
                       Grid.Column="2"

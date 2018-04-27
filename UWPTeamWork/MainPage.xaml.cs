@@ -57,5 +57,10 @@ namespace UWPTeamWork
         {
             RequestedTheme = ElementTheme.Light;
         }
+
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(NotePage));
+        }
     }
 }

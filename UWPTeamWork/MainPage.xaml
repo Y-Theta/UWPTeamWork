@@ -16,6 +16,9 @@
         <Frame x:Name="Container" Grid.RowSpan="2">
             
         </Frame>
+        <AppBarButton Icon="Bookmarks" Click="AppBarButton_Click" Grid.Row = "1">
+
+        </AppBarButton>
         <Grid x:Name="TitleBarBack" Grid.Row="0" HorizontalAlignment="Stretch" Background="#01ffffff"/>
         <local:OverallStateBar x:Name="OverallStateBar" Grid.Row="0" CommandParameter="{Binding ElementName=Container}"/>
     </Grid>

@@ -58,6 +58,7 @@ namespace UWPTeamWork
         private void Delete_Button(object sender, RoutedEventArgs e)
         {
             NoteManager.DeleteNote(note);
+            NoteManager.Save();
             Frame.Navigate(typeof(NotePage));
         }
     }

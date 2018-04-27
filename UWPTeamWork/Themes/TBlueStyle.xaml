@@ -23,4 +23,6 @@
     <SolidColorBrush x:Key="AppBarButtonNormal" Color="#C0FFFFFF"/>
     <SolidColorBrush x:Key="AppBarButtonPointerOver" Color="#e0256e52"/>
     <SolidColorBrush x:Key="AppBarButtonPressed" Color="#C0FFFFFF"/>
+    <SolidColorBrush x:Key="NoteBackground" Color="White"/>
+    <x:String x:Key="NoteShowBackground" >Assets/backg.jpg</x:String>
 </ResourceDictionary>

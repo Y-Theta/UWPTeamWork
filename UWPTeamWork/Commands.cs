@@ -25,7 +25,7 @@ namespace UWPTeamWork
         }
     }
 
-    public class SwitchToStopwatchCommand /* 切换 */ : ICommand
+    public class SwitchCommand /* 切换 */ : ICommand
     {
         public event EventHandler CanExecuteChanged;
 
@@ -36,11 +36,12 @@ namespace UWPTeamWork
         public void Execute(object parameter)
         {
             SlideClock s = (SlideClock)parameter;
-            s.SetMode(SlideClock.TimerMode.StopWatch);
+            s.SetMode((s.Mode.Equals(SlideClock.TimerMode.Timer) || s.Mode.Equals(SlideClock.TimerMode.Unknown))
+                ? SlideClock.TimerMode.StopWatch : SlideClock.TimerMode.Timer);
         }
     }
 
-    public class SwitchToTimerCommand /* 切换 */ : ICommand
+    public class ChangeResCommand/*  */ : ICommand
     {
         public event EventHandler CanExecuteChanged;
 
@@ -50,12 +51,15 @@ namespace UWPTeamWork
         }
         public void Execute(object parameter)
         {
-            SlideClock s = (SlideClock)parameter;
-            s.SetMode(SlideClock.TimerMode.Timer);
+            var dics = App.Current.Resources.ThemeDictionaries;
+            var dic =(ResourceDictionary) dics["Light"];
+            dic.MergedDictionaries.Clear();
+            dic.MergedDictionaries.Add(new ResourceDictionary() { Source= new Uri("ms-appx:///Themes/Tdefault.xaml") });
+            (Window.Current.Content as Frame).RequestedTheme = ElementTheme.Light;
         }
     }
 
-    public class ShowAdditionsCommand : ICommand
+    public class ShowAdditionsCommand/* 显示附加按钮 */ : ICommand
     {
         public event EventHandler CanExecuteChanged;
 

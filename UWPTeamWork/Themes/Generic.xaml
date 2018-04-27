@@ -8,6 +8,7 @@
     <local:MinAngConverterSim x:Key="MinAngConverterSim"/>
     <local:MutexVisConverter x:Key="MutexVisConverter"/>
 
+    <local:ChangeResCommand x:Key="ChangeRes"/>
     <local:ShowAdditionsCommand x:Key="ShowAdditionsCommand"/>
     <local:NavigateToClockCommand x:Key="NavigateToClockCommand"/>
     <!--Styles-->
@@ -667,44 +668,44 @@
                                     </VisualState.Setters>
                                     <Storyboard>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Settings" Storyboard.TargetProperty="Opacity">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1"/>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1"/>
                                         </DoubleAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Nnte" Storyboard.TargetProperty="Opacity">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="0"/>
-                                            <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
                                         </DoubleAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Stopwatch" Storyboard.TargetProperty="Opacity">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:1.2" Value="0"/>
-                                            <EasingDoubleKeyFrame KeyTime="0:0:1.6" Value="1"/>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0"/>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
                                         </DoubleAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Timer" Storyboard.TargetProperty="Opacity">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:1.8" Value="0"/>
-                                            <EasingDoubleKeyFrame KeyTime="0:0:2.2" Value="1"/>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="0"/>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="1"/>
                                         </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimation Storyboard.TargetName="AdditionButtons_TranslateTransform" Storyboard.TargetProperty="X" To="0" Duration="0:0:2.2"/>
+                                        <DoubleAnimation Storyboard.TargetName="AdditionButtons_TranslateTransform" Storyboard.TargetProperty="X" To="0" Duration="0:0:0.7"/>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="AdditionButtons_Hide">
                                     <Storyboard>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Timer" Storyboard.TargetProperty="Opacity">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0"/>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0"/>
                                         </DoubleAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Stopwatch" Storyboard.TargetProperty="Opacity">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="1"/>
-                                            <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0"/>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1"/>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
                                         </DoubleAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Nnte" Storyboard.TargetProperty="Opacity">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:1.2" Value="1"/>
-                                            <EasingDoubleKeyFrame KeyTime="0:0:1.6" Value="0"/>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1"/>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
                                         </DoubleAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Settings" Storyboard.TargetProperty="Opacity">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:1.8" Value="1"/>
-                                            <EasingDoubleKeyFrame KeyTime="0:0:2.2" Value="0"/>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="1"/>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="0"/>
                                         </DoubleAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="AdditionButtons" Storyboard.TargetProperty="Visibility">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:2.2" Value="Collapsed"/>
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.7" Value="Collapsed"/>
                                         </ObjectAnimationUsingKeyFrames>
-                                        <DoubleAnimation Storyboard.TargetName="AdditionButtons_TranslateTransform" Storyboard.TargetProperty="X" To="-144" Duration="0:0:2.2"/>
+                                        <DoubleAnimation Storyboard.TargetName="AdditionButtons_TranslateTransform" Storyboard.TargetProperty="X" To="-144" Duration="0:0:0.7"/>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -729,11 +730,9 @@
                             <Button x:Name="Stopwatch" Content="&#xE916;" Grid.Column="1" Style="{StaticResource IconButton}" Opacity="0"
                                     Foreground="{ThemeResource ClockdeskBg_L2}" CommandParameter="{TemplateBinding CommandParameter}"/>
                             <Button x:Name="Nnte" Content="&#xE70B;" Grid.Column="2" Style="{StaticResource IconButton}" Opacity="0"  Foreground="{ThemeResource ClockdeskBg_L2}" CommandParameter="{TemplateBinding CommandParameter}"/>
-                            <Button x:Name="Settings" Content="&#xE90F;" Grid.Column="3" Style="{StaticResource IconButton}" Opacity="0"  Foreground="{ThemeResource ClockdeskBg_L2}" CommandParameter="{TemplateBinding CommandParameter}"/>
+                            <Button x:Name="Settings" Content="&#xE90F;" Grid.Column="3" Style="{StaticResource IconButton}" Opacity="0"  Foreground="{ThemeResource ClockdeskBg_L2}" Command="{StaticResource ChangeRes}" CommandParameter="{TemplateBinding CommandParameter}"/>
                         </Grid>
-                        <Grid Grid.Column="1" IsHitTestVisible="False">
-                            
-                        </Grid>
+                        <Grid Grid.Column="1" IsHitTestVisible="False"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

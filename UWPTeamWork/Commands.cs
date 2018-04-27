@@ -25,6 +25,20 @@ namespace UWPTeamWork
         }
     }
 
+    public class ShowPageCommand /* 导航命令 */ : ICommand
+    {
+        public event EventHandler CanExecuteChanged;
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+        public void Execute(object parameter)
+        {
+            ((Frame)parameter).Navigate(typeof(ShowPage));
+        }
+    }
+
     public class SwitchCommand /* 切换 */ : ICommand
     {
         public event EventHandler CanExecuteChanged;

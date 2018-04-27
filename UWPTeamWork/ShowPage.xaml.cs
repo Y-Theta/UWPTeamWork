@@ -29,8 +29,10 @@ namespace UWPTeamWork
         {
             base.OnNavigatedTo(e);
             //这个e.Parameter是获取传递过来的参数，其实大家应该再次之前判断这个参数是否为null的，我偷懒了
-            note = (Note)e.Parameter;
-            ShowBox.Text = note.MyText;
+            if (e != null)
+            {
+                note = (Note)e.Parameter;
+            }
         }
         public ShowPage()
         {
@@ -38,7 +40,13 @@ namespace UWPTeamWork
             ImageBrush imageBrush = new ImageBrush();
             imageBrush.ImageSource = new BitmapImage(new Uri("ms-appx:///Assets/backg.jpg", UriKind.Absolute));
             grid.Background = imageBrush;
+            this.Loaded += ShowPage_Loaded;
             //ShowBox.Text = note.MyText;
+        }
+
+        private void ShowPage_Loaded(object sender, RoutedEventArgs e)
+        {
+           // ShowBox.Text = note.MyText;
         }
 
         private void AppBarButton_Click(object sender, RoutedEventArgs e)
@@ -58,7 +66,7 @@ namespace UWPTeamWork
         private void Delete_Button(object sender, RoutedEventArgs e)
         {
             NoteManager.DeleteNote(note);
-            NoteManager.Save();
+            NoteManager.Save("");
             Frame.Navigate(typeof(NotePage));
         }
     }

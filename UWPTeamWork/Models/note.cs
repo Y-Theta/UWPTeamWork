@@ -9,6 +9,7 @@ using Windows.Storage;
 
 namespace xBindDataExample.Models
 {
+    [Serializable]
     public class Note
     {
         public DateTime MyTime { get; set; }
@@ -31,7 +32,7 @@ namespace xBindDataExample.Models
         {
             notes.Add(x);
             id++;
-            Save();
+            Save("");//需要文件名
         }
         public static int getid()
         {
@@ -45,7 +46,7 @@ namespace xBindDataExample.Models
            if(isloaded == false)
             {
                 isloaded = true;
-                Load();
+                Load("");//提供文件名或指定一常量文件名,不用加类型（.note）
             }
             return notes;
         }
@@ -59,17 +60,32 @@ namespace xBindDataExample.Models
                     notes.Remove(notes[i]);
                 }
             }
-            Save();
+            Save("");//文件名
+        }
+
+        public async static void Save(string filename)
+        {
+            StorageFolder folder = ApplicationData.Current.LocalFolder;
+            StorageFile f = await folder.CreateFileAsync(filename+".note", CreationCollisionOption.ReplaceExisting);
+            using (FileStream stream = new FileStream(f.CreateSafeFileHandle(), FileAccess.Write))
+            {
+                BinaryFormatter binaryFormatter = new BinaryFormatter();
+                binaryFormatter.Serialize(stream, notes);
+            }
         }
         
-        public static void Save()
+        public async static void Load(string filename)
         {
-
-        }
-        
-        public static void Load()
-        {
-
+            StorageFolder folder = ApplicationData.Current.LocalFolder;
+            StorageFile f = await folder.TryGetItemAsync(filename+".note") as StorageFile;
+            if(f != null)
+            {
+                BinaryFormatter binaryFormatter = new BinaryFormatter();
+                using (FileStream stream = new FileStream(f.CreateSafeFileHandle(), FileAccess.Read))
+                {
+                    notes = (List<Note>)binaryFormatter.Deserialize(stream);
+                }
+            }
         }
     }
 }

@@ -12,6 +12,7 @@
     <local:ChangeResCommand x:Key="ChangeRes"/>
     <local:ShowAdditionsCommand x:Key="ShowAdditionsCommand"/>
     <local:NavigateToClockCommand x:Key="NavigateToClockCommand"/>
+    <local:ShowPageCommand x:Key="ShowPage"/>
     <!--Styles-->
     <!--SliderClock-->
     <Style TargetType="local:SlideClock" >
@@ -723,7 +724,8 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Button x:Name="Timer" Content="&#xE916;" Grid.Column="0" Style="{StaticResource IconButton}" Opacity="0" Foreground="{ThemeResource ClockdeskBg_L2}" CommandParameter="{TemplateBinding CommandParameter}" Command="{StaticResource NavigateToClockCommand}"/>
-                            <Button x:Name="Note" Content="&#xE70B;" Grid.Column="1" Style="{StaticResource IconButton}" Opacity="0"  Foreground="{ThemeResource ClockdeskBg_L2}" CommandParameter="{TemplateBinding CommandParameter}"/>
+                            <Button x:Name="Note" Content="&#xE70B;" Grid.Column="1" Style="{StaticResource IconButton}" Opacity="0"  Foreground="{ThemeResource ClockdeskBg_L2}" CommandParameter="{TemplateBinding CommandParameter}"
+                                    Command="{StaticResource ShowPage}"/>
                             <Button x:Name="Settings" Content="&#xE90F;" Grid.Column="2" Style="{StaticResource IconButton}" Opacity="0"  Foreground="{ThemeResource ClockdeskBg_L2}" Command="{StaticResource ChangeRes}" CommandParameter="{TemplateBinding CommandParameter}"/>
                         </Grid>
                         <Grid Grid.Column="1" IsHitTestVisible="False"/>

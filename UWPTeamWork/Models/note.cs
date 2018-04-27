@@ -22,6 +22,7 @@ namespace xBindDataExample.Models
     {
         static List<Note> notes = new List<Note>();
         static int id;
+        static bool isloaded = false;
         public static void init()
         {
             id=0;
@@ -30,6 +31,7 @@ namespace xBindDataExample.Models
         {
             notes.Add(x);
             id++;
+            Save();
         }
         public static int getid()
         {
@@ -40,7 +42,11 @@ namespace xBindDataExample.Models
             //var notes = new List<Note>();
             //notes.Add(new Note { NoteID = 1, MyTime = DateTime.Now, MyText = "sadasd", CoverImage = "Assets/timg.jpg" });
            // notes.Add(new Note { NoteID = 0x3f3f3f3f, MyText="", CoverImage = "Assets/add.jpg" });
-
+           if(isloaded == false)
+            {
+                isloaded = true;
+                Load();
+            }
             return notes;
         }
 
@@ -53,6 +59,17 @@ namespace xBindDataExample.Models
                     notes.Remove(notes[i]);
                 }
             }
+            Save();
+        }
+        
+        public static void Save()
+        {
+
+        }
+        
+        public static void Load()
+        {
+
         }
     }
 }

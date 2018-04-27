@@ -52,9 +52,9 @@ namespace UWPTeamWork
         public void Execute(object parameter)
         {
             var dics = App.Current.Resources.ThemeDictionaries;
-            var dic =(ResourceDictionary) dics["Light"];
+            var dic = (ResourceDictionary)dics["Light"];
             dic.MergedDictionaries.Clear();
-            dic.MergedDictionaries.Add(new ResourceDictionary() { Source= new Uri("ms-appx:///Themes/Tdefault.xaml") });
+            dic.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Themes/Tdefault.xaml") });
             (Window.Current.Content as Frame).RequestedTheme = ElementTheme.Light;
         }
     }

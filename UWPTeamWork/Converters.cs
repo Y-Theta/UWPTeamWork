@@ -81,4 +81,17 @@ namespace UWPTeamWork
             throw new NotImplementedException();
         }
     }
+
+    public class TimeFormatdConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            return String.Format("{0:D2}:{1:D2}.{2:D2}", ((TimeSpan)value).Minutes, ((TimeSpan)value).Seconds, ((TimeSpan)value).Milliseconds);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

@@ -24,7 +24,7 @@ namespace UWPTeamWork
         }
         public static readonly DependencyProperty AdditionButtonVisiblityProperty =
             DependencyProperty.Register("AdditionButtonVisiblity", typeof(Visibility), typeof(OverallStateBar),
-                new PropertyMetadata(Visibility.Collapsed,new PropertyChangedCallback(OnAdditionButtonVisiblityChanged)));
+                new PropertyMetadata(Visibility.Collapsed, new PropertyChangedCallback(OnAdditionButtonVisiblityChanged)));
         private static void OnAdditionButtonVisiblityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (((Visibility)e.NewValue).Equals(Visibility.Collapsed))
@@ -32,6 +32,16 @@ namespace UWPTeamWork
             else
                 VisualStateManager.GoToState((OverallStateBar)d, "AdditionButtons_Show", false);
         }
+        #endregion
+
+        #region 自动折叠
+        public bool AutoRow
+        {
+            get { return (bool)GetValue(AutoRowProperty); }
+            set { SetValue(AutoRowProperty, value); }
+        }
+        public static readonly DependencyProperty AutoRowProperty =
+            DependencyProperty.Register("AutoRow", typeof(bool), typeof(OverallStateBar), new PropertyMetadata(true));
         #endregion
 
         #region 命令参数1
@@ -43,7 +53,6 @@ namespace UWPTeamWork
         public static readonly DependencyProperty CommandParameterProperty =
             DependencyProperty.Register("CommandParameter", typeof(object), typeof(OverallStateBar), new PropertyMetadata(null));
         #endregion
-
 
 
         public OverallStateBar()

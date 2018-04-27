@@ -10,7 +10,7 @@
         <local:SwitchCommand x:Key="Switch"/>
     </Page.Resources>
 
-    <Grid x:Name="RootGrid" Background="{StaticResource MainThemeColor}">
+    <Grid x:Name="RootGrid" Background="{ThemeResource MainThemeColor}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="LayoutStyle">
                 <VisualState>

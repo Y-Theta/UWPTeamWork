@@ -78,7 +78,6 @@ namespace UWPTeamWork
         }
     }
 
-
     public class WindowSizeOverTrigger : StateTriggerBase
     {
         private bool flag = false;
@@ -117,7 +116,6 @@ namespace UWPTeamWork
             }
         }
     }
-
 
     public class WindowSizeLessTrigger : StateTriggerBase
     {
@@ -159,7 +157,6 @@ namespace UWPTeamWork
         }
     }
 
-
     public class SlideClockModeTrigger : StateTriggerBase
     {
         public TimerMode Mode
@@ -183,8 +180,30 @@ namespace UWPTeamWork
         public static readonly DependencyProperty referenceProperty =
             DependencyProperty.Register("Reference", typeof(TimerMode), typeof(SlideClockModeTrigger), new PropertyMetadata(TimerMode.Timer));
 
+    }
 
+    public class OverallStateBarStateTrigger : StateTriggerBase
+    {
+        public Visibility TargetStatus
+        {
+            get { return (Visibility)GetValue(TargetStatusProperty); }
+            set { SetValue(TargetStatusProperty, value); }
+        }
+        public static readonly DependencyProperty TargetStatusProperty =
+            DependencyProperty.Register("TargetStatus", typeof(Visibility), typeof(OverallStateBarStateTrigger), 
+                new PropertyMetadata(Visibility.Visible));
 
-
+        public Visibility BindPropVis
+        {
+            get { return (Visibility)GetValue(BindPropVisProperty); }
+            set { SetValue(BindPropVisProperty, value); }
+        }
+        public static readonly DependencyProperty BindPropVisProperty =
+            DependencyProperty.Register("BindPropVis", typeof(Visibility), typeof(OverallStateBarStateTrigger),
+                new PropertyMetadata(Visibility.Collapsed,new PropertyChangedCallback(OnBindPropVisChanged)));
+        private static void OnBindPropVisChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((OverallStateBarStateTrigger)d).SetActive(((Visibility)e.NewValue).Equals(((OverallStateBarStateTrigger)d).TargetStatus));
+        }
     }
 }

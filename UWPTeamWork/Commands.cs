@@ -35,7 +35,7 @@ namespace UWPTeamWork
         }
         public void Execute(object parameter)
         {
-            ((Frame)parameter).Navigate(typeof(ShowPage));
+            ((Frame)parameter).Navigate(typeof(NotePage));
         }
     }
 

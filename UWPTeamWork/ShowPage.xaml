@@ -243,19 +243,24 @@
             </Setter>
         </Style>
     </Page.Resources>
-
-    <Grid Name="grid" Background="Gray">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="80" />
+            <RowDefinition Height="32" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="80" />
+            
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="200" />
-        </Grid.ColumnDefinitions>
-        <TextBox Name="ShowBox" 
+        <Grid Name="grid" Background="Gray" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="80" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="100" />
+            </Grid.ColumnDefinitions>
+            <TextBox Name="ShowBox" 
                  AcceptsReturn="True" 
                  FontSize="16" 
                  TextWrapping="Wrap" 
@@ -264,10 +269,10 @@
                  Margin="0,40,0,0"
                  Style="{StaticResource TextBoxStyle1}" 
                 />
-        <AppBarButton Icon="Back" 
+            <AppBarButton Icon="Back" 
                       Click="AppBarButton_Click"
                       />
-        <Slider Name="MySlider" 
+            <Slider Name="MySlider" 
                 Margin="20,0,0,20"
                 Grid.Row="2" 
                 Grid.Column="2" 
@@ -276,15 +281,15 @@
                 Minimum="0" 
                 Width="200" 
                 ValueChanged="MySlider_ValueChanged" />
-        <AppBarButton 
+            <AppBarButton 
             Icon="Delete" 
             Click="Delete_Button"
             Grid.Column="2"
             Grid.RowSpan="2"
             Margin="40,60,0,0"
             >
-        </AppBarButton>
-        <TextBox Grid.Column="1"
+            </AppBarButton>
+            <TextBox Grid.Column="1"
                  Grid.Row="0"
                  Style="{StaticResource TextBoxStyle1}"
                  Text="Summary"
@@ -294,6 +299,8 @@
                  AcceptsReturn="True" 
                  TextWrapping="Wrap"
             >
-        </TextBox>
+            </TextBox>
+        </Grid>
     </Grid>
+    
 </Page>

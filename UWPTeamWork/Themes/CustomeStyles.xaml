@@ -182,7 +182,27 @@
         <Setter Property="FontFamily" Value="{StaticResource LineNumber}"/>
         <Setter Property="FontSize" Value="48"/>
     </Style>
-    
+
+    <!--StopNodeTextblock1-->
+    <Style x:Key="StopNodeTextblock1" TargetType="TextBlock">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="0,160,0,0"/>
+        <Setter Property="Foreground" Value="{ThemeResource BrightMask_A0}"/>
+        <Setter Property="FontFamily" Value="{StaticResource LineNumber}"/>
+        <Setter Property="FontSize" Value="24"/>
+    </Style>
+
+    <!--StopNodeTextblock2-->
+    <Style x:Key="StopNodeTextblock2" TargetType="TextBlock">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="0,240,0,0"/>
+        <Setter Property="Foreground" Value="{ThemeResource BrightMask_80}"/>
+        <Setter Property="FontFamily" Value="{StaticResource LineNumber}"/>
+        <Setter Property="FontSize" Value="18"/>
+    </Style>
+
     <!--IconTextblock-->
     <Style x:Key="IconTextblock" TargetType="TextBlock">
         <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -930,9 +950,7 @@
                                     </ItemsControl.ItemsPanel>
                                 </ItemsControl>
                             </Grid>
-                            <Button x:Name="MoreButton" Grid.Column="1" Foreground="{TemplateBinding Foreground}" IsAccessKeyScope="True" Control.IsTemplateKeyTipTarget="True" MinHeight="{ThemeResource AppBarThemeCompactHeight}" Padding="14,23,14,0" Style="{StaticResource EllipsisButton}" VerticalAlignment="Top" Visibility="{Binding CommandBarTemplateSettings.EffectiveOverflowButtonVisibility, RelativeSource={RelativeSource Mode=TemplatedParent}}">
-                                <FontIcon x:Name="EllipsisIcon" FontFamily="{ThemeResource SymbolThemeFontFamily}" FontSize="20" Glyph="&#xE10C;" Height="{ThemeResource AppBarExpandButtonCircleDiameter}" VerticalAlignment="Center"/>
-                            </Button>
+                            <Button x:Name="MoreButton" Grid.Column="1" Foreground="{TemplateBinding Foreground}" IsAccessKeyScope="True" Control.IsTemplateKeyTipTarget="True" Content="&#xE10C;" MinHeight="{ThemeResource AppBarThemeCompactHeight}"  Style="{StaticResource IconButton}" VerticalAlignment="Top" Margin="10,0,10,0" Visibility="{Binding CommandBarTemplateSettings.EffectiveOverflowButtonVisibility, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                             <Popup x:Name="OverflowPopup">
                                 <Popup.RenderTransform>
                                     <TranslateTransform x:Name="OverflowPopupOffsetTransform"/>
@@ -959,84 +977,6 @@
                             </Popup>
                             <Rectangle x:Name="HighContrastBorder" Grid.ColumnSpan="2" StrokeThickness="1" Stroke="{ThemeResource CommandBarHighContrastBorder}" VerticalAlignment="Stretch" Visibility="Collapsed" x:DeferLoadStrategy="Lazy"/>
                         </Grid>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!--MoreButton-->
-    <Style x:Key="MoreButton" TargetType="Button">
-        <Setter Property="Background" Value="{ThemeResource AppBarEllipsisButtonBackground}" />
-        <Setter Property="Foreground" Value="{ThemeResource AppBarEllipsisButtonForeground}" />
-        <Setter Property="BorderBrush" Value="{ThemeResource AppBarEllipsisButtonBorderBrush}" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Padding" Value="0,0,9,0" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="HorizontalContentAlignment" Value="Right" />
-        <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Top" />
-        <Setter Property="Width" Value="{ThemeResource AppBarExpandButtonThemeWidth}" />
-        <Setter Property="UseSystemFocusVisuals" Value="True" />
-        <Setter Property="FocusVisualMargin" Value="0" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Grid>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="PointerOver">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarEllipsisButtonBackgroundPointerOver}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarEllipsisButtonForegroundPointerOver}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarEllipsisButtonBorderBrushPointerOver}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Pressed">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarEllipsisButtonBackgroundPressed}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarEllipsisButtonForegroundPressed}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarEllipsisButtonBorderBrushPressed}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Disabled">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarEllipsisButtonBackgroundDisabled}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarEllipsisButtonForegroundDisabled}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AppBarEllipsisButtonBorderBrushDisabled}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                        <ContentPresenter x:Name="ContentPresenter"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            ContentTransitions="{TemplateBinding ContentTransitions}"
-                            ContentTemplate="{TemplateBinding ContentTemplate}"
-                            Padding="{TemplateBinding Padding}"
-                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                            AutomationProperties.AccessibilityView="Raw" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

@@ -8,6 +8,7 @@
     mc:Ignorable="d" Loaded="Page_Loaded" MinWidth="100">
     <Page.Resources>
         <local:SwitchCommand x:Key="Switch"/>
+        <local:ShowStopListCommand x:Key="ShowStopList"/>
     </Page.Resources>
 
     <Grid x:Name="RootGrid" Background="{ThemeResource MainThemeColor}">
@@ -54,9 +55,14 @@
             <local:SlideClock x:Name="SlideClock" Background="{Binding ElementName=RootGrid,Path=Background,Mode=OneWay}" />
         </Viewbox>
         <CommandBar Grid.Row="1" Grid.ColumnSpan="3" x:Name="MainControl" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" OverflowButtonVisibility="Visible" ClosedDisplayMode="Minimal" IsOpen="False" Style="{StaticResource ControlBarSettingPanel}" Foreground="{ThemeResource ClockdeskBg_L2}">
-            <AppBarButton x:Name="SwitchButton" Label="ToStopwatch" Command="{StaticResource Switch}" CommandParameter="{Binding ElementName=SlideClock}" Foreground="{ThemeResource ClockdeskBg_L2}">
+            <AppBarButton x:Name="Switch" Label="ToStopwatch" Command="{StaticResource Switch}" CommandParameter="{Binding ElementName=SlideClock}" Foreground="{ThemeResource ClockdeskBg_L2}">
                 <AppBarButton.Icon>
                     <FontIcon x:Name="SwitchButton_Icon" Glyph="&#xE916;" Foreground="{ThemeResource ClockdeskBg_L2}"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton x:Name="ShowStop" Label="" Command="{StaticResource ShowStopList}" CommandParameter="{Binding ElementName=SlideClock}" Foreground="{ThemeResource ClockdeskBg_L2}">
+                <AppBarButton.Icon>
+                    <FontIcon x:Name="ShowStop_Icon" Glyph="&#xE916;" Foreground="{ThemeResource ClockdeskBg_L2}"/>
                 </AppBarButton.Icon>
             </AppBarButton>
         </CommandBar>

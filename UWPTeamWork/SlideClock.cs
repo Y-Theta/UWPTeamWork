@@ -10,6 +10,8 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Shapes;
 
 namespace UWPTeamWork
 {
@@ -81,10 +83,30 @@ namespace UWPTeamWork
             set { SetValue(MinPathProperty, value); }
         }
         public static readonly DependencyProperty MinPathProperty =
-             DependencyProperty.Register("MinPath", typeof(String), typeof(SlideClock), new PropertyMetadata(""));
+             DependencyProperty.Register("MinPath", typeof(String), typeof(SlideClock), new PropertyMetadata(null));
         #endregion
 
-        #region 秒表停点
+        #region 倒数第一停点
+        public TimeSpan LastStop
+        {
+            get { return (TimeSpan)GetValue(LastStopProperty); }
+            set { SetValue(LastStopProperty, value); }
+        }
+        public static readonly DependencyProperty LastStopProperty =
+            DependencyProperty.Register("LastStop", typeof(TimeSpan), typeof(SlideClock), new PropertyMetadata(null));
+        #endregion
+
+        #region 倒数第二停点
+        public TimeSpan SecondlastStop
+        {
+            get { return (TimeSpan)GetValue(SecondlastStopProperty); }
+            set { SetValue(SecondlastStopProperty, value); }
+        }
+        public static readonly DependencyProperty SecondlastStopProperty =
+            DependencyProperty.Register("SecondlastStop", typeof(TimeSpan), typeof(SlideClock), new PropertyMetadata(null));
+        #endregion
+
+        #region 秒表停点列表
         public ObservableCollection<StopNode> StopList
         {
             get { return (ObservableCollection<StopNode>)GetValue(StopListProperty); }
@@ -93,6 +115,16 @@ namespace UWPTeamWork
         public static readonly DependencyProperty StopListProperty =
             DependencyProperty.Register("StopList", typeof(ObservableCollection<StopNode>), typeof(SlideClock), 
                 new PropertyMetadata(new ObservableCollection<StopNode>()));
+        #endregion
+
+        #region 秒表停点列表可见性
+        public Visibility StopListVisibility
+        {
+            get { return (Visibility)GetValue(StopListVisibilityProperty); }
+            set { SetValue(StopListVisibilityProperty, value); }
+        }
+        public static readonly DependencyProperty StopListVisibilityProperty =
+            DependencyProperty.Register("StopListVisibility", typeof(Visibility), typeof(SlideClock), new PropertyMetadata(Visibility.Collapsed));
         #endregion
 
         #region 主计时 /s 
@@ -157,13 +189,13 @@ namespace UWPTeamWork
             DependencyProperty.Register("HMsec", typeof(int), typeof(SlideClock), new PropertyMetadata(0));
         #endregion
 
+        //方法
+
         #region 公共方法
         public void SetMode(TimerMode mode)
         {
             if (IsTimerRuning)
-            {
                 return;
-            }
             VisualStateManager.GoToState(this, "SecNormal", false);
             VisualStateManager.GoToState(this, "SecToO", false);
             InitTimer();
@@ -406,8 +438,22 @@ namespace UWPTeamWork
         {
             this.DefaultStyleKey = typeof(SlideClock);
             this.ManipulationMode = ManipulationModes.All;
-            
+            this.StopList.CollectionChanged += StopList_CollectionChanged;
             this.Loaded += OnLoaded;
+        }
+
+        private void StopList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            var nodes = (ObservableCollection<StopNode>)sender;
+            if (nodes.Count >= 2)
+            {
+                LastStop = nodes[nodes.Count - 1].Stoppoint;
+                SecondlastStop = nodes[nodes.Count - 2].Stoppoint;
+            }
+            else if(nodes.Count >= 1)
+            {
+                LastStop = nodes[nodes.Count - 1].Stoppoint;
+            }
         }
     }
 

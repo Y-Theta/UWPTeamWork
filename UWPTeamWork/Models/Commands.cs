@@ -35,7 +35,7 @@ namespace UWPTeamWork
         }
         public void Execute(object parameter)
         {
-            ((Frame)parameter).Navigate(typeof(ShowPage));
+            ((Frame)parameter).Navigate(typeof(NotePage));
         }
     }
 
@@ -55,7 +55,21 @@ namespace UWPTeamWork
         }
     }
 
-    public class ChangeResCommand/*  */ : ICommand
+    public class ShowStopListCommand /* 切换 */ : ICommand
+    {
+        public event EventHandler CanExecuteChanged;
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+        public void Execute(object parameter)
+        {
+            SlideClock s = (SlideClock)parameter;
+            s.StopListVisibility = s.StopListVisibility.Equals(Visibility.Collapsed) ? Visibility.Visible : Visibility.Collapsed;
+        }
+    }
+    public class ChangeResCommand/* 更改主题 */ : ICommand
     {
         public event EventHandler CanExecuteChanged;
 

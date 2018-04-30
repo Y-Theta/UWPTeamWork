@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ using static UWPTeamWork.SlideClock;
 
 namespace UWPTeamWork
 {
+    //Ang to Min 
     public class MinAngConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
@@ -28,6 +30,7 @@ namespace UWPTeamWork
         }
     }
 
+    //Simple Ang to Min 
     public class MinAngConverterSim : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
@@ -51,6 +54,7 @@ namespace UWPTeamWork
         }
     }
 
+    //Ang to Hour
     public class HourAngConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
@@ -64,29 +68,15 @@ namespace UWPTeamWork
         }
     }
 
-    public class MutexVisConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, string language)
-        {
-            switch((Visibility)value)
-            {
-                case Visibility.Collapsed:
-                    return Visibility.Visible;
-                default:return Visibility.Collapsed;
-            }
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, string language)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
+    //格式化时间
     public class TimeFormatdConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return String.Format("{0:D2}:{1:D2}.{2:D2}", ((TimeSpan)value).Minutes, ((TimeSpan)value).Seconds, ((TimeSpan)value).Milliseconds);
+            if (value != null)
+                return String.Format("{0:D2}:{1:D2}.{2:D2}", ((TimeSpan)value).Minutes, ((TimeSpan)value).Seconds, ((TimeSpan)value).Milliseconds);
+            else
+                return " ";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
@@ -94,4 +84,5 @@ namespace UWPTeamWork
             throw new NotImplementedException();
         }
     }
+
 }

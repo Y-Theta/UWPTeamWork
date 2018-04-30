@@ -33,7 +33,6 @@ namespace UWPTeamWork
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;       
-            
         }
 
         /// <summary>

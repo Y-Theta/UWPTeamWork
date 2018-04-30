@@ -24,14 +24,7 @@ namespace UWPTeamWork
         }
         public static readonly DependencyProperty AdditionButtonVisiblityProperty =
             DependencyProperty.Register("AdditionButtonVisiblity", typeof(Visibility), typeof(OverallStateBar),
-                new PropertyMetadata(Visibility.Collapsed, new PropertyChangedCallback(OnAdditionButtonVisiblityChanged)));
-        private static void OnAdditionButtonVisiblityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (((Visibility)e.NewValue).Equals(Visibility.Collapsed))
-                VisualStateManager.GoToState((OverallStateBar)d, "AdditionButtons_Hide", false);
-            else
-                VisualStateManager.GoToState((OverallStateBar)d, "AdditionButtons_Show", false);
-        }
+                new PropertyMetadata(Visibility.Collapsed));
         #endregion
 
         #region 自动折叠
@@ -54,6 +47,21 @@ namespace UWPTeamWork
             DependencyProperty.Register("CommandParameter", typeof(object), typeof(OverallStateBar), new PropertyMetadata(null));
         #endregion
 
+        protected override void OnApplyTemplate()
+        {
+            var Timer = GetTemplateChild("Timer") as Button;
+            Timer.Click += AdditionButton_Click;
+            var Note = GetTemplateChild("Note") as Button;
+            Note.Click += AdditionButton_Click;
+            var Settings = GetTemplateChild("Settings") as Button;
+            Settings.Click += AdditionButton_Click;
+        }
+
+        private void AdditionButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (AutoRow)
+                AdditionButtonVisiblity = Visibility.Collapsed;
+        }
 
         public OverallStateBar()
         {

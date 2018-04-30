@@ -110,6 +110,7 @@
     <Compile Include="ShowPage.xaml.cs">
       <DependentUpon>ShowPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="StopList.cs" />
     <Compile Include="TaskManage.xaml.cs">
       <DependentUpon>TaskManage.xaml</DependentUpon>
     </Compile>

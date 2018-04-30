@@ -100,13 +100,13 @@
     <Compile Include="NotePage.xaml.cs">
       <DependentUpon>NotePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Commands.cs" />
+    <Compile Include="Models\Commands.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters.cs" />
+    <Compile Include="Models\Converters.cs" />
     <Compile Include="OverallStateBar.cs" />
-    <Compile Include="OverallConfig.cs" />
+    <Compile Include="Models\OverallConfig.cs" />
     <Compile Include="ShowPage.xaml.cs">
       <DependentUpon>ShowPage.xaml</DependentUpon>
     </Compile>
@@ -119,7 +119,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SlideClock.cs" />
-    <Compile Include="StateTriggers.cs" />
+    <Compile Include="Models\StateTriggers.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

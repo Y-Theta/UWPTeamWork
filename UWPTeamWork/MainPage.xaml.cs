@@ -7,9 +7,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Timers;
 using Windows.ApplicationModel.Core;
+using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
+using Windows.UI.Notifications;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -17,6 +19,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using UWPTeamWork.tile;
 using xBindDataExample.Models;
 
 namespace UWPTeamWork
@@ -51,6 +54,12 @@ namespace UWPTeamWork
         {
             Window.Current.SetTitleBar(TitleBarBack);
             OverallConfig.Instence.OverallThemeChanged += Instence_OverallThemeChanged;
+
+            XmlDocument xmlDoc = TileService.CreateTiles(new PrimaryTile());
+
+            TileUpdater updater = TileUpdateManager.CreateTileUpdaterForApplication();
+            TileNotification notification = new TileNotification(xmlDoc);
+            updater.Update(notification);
         }
 
         private void Instence_OverallThemeChanged(object sender, EventArgs e)

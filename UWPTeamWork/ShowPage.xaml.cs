@@ -25,13 +25,14 @@ namespace UWPTeamWork
     public sealed partial class ShowPage : Page
     {
         Note note;
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             //这个e.Parameter是获取传递过来的参数，其实大家应该再次之前判断这个参数是否为null的，我偷懒了
             if (e != null)
             {
                 note = (Note)e.Parameter;
+                Text();
             }
         }
         public ShowPage()
@@ -40,8 +41,16 @@ namespace UWPTeamWork
             ImageBrush imageBrush = new ImageBrush();
             imageBrush.ImageSource = new BitmapImage(new Uri("ms-appx:///Assets/backg.jpg", UriKind.Absolute));
             grid.Background = imageBrush;
+
             this.Loaded += ShowPage_Loaded;
+            
             //ShowBox.Text = note.MyText;
+        }
+
+        private void Text()
+        {
+            Title.Text = note.summary;
+            ShowBox.Text = note.MyText;
         }
 
         private void ShowPage_Loaded(object sender, RoutedEventArgs e)

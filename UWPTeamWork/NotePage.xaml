@@ -63,37 +63,45 @@
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="80"/>
+            <RowDefinition Height="32"/>
             <RowDefinition Height="*" />
-            <RowDefinition Height="100" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="80" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="80" />
-        </Grid.ColumnDefinitions>
-        <AppBarButton Icon="Back" Click="Return_Click"></AppBarButton>
-        <GridView Grid.Column="1" 
+            
+        <Grid Grid.Row="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="100" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="80" />
+            </Grid.ColumnDefinitions>
+            <AppBarButton Icon="Back" Click="Return_Click"></AppBarButton>
+            <GridView Grid.Column="1" 
                   Grid.Row="1"
                   Name="myGridView"
                   ItemsSource="{x:Bind Notes}" 
                   IsItemClickEnabled="True" 
                   ItemClick="GridView_ItemClick"
                   ItemTemplate="{StaticResource NoteDataTemplate}">
-        </GridView>
-        <AppBarButton Icon ="Add" 
+            </GridView>
+            <AppBarButton Icon ="Add" 
                       Grid.Row="2" 
                       Click="Button_Click"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center">
-            
-        </AppBarButton>
-        <!--
+
+            </AppBarButton>
+            <!--
         <AppBarButton Icon="Delete"
                       Grid.Column="2"
                       Grid.Row="2"
                       Click="delete_button"></AppBarButton>
         -->
-        
+
+        </Grid>
     </Grid>
+    
 </Page>

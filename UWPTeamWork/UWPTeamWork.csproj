@@ -120,6 +120,8 @@
     <Compile Include="TaskManage.xaml.cs">
       <DependentUpon>TaskManage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="tile\tile.cs" />
+    <Compile Include="tile\tileservice.cs" />
     <Compile Include="TimerPage.xaml.cs">
       <DependentUpon>TimerPage.xaml</DependentUpon>
     </Compile>

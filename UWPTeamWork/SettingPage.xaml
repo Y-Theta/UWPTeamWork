@@ -1,0 +1,51 @@
+﻿<Page
+    x:Class="UWPTeamWork.SettingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UWPTeamWork"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <local:ChangeResCommand x:Key="ChangeColor"/>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource MainThemeColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="1" Style="{StaticResource DefaultScrollViewer}">
+            <StackPanel Margin="10">
+                <Grid x:Name="General" Margin="0,0,0,20" Height="1000">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock x:Name="General_Title" Text="General" Style="{StaticResource SettingTitle}"/>
+                    <Rectangle x:Name="General_HSeperator" Style="{StaticResource SettingSeperator}"/>
+                    <TextBlock x:Name="General_Content" Grid.Row="1" Text="This is an App that..." Style="{StaticResource SettingTextContent}"/>
+                </Grid>
+                <Grid x:Name="Themes" Margin="0,0,0,20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock x:Name="Themes_Title" Text="Themes" Style="{StaticResource SettingTitle}"/>
+                    <Rectangle x:Name="Themes_HSeperator" Style="{StaticResource SettingSeperator}"/>
+                    <TextBlock x:Name="Themes_Content" Grid.Row="1" Text="Select a color as theme from colors below " Style="{StaticResource SettingTextContent}"/>
+                    <VariableSizedWrapGrid x:Name="Themes_Conntrols" Grid.Row="2" Orientation="Horizontal" MaximumRowsOrColumns="8" ItemHeight="50" ItemWidth="50" Margin="0,4,0,0">
+                        <RadioButton GroupName="Theme" Background="#42A881" Style="{StaticResource ColorRadioButton}"
+                                     Command="{StaticResource ChangeColor}" CommandParameter="ms-appx:///Themes/Tdefault.xaml"/>
+                        <RadioButton GroupName="Theme" Background="#1DB0B8" Style="{StaticResource ColorRadioButton}"
+                                     Command="{StaticResource ChangeColor}" CommandParameter="ms-appx:///Themes/TBlueStyle.xaml"/>
+                        <RadioButton GroupName="Theme" Background="#999999" Style="{StaticResource ColorRadioButton}"
+                                     Command="{StaticResource ChangeColor}" CommandParameter="ms-appx:///Themes/TGrayStyle.xaml"/>
+                    </VariableSizedWrapGrid>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
+  

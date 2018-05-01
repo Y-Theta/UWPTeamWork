@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using static UWPTeamWork.SlideClock;
 
 namespace UWPTeamWork
@@ -53,7 +56,6 @@ namespace UWPTeamWork
         }
     }
 
-    //
     public class BoolTrigger : StateTriggerBase
     {
         public bool ReferenceValue
@@ -206,4 +208,30 @@ namespace UWPTeamWork
             ((OverallStateBarStateTrigger)d).SetActive(((Visibility)e.NewValue).Equals(((OverallStateBarStateTrigger)d).TargetStatus));
         }
     }
+
+    public class StopNodesTrigger : StateTriggerBase
+    {
+        public TimeSpan ReferenceValue
+        {
+            get { return (TimeSpan)GetValue(ReferenceValueProperty); }
+            set { SetValue(ReferenceValueProperty, value); }
+        }
+        public static readonly DependencyProperty ReferenceValueProperty =
+            DependencyProperty.Register("ReferenceValue", typeof(TimeSpan), typeof(StopNodesTrigger), new PropertyMetadata(TimeSpan.Zero));
+
+        public TimeSpan AimValue
+        {
+            get { return (TimeSpan)GetValue(AimValueProperty); }
+            set { SetValue(AimValueProperty, value); }
+        }
+        public static readonly DependencyProperty AimValueProperty =
+            DependencyProperty.Register("AimValue", typeof(TimeSpan), typeof(StopNodesTrigger), 
+                new PropertyMetadata(TimeSpan.Zero, new PropertyChangedCallback(OnAimValueChanged)));
+        private static void OnAimValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            StopNodesTrigger snt = (StopNodesTrigger)d;
+            snt.SetActive( snt.ReferenceValue.Equals(TimeSpan.Zero) && !((TimeSpan)e.NewValue).Equals(TimeSpan.Zero));
+        }
+    }
+
 }

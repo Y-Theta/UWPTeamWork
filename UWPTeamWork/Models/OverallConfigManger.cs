@@ -9,9 +9,9 @@ using Windows.UI.Xaml;
 
 namespace UWPTeamWork
 {
-    class OverallConfig 
+    class OverallConfigManger
     {
-        public static OverallConfig Instence = new OverallConfig();
+        public static OverallConfigManger Instence = new OverallConfigManger();
 
         #region 主题颜色
         public event EventHandler OverallThemeChanged;
@@ -27,7 +27,17 @@ namespace UWPTeamWork
         }
         #endregion
 
-        public OverallConfig()
+        private String generalIns;
+        public String GeneralIns
+        {
+            get => generalIns;
+            set
+            {
+                generalIns = value;
+            }
+        }
+
+        public OverallConfigManger()
         {
 
         }

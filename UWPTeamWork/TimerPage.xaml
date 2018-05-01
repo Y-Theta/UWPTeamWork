@@ -42,19 +42,40 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
+            <VisualStateGroup x:Name="NotifyGridState">
+                <VisualState x:Name="PopTipShow">
+                    <Storyboard>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="NotifyGrid" Storyboard.TargetProperty="Opacity">
+                            <LinearDoubleKeyFrame KeyTime="0" Value="0"/>
+                            <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1">
+                                <EasingDoubleKeyFrame.EasingFunction>
+                                    <CircleEase EasingMode="EaseOut"/>
+                                </EasingDoubleKeyFrame.EasingFunction>
+                            </EasingDoubleKeyFrame>
+                            <LinearDoubleKeyFrame KeyTime="0:0:3" Value="1"/>
+                            <LinearDoubleKeyFrame KeyTime="0:0:4" Value="0"/>
+                        </DoubleAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NotifyGrid" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                            <DiscreteObjectKeyFrame KeyTime="0:0:4" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="PopTipHide"/>
+            </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <Viewbox x:Name="ClockLayer"   Grid.RowSpan="2" Grid.ColumnSpan="3" MaxHeight="600" MaxWidth="600">
+        <Viewbox x:Name="ClockLayer"  Grid.ColumnSpan="3" MaxHeight="600" MaxWidth="600">
             <local:SlideClock x:Name="SlideClock" Background="{Binding ElementName=RootGrid,Path=Background,Mode=OneWay}" />
         </Viewbox>
-        <CommandBar Grid.Row="1" Grid.ColumnSpan="3" x:Name="MainControl" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" OverflowButtonVisibility="Visible" ClosedDisplayMode="Minimal" IsOpen="False" Style="{StaticResource ControlBarSettingPanel}" Foreground="{ThemeResource ClockdeskBg_L2}">
+        <Grid x:Name="NotifyGrid" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{ThemeResource MainThemeColorD1}" Visibility="Collapsed" Opacity="0">
+            <TextBlock x:Name="NotifyText" Text="{Binding ElementName=SlideClock,Path=PopTip}" Style="{StaticResource NotifyTextBlock}"/>
+        </Grid>
+        <CommandBar Grid.Row="1" Grid.ColumnSpan="3" x:Name="MainControl" Style="{StaticResource ControlBarSettingPanel}">
             <AppBarButton x:Name="Switch" Label="ToStopwatch" Command="{StaticResource Switch}" CommandParameter="{Binding ElementName=SlideClock}" Foreground="{ThemeResource ClockdeskBg_L2}">
                 <AppBarButton.Icon>
                     <FontIcon x:Name="SwitchButton_Icon" Glyph="&#xE916;" Foreground="{ThemeResource ClockdeskBg_L2}"/>

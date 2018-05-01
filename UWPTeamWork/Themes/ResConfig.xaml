@@ -3,12 +3,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:UWPTeamWork">
 
-    <local:OverallConfig x:Key="OverallConfig"/>
+    <local:OverallConfigManger x:Key="OverallConfig"/>
     <FontFamily x:Key="LineNumber">Assets/LineNumber.ttf#LineNumber</FontFamily>
     <x:Double x:Key="OverallStateBarButtonSize">32</x:Double>
     <x:Double x:Key="TextTickSize">24</x:Double>
     <x:Double x:Key="ClockCircleThickness">4</x:Double>
     <x:Double x:Key="TitleBarText">16</x:Double>
     <x:Double x:Key="StopListTextSize">20</x:Double>
+    <x:Double x:Key="ControlBarSettingPanel_CompactHeight">48</x:Double>
+    <x:Double x:Key="ControlBarSettingPanel_MinimalHeight">24</x:Double>
+    <x:String x:Key="ScrollViewerSeparatorContractDuration">00:00:00.1</x:String>
+    <x:String x:Key="ScrollViewerSeparatorContractDelay">00:00:02</x:String>
+    <x:Double x:Key="DefaultScrollBarSize">16</x:Double>
+    <x:Double x:Key="SmallScrollThumbScale">0.125</x:Double>
+    <x:Double x:Key="SmallScrollThumbOffset">-2</x:Double>
     
 </ResourceDictionary>

@@ -8,27 +8,26 @@
     <local:MinAngConverterSim x:Key="MinAngConverterSim"/>
     <local:TimeFormatdConverter x:Key="TimeFormat"/>
 
-    <local:ChangeResCommand x:Key="ChangeRes"/>
     <local:ShowAdditionsCommand x:Key="ShowAdditionsCommand"/>
     <local:NavigateToClockCommand x:Key="NavigateToClockCommand"/>
     <local:ShowPageCommand x:Key="ShowPage"/>
+    <local:SettingPageCommand x:Key="SettingPage"/>
+
     <!--Styles-->
+    
     <!--SliderClock-->
     <Style TargetType="local:SlideClock" >
         <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:SlideClock">
-                    <Grid x:Name="RootGrid" UseLayoutRounding="True" Margin="50">
+                    <Grid x:Name="RootGrid" UseLayoutRounding="True">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="WindowState">
                                 <VisualState x:Name="Large">
                                     <VisualState.StateTriggers>
                                         <local:WindowSizeOverTrigger MinWidowWidth="500" MinWindowHeight="500"/>
                                     </VisualState.StateTriggers>
-                                    <VisualState.Setters>
-                                        <Setter Target="RootGrid.Margin" Value="50"/>
-                                    </VisualState.Setters>
                                     <VisualState.Storyboard>
                                         <Storyboard>
                                             <DoubleAnimation Storyboard.TargetName="ContentLayerLarge" Storyboard.TargetProperty="Opacity"
@@ -48,9 +47,6 @@
                                     <VisualState.StateTriggers>
                                         <local:WindowSizeLessTrigger MinWidowWidth="500" MinWindowHeight="500"/>
                                     </VisualState.StateTriggers>
-                                    <VisualState.Setters>
-                                        <Setter Target="RootGrid.Margin" Value="0"/>
-                                    </VisualState.Setters>
                                     <VisualState.Storyboard>
                                         <Storyboard>
                                             <DoubleAnimation Storyboard.TargetName="ContentLayerLarge" Storyboard.TargetProperty="Opacity"
@@ -538,11 +534,42 @@
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
+                            <VisualStateGroup x:Name="StopNodes">
+                                <VisualState x:Name="NoneStoppoints"/>
+                                <VisualState x:Name="OneStoppoints">
+                                    <VisualState.StateTriggers>
+                                        <local:StopNodesTrigger AimValue="{Binding LastStop, RelativeSource={RelativeSource Mode=TemplatedParent},Mode=OneWay}" ReferenceValue="{Binding SecondlastStop, RelativeSource={RelativeSource Mode=TemplatedParent},Mode=OneWay}"/>
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="StopPoint_One.Visibility" Value="Visible"/>
+                                    </VisualState.Setters>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="StopPoint_One" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.8">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="MorethantwoStoppoints">
+                                    <VisualState.StateTriggers>
+                                        <local:StopNodesTrigger AimValue="{Binding SecondlastStop, RelativeSource={RelativeSource Mode=TemplatedParent},Mode=OneWay}"/>
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="StopPoint_One.Visibility" Value="Visible"/>
+                                        <Setter Target="StopPoint_Two.Visibility" Value="Visible"/>
+                                    </VisualState.Setters>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="StopPoint_Two" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.8">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid x:Name="ContentLayerLarge" Width="700" Height="700" Opacity="1" Visibility="Visible">
-                            <Grid.Projection>
-                                <PlaneProjection />
-                            </Grid.Projection>
                             <Grid x:Name="SecH_Grid" Height="500" Width="500" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin=".5 .5" >
                                 <Grid.RenderTransform>
                                     <TransformGroup>
@@ -619,8 +646,8 @@
                                 <TextBlock x:Name="LargeIcon" Text="&#xEDB5;" FontSize="120"  Opacity="0" Style="{StaticResource IconTextblock}"/>
                             </Grid>
                             <Grid x:Name="StopPoints" Visibility="Collapsed">
-                                <TextBlock x:Name="StopPoint_One" Text="{Binding LastStop, RelativeSource={RelativeSource Mode=TemplatedParent},Mode=OneWay,Converter={StaticResource TimeFormat}}" Style="{StaticResource StopNodeTextblock1}"/>
-                                <TextBlock x:Name="StopPoint_Two" Text="{Binding SecondlastStop, RelativeSource={RelativeSource Mode=TemplatedParent},Mode=OneWay,Converter={StaticResource TimeFormat}}" Style="{StaticResource StopNodeTextblock2}" />
+                                <TextBlock x:Name="StopPoint_One" Text="{Binding LastStop, RelativeSource={RelativeSource Mode=TemplatedParent},Mode=OneWay,Converter={StaticResource TimeFormat}}" Style="{StaticResource StopNodeTextblock1}" Visibility="Collapsed"/>
+                                <TextBlock x:Name="StopPoint_Two" Text="{Binding SecondlastStop, RelativeSource={RelativeSource Mode=TemplatedParent},Mode=OneWay,Converter={StaticResource TimeFormat}}" Style="{StaticResource StopNodeTextblock2}" Visibility="Collapsed"/>
                             </Grid>
                         </Grid>
                         <Grid x:Name="ContentLayerMini" Width="500" Height="500" Opacity="0" Visibility="Collapsed">
@@ -737,7 +764,7 @@
                             <Button x:Name="Timer" Content="&#xE916;" Grid.Column="0" Style="{StaticResource IconButton}" Opacity="0" Foreground="{ThemeResource ClockdeskBg_L2}" CommandParameter="{TemplateBinding CommandParameter}" Command="{StaticResource NavigateToClockCommand}"/>
                             <Button x:Name="Note" Content="&#xE70B;" Grid.Column="1" Style="{StaticResource IconButton}" Opacity="0"  Foreground="{ThemeResource ClockdeskBg_L2}" CommandParameter="{TemplateBinding CommandParameter}"
                                     Command="{StaticResource ShowPage}"/>
-                            <Button x:Name="Settings" Content="&#xE90F;" Grid.Column="2" Style="{StaticResource IconButton}" Opacity="0"  Foreground="{ThemeResource ClockdeskBg_L2}" Command="{StaticResource ChangeRes}" CommandParameter="{TemplateBinding CommandParameter}"/>
+                            <Button x:Name="Settings" Content="&#xE90F;" Grid.Column="2" Style="{StaticResource IconButton}" Opacity="0"  Foreground="{ThemeResource ClockdeskBg_L2}" CommandParameter="{TemplateBinding CommandParameter}" Command="{StaticResource SettingPage}"/>
                         </Grid>
                         <Grid Grid.Column="1" IsHitTestVisible="False"/>
                     </Grid>
@@ -764,7 +791,7 @@
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <Grid Width="300">
+                    <Grid Width="300" IsHitTestVisible="False">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="40"/>
                             <ColumnDefinition Width="*"/>

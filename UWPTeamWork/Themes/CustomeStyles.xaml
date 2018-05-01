@@ -50,8 +50,8 @@
                         </VisualStateManager.VisualStateGroups>
                         <FontIcon x:Name="ContentIcon" Glyph="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Content}" Foreground="{TemplateBinding Foreground}" FontSize="{TemplateBinding FontSize}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RenderTransformOrigin=".5 .5">
                             <FontIcon.RenderTransform>
-                                    <ScaleTransform x:Name="ContentIcon_ScaleTransform"/>
-                              </FontIcon.RenderTransform>
+                                <ScaleTransform x:Name="ContentIcon_ScaleTransform"/>
+                            </FontIcon.RenderTransform>
                         </FontIcon>
                     </Grid>
                 </ControlTemplate>
@@ -75,12 +75,12 @@
                                 </VisualState>
                                 <VisualState x:Name="PointerOver">
                                     <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="ContentIcon_RotateTransform" Storyboard.TargetProperty="Angle"
+                                        <DoubleAnimation Storyboard.TargetName="ContentIcon_RotateTransform" Storyboard.TargetProperty="Angle"
                                                          To="180" Duration="0:0:1">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <CubicEase EasingMode="EaseIn"/>
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseIn"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
                                         <DoubleAnimation Storyboard.TargetName="ContentIcon_ScaleTransform" Storyboard.TargetProperty="ScaleX"
                                                          To="1.2" Duration="0:0:0.3">
                                             <DoubleAnimation.EasingFunction>
@@ -203,6 +203,89 @@
         <Setter Property="FontSize" Value="18"/>
     </Style>
 
+    <!--NotifyTextBlock-->
+    <Style x:Key="NotifyTextBlock" TargetType="TextBlock">
+        <Setter Property="Margin" Value="18,10,18,10"/>
+        <Setter Property="Foreground" Value="{ThemeResource NotifyTextBlockForeground}"/>
+        <Setter Property="FontFamily" Value="{StaticResource LineNumber}"/>
+        <Setter Property="FontSize" Value="20"/>
+    </Style>
+
+    <!--SettingTitle-->
+    <Style x:Key="SettingTitle" TargetType="TextBlock">
+        <Setter Property="Margin" Value="0,0,0,4"/>
+        <Setter Property="Foreground" Value="{ThemeResource BrightMask_A0}"/>
+        <Setter Property="FontWeight" Value="ExtraLight"/>
+        <Setter Property="FontSize" Value="24"/>
+    </Style>
+
+    <Style x:Key="SettingTextContent" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{ThemeResource BrightMask_A0}"/>
+        <Setter Property="FontWeight" Value="ExtraLight"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+
+    <Style x:Key="SettingSeperator" TargetType="Rectangle">
+        <Setter Property="Fill" Value="{ThemeResource BrightMask_A0}"/>
+        <Setter Property="Height" Value="1"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Bottom"/>
+    </Style>
+
+    <Style x:Key="ColorRadioButton" TargetType="RadioButton">
+        <Setter Property="Width" Value="30"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="MinWidth" Value="30"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Foreground" Value="{ThemeResource MinHButtonForeGround}"/>
+        <Setter Property="BorderBrush" Value="{ThemeResource DarkMask_A0}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Grid x:Name="RootGrid">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Content_Mask_R" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed"/>
+                                <VisualState x:Name="Disabled"/>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Checked">
+                                    <VisualState.Setters>
+                                        <Setter Target="Content_Select.Visibility" Value="Visible"/>
+                                    </VisualState.Setters>
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Content_Mask" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked"/>
+                                <VisualState x:Name="Indeterminate"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Rectangle x:Name="Content_Bg" Fill="{TemplateBinding Background}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" />
+                        <Rectangle x:Name="Content_Border" Stroke="{TemplateBinding BorderBrush}" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" StrokeThickness="1"/>
+                        <Rectangle x:Name="Content_Mask_R" Fill="{ThemeResource DarkMask_40}" Width="{TemplateBinding Width}"
+                                   Height="{TemplateBinding Height}" Visibility="Collapsed"/>
+                        <Rectangle x:Name="Content_Mask" Fill="{ThemeResource DarkMask_80}" Width="{TemplateBinding Width}"
+                                   Height="{TemplateBinding Height}" Visibility="Collapsed"/>
+                        <FontIcon x:Name="Content_Select" Glyph="&#xE73E;" Foreground="{ThemeResource BrightMask_A0}" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" FontWeight="Bold"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!--IconTextblock-->
     <Style x:Key="IconTextblock" TargetType="TextBlock">
         <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -211,16 +294,19 @@
         <Setter Property="Foreground" Value="{ThemeResource ClockdeskBg_L2}"/>
         <Setter Property="TextAlignment" Value="Center"/>
     </Style>
- 
+
     <!--ControlBarSettingPanel-->
     <Style x:Key="ControlBarSettingPanel" TargetType="CommandBar">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{ThemeResource CommandBarForeground}"/>
+        <Setter Property="Foreground" Value="{ThemeResource ClockdeskBg_L2}"/>
+        <Setter Property="IsOpen" Value="False"/>
         <Setter Property="IsTabStop" Value="False"/>
-        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="VerticalAlignment" Value="Bottom"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="OverflowButtonVisibility" Value="Visible"/>
+        <Setter Property="ClosedDisplayMode" Value="Minimal"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CommandBar">
@@ -341,7 +427,7 @@
                                                 <SplineDoubleKeyFrame KeySpline="0.1,0.9 0.2,1.0" KeyTime="0:0:0.467" Value="0"/>
                                             </DoubleAnimationUsingKeyFrames>
                                             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="OverflowContentRootTransform" Storyboard.TargetProperty="Y">
-                                                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{ThemeResource AppBarThemeCompactHeight}"/>
+                                                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{StaticResource ControlBarSettingPanel_CompactHeight}"/>
                                                 <SplineDoubleKeyFrame KeySpline="0.1,0.9 0.2,1.0" KeyTime="0:0:0.467" Value="{Binding CommandBarTemplateSettings.ContentHeight, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                             </DoubleAnimationUsingKeyFrames>
                                             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="OverflowContentTransform" Storyboard.TargetProperty="Y">
@@ -373,7 +459,7 @@
                                             </DoubleAnimationUsingKeyFrames>
                                             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="OverflowContentRootTransform" Storyboard.TargetProperty="Y">
                                                 <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding CommandBarTemplateSettings.ContentHeight, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                                                <SplineDoubleKeyFrame KeySpline="0.2,0 0,1" KeyTime="0:0:0.167" Value="{ThemeResource AppBarThemeCompactHeight}"/>
+                                                <SplineDoubleKeyFrame KeySpline="0.2,0 0,1" KeyTime="0:0:0.167" Value="{StaticResource ControlBarSettingPanel_CompactHeight}"/>
                                             </DoubleAnimationUsingKeyFrames>
                                             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="OverflowContentTransform" Storyboard.TargetProperty="Y">
                                                 <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
@@ -387,7 +473,7 @@
                                                 <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="14,11,14,0"/>
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MoreButton" Storyboard.TargetProperty="MinHeight">
-                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{ThemeResource AppBarThemeMinimalHeight}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource ControlBarSettingPanel_MinimalHeight}"/>
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MoreButton" Storyboard.TargetProperty="VerticalAlignment">
                                                 <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Stretch"/>
@@ -434,7 +520,7 @@
                                                 <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="14,11,14,0"/>
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MoreButton" Storyboard.TargetProperty="MinHeight">
-                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{ThemeResource AppBarThemeMinimalHeight}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource ControlBarSettingPanel_MinimalHeight}"/>
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MoreButton" Storyboard.TargetProperty="VerticalAlignment">
                                                 <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Stretch"/>
@@ -481,7 +567,7 @@
                                                 <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="14,11,14,0"/>
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MoreButton" Storyboard.TargetProperty="MinHeight">
-                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{ThemeResource AppBarThemeMinimalHeight}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource ControlBarSettingPanel_MinimalHeight}"/>
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MoreButton" Storyboard.TargetProperty="VerticalAlignment">
                                                 <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Stretch"/>
@@ -511,7 +597,7 @@
                                                 <SplineDoubleKeyFrame KeySpline="0.1,0.9 0.2,1.0" KeyTime="0:0:0.467" Value="1"/>
                                             </DoubleAnimationUsingKeyFrames>
                                             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="OverflowContentRootTransform" Storyboard.TargetProperty="Y">
-                                                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{ThemeResource AppBarThemeMinimalHeight}"/>
+                                                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{StaticResource ControlBarSettingPanel_MinimalHeight}"/>
                                                 <SplineDoubleKeyFrame KeySpline="0.1,0.9 0.2,1.0" KeyTime="0:0:0.467" Value="{Binding CommandBarTemplateSettings.ContentHeight, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                             </DoubleAnimationUsingKeyFrames>
                                             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="OverflowContentTransform" Storyboard.TargetProperty="Y">
@@ -526,7 +612,7 @@
                                                 <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="14,11,14,0"/>
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MoreButton" Storyboard.TargetProperty="MinHeight">
-                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{ThemeResource AppBarThemeMinimalHeight}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource ControlBarSettingPanel_MinimalHeight}"/>
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MoreButton" Storyboard.TargetProperty="VerticalAlignment">
                                                 <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Stretch"/>
@@ -557,7 +643,7 @@
                                             </DoubleAnimationUsingKeyFrames>
                                             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="OverflowContentRootTransform" Storyboard.TargetProperty="Y">
                                                 <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="{Binding CommandBarTemplateSettings.ContentHeight, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                                                <SplineDoubleKeyFrame KeySpline="0.2,0 0,1" KeyTime="0:0:0.167" Value="{ThemeResource AppBarThemeMinimalHeight}"/>
+                                                <SplineDoubleKeyFrame KeySpline="0.2,0 0,1" KeyTime="0:0:0.167" Value="{StaticResource ControlBarSettingPanel_MinimalHeight}"/>
                                             </DoubleAnimationUsingKeyFrames>
                                             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="OverflowContentTransform" Storyboard.TargetProperty="Y">
                                                 <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
@@ -757,7 +843,7 @@
                                             <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="14,11,14,0"/>
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MoreButton" Storyboard.TargetProperty="MinHeight">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{ThemeResource AppBarThemeMinimalHeight}"/>
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource ControlBarSettingPanel_MinimalHeight}"/>
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PrimaryItemsControl" Storyboard.TargetProperty="IsHitTestVisible">
                                             <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="False"/>
@@ -782,7 +868,7 @@
                                             <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="14,11,14,0"/>
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MoreButton" Storyboard.TargetProperty="MinHeight">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{ThemeResource AppBarThemeMinimalHeight}"/>
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource ControlBarSettingPanel_MinimalHeight}"/>
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MoreButton" Storyboard.TargetProperty="VerticalAlignment">
                                             <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Stretch"/>
@@ -810,7 +896,7 @@
                                             <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="14,11,14,0"/>
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MoreButton" Storyboard.TargetProperty="MinHeight">
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{ThemeResource AppBarThemeMinimalHeight}"/>
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource ControlBarSettingPanel_MinimalHeight}"/>
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MoreButton" Storyboard.TargetProperty="VerticalAlignment">
                                             <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Stretch"/>
@@ -921,7 +1007,7 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid x:Name="ContentRoot" Background="{TemplateBinding Background}" Height="{TemplateBinding Height}" 
-                              MinHeight="{ThemeResource AppBarThemeCompactHeight}" Margin="{TemplateBinding Padding}" 
+                              MinHeight="{StaticResource ControlBarSettingPanel_CompactHeight}" Margin="{TemplateBinding Padding}" 
                               VerticalAlignment="Top" XYFocusKeyboardNavigation="Enabled" Width="{TemplateBinding Width}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -942,7 +1028,7 @@
                                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
                                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
                                 <ItemsControl x:Name="PrimaryItemsControl" Grid.Column="1" HorizontalAlignment="Stretch" IsTabStop="False" 
-                                              MinHeight="{ThemeResource AppBarThemeCompactHeight}" >
+                                              MinHeight="{StaticResource ControlBarSettingPanel_CompactHeight}" >
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft"/>
@@ -950,7 +1036,7 @@
                                     </ItemsControl.ItemsPanel>
                                 </ItemsControl>
                             </Grid>
-                            <Button x:Name="MoreButton" Grid.Column="1" Foreground="{TemplateBinding Foreground}" IsAccessKeyScope="True" Control.IsTemplateKeyTipTarget="True" Content="&#xE10C;" MinHeight="{ThemeResource AppBarThemeCompactHeight}"  Style="{StaticResource IconButton}" VerticalAlignment="Top" Margin="10,0,10,0" Visibility="{Binding CommandBarTemplateSettings.EffectiveOverflowButtonVisibility, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                            <Button x:Name="MoreButton" Grid.Column="1" Foreground="{TemplateBinding Foreground}" IsAccessKeyScope="True" Control.IsTemplateKeyTipTarget="True" Content="&#xE10C;" MinHeight="{StaticResource ControlBarSettingPanel_CompactHeight}"  Style="{StaticResource IconButton}" VerticalAlignment="Top" Margin="10,0,10,0" Visibility="{Binding CommandBarTemplateSettings.EffectiveOverflowButtonVisibility, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                             <Popup x:Name="OverflowPopup">
                                 <Popup.RenderTransform>
                                     <TranslateTransform x:Name="OverflowPopupOffsetTransform"/>
@@ -983,5 +1069,310 @@
         </Setter>
     </Style>
 
-    <!---->    
+    <!--Thumb-->
+    <Style x:Key="DefaultThumb" TargetType="Thumb">
+        <Setter Property="Margin" Value="0,5,0,5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Thumb">
+                    <Rectangle x:Name="Rect"
+                               Fill="{ThemeResource MainThemeColorD1}"
+                               Width="{TemplateBinding Height}"
+                               Height="{TemplateBinding Height}" >
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="PointerOver">
+                                    <VisualState.Setters>
+                                        <Setter Target="Rect.Fill" Value="{ThemeResource MainThemeColorD2}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <VisualState.Setters>
+                                        <Setter Target="Rect.Fill" Value="{ThemeResource MainThemeColorD3}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <VisualState.Setters>
+                                        <Setter Target="Rect.Fill" Value="{ThemeResource MainThemeColor}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Rectangle>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--RepeatButtonTemplate-->
+    <Style x:Key="DefaultRepeatButton" TargetType="RepeatButton">
+        <Setter Property="AllowFocusOnInteraction" Value="False"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Interval" Value="50"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Opacity" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RepeatButton">
+                    <Grid x:Name="Root" Background="Transparent">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--ScrollBar-->
+    <Style x:Key="DefaultScrollbar" TargetType="ScrollBar">
+        <Setter Property="MinWidth"
+                Value="{StaticResource DefaultScrollBarSize}" />
+        <Setter Property="MinHeight"
+                Value="{StaticResource DefaultScrollBarSize}" />
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="BorderBrush"
+                Value="Transparent" />
+        <Setter Property="IsTabStop"
+                Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ScrollBar">
+                    <Grid x:Name="Root">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition From="PointerOver" To="Normal">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="VerticalThumbTransform" Storyboard.TargetProperty="ScaleX"
+                                                         From="1" To="0.2" Duration="0:0:0.4">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <DoubleAnimation Storyboard.TargetName="VerticalThumbTransform" Storyboard.TargetProperty="TranslateX"
+                                                         From="0" To="-2" Duration="0:0:0.4">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                        </Storyboard>
+                                    </VisualTransition>
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="PointerOver">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="VerticalThumbTransform" Storyboard.TargetProperty="ScaleX"
+                                                         From="0.2" To="1" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation Storyboard.TargetName="VerticalThumbTransform" Storyboard.TargetProperty="TranslateX"
+                                                         From="-2" To="0" Duration="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="ScrollingIndicatorStates">
+                                <VisualState x:Name="TouchIndicator"/>
+                                <VisualState x:Name="MouseIndicator">
+                                    <VisualState.Setters>
+                                        <Setter Target="VerticalRoot.IsHitTestVisible"
+                                                Value="True" />
+                                        <Setter Target="VerticalThumb.Opacity"
+                                                Value="1" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="NoIndicator">
+                                    
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid x:Name="VerticalRoot"
+                              Background="{TemplateBinding Background}"
+                              BorderBrush="{TemplateBinding BorderBrush}"
+                              IsHitTestVisible="False">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Thumb x:Name="VerticalThumb"
+                                   AutomationProperties.AccessibilityView="Raw"
+                                   MinHeight="{StaticResource DefaultScrollBarSize}"
+                                   Opacity="0"
+                                   RenderTransformOrigin="1,0.5"
+                                   Grid.Row="2"
+                                   Style="{StaticResource DefaultThumb}"
+                                   Width="{StaticResource DefaultScrollBarSize}">
+                                <Thumb.RenderTransform>
+                                    <CompositeTransform x:Name="VerticalThumbTransform"
+                                                        ScaleX="0.2"
+                                                        TranslateX="-2"/>
+                                </Thumb.RenderTransform>
+                            </Thumb>
+                            <RepeatButton x:Name="VerticalLargeIncrease"
+                                          Grid.Row="3"
+                                          Style="{StaticResource DefaultRepeatButton}" />
+                            <RepeatButton x:Name="VerticalLargeDecrease"
+                                          Height="0"
+                                          Grid.Row="1"
+                                          Style="{StaticResource DefaultRepeatButton}" />
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--DefaultScrollViewer-->
+    <Style x:Key="DefaultScrollViewer" TargetType="ScrollViewer">
+        <Setter Property="HorizontalScrollMode" Value="Disabled" />
+        <Setter Property="VerticalScrollMode" Value="Auto" />
+        <Setter Property="IsHorizontalRailEnabled" Value="False" />
+        <Setter Property="IsVerticalRailEnabled" Value="True" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="ZoomMode" Value="Disabled" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="UseSystemFocusVisuals" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ScrollViewer">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="ScrollingIndicatorStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition From="MouseIndicator" To="NoIndicator">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VerticalScrollBar" Storyboard.TargetProperty="IndicatorMode">
+                                                <DiscreteObjectKeyFrame KeyTime="{StaticResource ScrollViewerSeparatorContractDelay}">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <ScrollingIndicatorMode>None</ScrollingIndicatorMode>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualTransition>
+                                    <VisualTransition From="MouseIndicatorFull" To="NoIndicator">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VerticalScrollBar" Storyboard.TargetProperty="IndicatorMode">
+                                                <DiscreteObjectKeyFrame KeyTime="{StaticResource ScrollViewerSeparatorContractDelay}">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <ScrollingIndicatorMode>None</ScrollingIndicatorMode>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualTransition>
+                                    <VisualTransition From="MouseIndicatorFull" To="MouseIndicator">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VerticalScrollBar" Storyboard.TargetProperty="IndicatorMode">
+                                                <DiscreteObjectKeyFrame KeyTime="{StaticResource ScrollViewerSeparatorContractDelay}">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <ScrollingIndicatorMode>MouseIndicator</ScrollingIndicatorMode>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualTransition>
+                                    <VisualTransition From="TouchIndicator" To="NoIndicator">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VerticalScrollBar" Storyboard.TargetProperty="IndicatorMode">
+                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.5">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <ScrollingIndicatorMode>None</ScrollingIndicatorMode>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualTransition>
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="NoIndicator"/>
+                                <VisualState x:Name="TouchIndicator">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VerticalScrollBar" Storyboard.TargetProperty="IndicatorMode">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <ScrollingIndicatorMode>TouchIndicator</ScrollingIndicatorMode>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="MouseIndicator">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VerticalScrollBar" Storyboard.TargetProperty="IndicatorMode">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <ScrollingIndicatorMode>MouseIndicator</ScrollingIndicatorMode>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="MouseIndicatorFull">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VerticalScrollBar" Storyboard.TargetProperty="IndicatorMode">
+                                            <DiscreteObjectKeyFrame KeyTime="0">
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <ScrollingIndicatorMode>MouseIndicator</ScrollingIndicatorMode>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid Background="{TemplateBinding Background}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <ScrollContentPresenter x:Name="ScrollContentPresenter"
+                                                    Grid.RowSpan="2"
+                                                    Grid.ColumnSpan="2"
+                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                    Margin="{TemplateBinding Padding}" />
+                            <Grid Grid.RowSpan="2"
+                                  Grid.ColumnSpan="2" />
+                            <ScrollBar x:Name="VerticalScrollBar"
+                                       Grid.Column="1"
+                                       IsTabStop="False"
+                                       Maximum="{TemplateBinding ScrollableHeight}"
+                                       Orientation="Vertical"
+                                       Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                       Value="{TemplateBinding VerticalOffset}"
+                                       ViewportSize="{TemplateBinding ViewportHeight}"
+                                       Style="{StaticResource DefaultScrollbar}"
+                                       HorizontalAlignment="Right" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

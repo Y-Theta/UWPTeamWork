@@ -39,6 +39,20 @@ namespace UWPTeamWork
         }
     }
 
+    public class SettingPageCommand /* 导航命令 */ : ICommand
+    {
+        public event EventHandler CanExecuteChanged;
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+        public void Execute(object parameter)
+        {
+            ((Frame)parameter).Navigate(typeof(SettingPage));
+        }
+    }
+
     public class SwitchCommand /* 切换 */ : ICommand
     {
         public event EventHandler CanExecuteChanged;
@@ -69,6 +83,7 @@ namespace UWPTeamWork
             s.StopListVisibility = s.StopListVisibility.Equals(Visibility.Collapsed) ? Visibility.Visible : Visibility.Collapsed;
         }
     }
+
     public class ChangeResCommand/* 更改主题 */ : ICommand
     {
         public event EventHandler CanExecuteChanged;
@@ -82,7 +97,8 @@ namespace UWPTeamWork
             var dics = App.Current.Resources.ThemeDictionaries;
             var dic = (ResourceDictionary)dics["Light"];
             dic.MergedDictionaries.Clear();
-            dic.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("ms-appx:///Themes/Tdefault.xaml") });
+            dic.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri((string)parameter) });
+            (Window.Current.Content as Frame).RequestedTheme = ElementTheme.Dark;
             (Window.Current.Content as Frame).RequestedTheme = ElementTheme.Light;
         }
     }

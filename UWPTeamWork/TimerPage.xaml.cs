@@ -44,15 +44,13 @@ namespace UWPTeamWork
             //doc.LoadXml(xml); 
             //ToastNotification toast = new ToastNotification(doc);
             //ToastNotificationManager.CreateToastNotifier().Show(toast);
+            SlideClock.PopTipChanged += SlideClock_PopTipChanged;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void SlideClock_PopTipChanged(object sender, EventArgs e)
         {
-            if (SlideClock.Mode.Equals(SlideClock.TimerMode.StopWatch))
-                SlideClock.SetMode(SlideClock.TimerMode.Timer);
-            else
-                SlideClock.SetMode(SlideClock.TimerMode.StopWatch);
-
+            VisualStateManager.GoToState(this, "PopTipHide", false);
+            VisualStateManager.GoToState(this, "PopTipShow", false);
         }
 
         #region IDisposable Support
@@ -65,19 +63,14 @@ namespace UWPTeamWork
                 if (disposing)
                 {
                 }
-
                 SlideClock.Dispose();
                 disposedValue = true;
             }
         }
 
-        // 添加此代码以正确实现可处置模式。
         public void Dispose()
         {
-            // 请勿更改此代码。将清理代码放入以上 Dispose(bool disposing) 中。
             Dispose(true);
-            // TODO: 如果在以上内容中替代了终结器，则取消注释以下行。
-            // GC.SuppressFinalize(this);
         }
         #endregion
     }

@@ -3,11 +3,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:UWPTeamWork">
 
-    <SolidColorBrush x:Key="MainThemeColor" Color="#658073"/>
-    <SolidColorBrush x:Key="MainThemeColorD1" Color="#629e82"/>
-    <SolidColorBrush x:Key="MainThemeColorD2" Color="#658073"/>
-    <SolidColorBrush x:Key="MainThemeColorB1" Color="#93e87d"/>
-    <SolidColorBrush x:Key="MainThemeColorB2" Color="#2ADE87"/>
+    <SolidColorBrush x:Key="MainThemeColor" Color="#1DB0B8"/>
+    <SolidColorBrush x:Key="MainThemeColorD1" Color="#1A949B"/>
+    <SolidColorBrush x:Key="MainThemeColorD2" Color="#035D70"/>
+    <SolidColorBrush x:Key="MainThemeColorD3" Color="#00343F"/>
+    <SolidColorBrush x:Key="MainThemeColorD4" Color="#00322D"/>
+    <SolidColorBrush x:Key="MainThemeColorB1" Color="#23C7D0"/>
+    <SolidColorBrush x:Key="MainThemeColorB2" Color="#37C6C0"/>
+    <SolidColorBrush x:Key="MainThemeColorB3" Color="#1FDBD3"/>
+    <SolidColorBrush x:Key="MainThemeColorB4" Color="#D0E9FF"/>
     <SolidColorBrush x:Key="DarkMask_C0" Color="#C0000000"/>
     <SolidColorBrush x:Key="DarkMask_A0" Color="#A0000000"/>
     <SolidColorBrush x:Key="DarkMask_80" Color="#80000000"/>
@@ -16,6 +20,8 @@
     <SolidColorBrush x:Key="BrightMask_A0" Color="#A0FFFFFF"/>
     <SolidColorBrush x:Key="BrightMask_80" Color="#80FFFFFF"/>
     <SolidColorBrush x:Key="BrightMask_40" Color="#40FFFFFF"/>
+
+    <SolidColorBrush x:Key="NotifyTextBlockForeground" Color="#A0000000"/>
     <SolidColorBrush x:Key="MinHButtonForeGround" Color="#e0ffffff"/>
     <SolidColorBrush x:Key="ClockdeskBg_L2" Color="#80ffffff"/>
     <SolidColorBrush x:Key="ClockdeskBg_L3" Color="#30ffffff"/>
@@ -23,6 +29,5 @@
     <SolidColorBrush x:Key="AppBarButtonNormal" Color="#C0FFFFFF"/>
     <SolidColorBrush x:Key="AppBarButtonPointerOver" Color="#e0256e52"/>
     <SolidColorBrush x:Key="AppBarButtonPressed" Color="#C0FFFFFF"/>
-    <SolidColorBrush x:Key="NoteBackground" Color="White"/>
-    <x:String x:Key="NoteShowBackground" >Assets/backg.jpg</x:String>
+    
 </ResourceDictionary>

@@ -30,6 +30,19 @@ namespace UWPTeamWork
         private int Stoppoints = 0;
 
         //属性
+        #region 操作提示
+        public String PopTip
+        {
+            get { return (String)GetValue(PopTipProperty); }
+            set { SetValue(PopTipProperty, value);
+                PopTipChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+        public static readonly DependencyProperty PopTipProperty =
+            DependencyProperty.Register("PopTip", typeof(String), typeof(SlideClock), new PropertyMetadata(null));
+        public event EventHandler PopTipChanged;
+        #endregion
+
         #region 计时模式
         public TimerMode Mode
         {
@@ -93,7 +106,7 @@ namespace UWPTeamWork
             set { SetValue(LastStopProperty, value); }
         }
         public static readonly DependencyProperty LastStopProperty =
-            DependencyProperty.Register("LastStop", typeof(TimeSpan), typeof(SlideClock), new PropertyMetadata(null));
+            DependencyProperty.Register("LastStop", typeof(TimeSpan), typeof(SlideClock), new PropertyMetadata(TimeSpan.Zero));
         #endregion
 
         #region 倒数第二停点
@@ -103,7 +116,7 @@ namespace UWPTeamWork
             set { SetValue(SecondlastStopProperty, value); }
         }
         public static readonly DependencyProperty SecondlastStopProperty =
-            DependencyProperty.Register("SecondlastStop", typeof(TimeSpan), typeof(SlideClock), new PropertyMetadata(null));
+            DependencyProperty.Register("SecondlastStop", typeof(TimeSpan), typeof(SlideClock), new PropertyMetadata(TimeSpan.Zero));
         #endregion
 
         #region 秒表停点列表
@@ -195,7 +208,10 @@ namespace UWPTeamWork
         public void SetMode(TimerMode mode)
         {
             if (IsTimerRuning)
+            {
+                PopTip = "You need to stop Timer first";
                 return;
+            }
             VisualStateManager.GoToState(this, "SecNormal", false);
             VisualStateManager.GoToState(this, "SecToO", false);
             InitTimer();
@@ -243,7 +259,10 @@ namespace UWPTeamWork
         public void Start()
         {
             if (MainSeconds == 0)
+            {
+                PopTip = "You must set a Timespan first";
                 return;
+            }
             IsTimerRuning = true;
             StartTimer();
         }
@@ -256,6 +275,8 @@ namespace UWPTeamWork
             MinutesAng = 0;
             HMsec = 0;
             Stoppoints = 0;
+            LastStop = TimeSpan.Zero;
+            SecondlastStop = TimeSpan.Zero;
             StopList.Clear();
             SetIconPathByAngle(0);
         }
@@ -356,7 +377,7 @@ namespace UWPTeamWork
             if (!e.IsInertial && !IsTimerRuning)
             {
                 double angleOfLine = Math.Atan2((e.Position.Y - ActualHeight / 2), (e.Position.X - ActualWidth / 2)) * 180 / Math.PI + 90;
-                if (Pointliner < ActualHeight * 3 / 5 && Pointliner > ActualHeight / 4 && (Mode.Equals(TimerMode.Timer) || Mode.Equals(TimerMode.Unknown)))
+                if (Pointliner < ActualHeight * 3 / 5 && Pointliner > ActualHeight / 4 && !Mode.Equals(TimerMode.StopWatch))
                 {
                     if (angleOfLine < 0)
                         angleOfLine = 360 + angleOfLine;
@@ -447,8 +468,8 @@ namespace UWPTeamWork
             var nodes = (ObservableCollection<StopNode>)sender;
             if (nodes.Count >= 2)
             {
-                LastStop = nodes[nodes.Count - 1].Stoppoint;
                 SecondlastStop = nodes[nodes.Count - 2].Stoppoint;
+                LastStop = nodes[nodes.Count - 1].Stoppoint;
             }
             else if(nodes.Count >= 1)
             {
@@ -456,7 +477,6 @@ namespace UWPTeamWork
             }
         }
     }
-
 
     public class StopNode
     {

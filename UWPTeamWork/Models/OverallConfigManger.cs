@@ -9,14 +9,15 @@ using Windows.UI.Xaml;
 
 namespace UWPTeamWork
 {
+    [Serializable]
     class OverallConfigManger
     {
         public static OverallConfigManger Instence = new OverallConfigManger();
 
         #region 主题颜色
         public event EventHandler OverallThemeChanged;
-        private ElementTheme overalltheme = ElementTheme.Light;
-        public ElementTheme OverallTheme
+        private String overalltheme = "TDefault";
+        public String OverallTheme
         {
             get { return overalltheme; }
             set

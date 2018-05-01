@@ -679,8 +679,9 @@
                             </Grid>
                             <TextBlock x:Name="MiniIcon" Text="&#xEDB5;" FontSize="80" Opacity="0" Style="{StaticResource IconTextblock}"/>
                         </Grid>
-                        <Grid x:Name="StopPointsGrid"  Width="300" HorizontalAlignment="Left" Background="{ThemeResource MainThemeColorD1}" Visibility="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=StopListVisibility}">
-                            <local:StopList ItemsSource="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=StopList}" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                        <Grid x:Name="StopPointsGrid" Height="120" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" 
+                              Background="{ThemeResource MainThemeColorD1}" Visibility="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=StopListVisibility}">
+                            <local:StopList ItemsSource="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=StopList}" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
                         </Grid>
                     </Grid>
                 </ControlTemplate>
@@ -836,6 +837,7 @@
                             ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}"
                             IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
                             BringIntoViewOnFocusChange="{TemplateBinding ScrollViewer.BringIntoViewOnFocusChange}"
+                                      Style="{StaticResource DefaultScrollViewer}"
                             AutomationProperties.AccessibilityView="Raw">
                             <ItemsPresenter Header="{TemplateBinding Header}"
                                 HeaderTemplate="{TemplateBinding HeaderTemplate}"

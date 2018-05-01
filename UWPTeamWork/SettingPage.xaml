@@ -8,6 +8,7 @@
     mc:Ignorable="d">
     <Page.Resources>
         <local:ChangeResCommand x:Key="ChangeColor"/>
+        <local:IsEqualConverter x:Key="IsEqual"/>
     </Page.Resources>
 
     <Grid Background="{ThemeResource MainThemeColor}">
@@ -36,13 +37,29 @@
                     <Rectangle x:Name="Themes_HSeperator" Style="{StaticResource SettingSeperator}"/>
                     <TextBlock x:Name="Themes_Content" Grid.Row="1" Text="Select a color as theme from colors below " Style="{StaticResource SettingTextContent}"/>
                     <VariableSizedWrapGrid x:Name="Themes_Conntrols" Grid.Row="2" Orientation="Horizontal" MaximumRowsOrColumns="8" ItemHeight="50" ItemWidth="50" Margin="0,4,0,0">
-                        <RadioButton GroupName="Theme" Background="#42A881" Style="{StaticResource ColorRadioButton}"
-                                     Command="{StaticResource ChangeColor}" CommandParameter="ms-appx:///Themes/Tdefault.xaml"/>
-                        <RadioButton GroupName="Theme" Background="#1DB0B8" Style="{StaticResource ColorRadioButton}"
-                                     Command="{StaticResource ChangeColor}" CommandParameter="ms-appx:///Themes/TBlueStyle.xaml"/>
-                        <RadioButton GroupName="Theme" Background="#999999" Style="{StaticResource ColorRadioButton}"
-                                     Command="{StaticResource ChangeColor}" CommandParameter="ms-appx:///Themes/TGrayStyle.xaml"/>
+                        <RadioButton Tag="0" Background="#42A881" Style="{StaticResource ColorRadioButton}" Click="ThemeButton_Click"
+                                     Command="{StaticResource ChangeColor}" CommandParameter="ms-appx:///Themes/TDefault.xaml"
+                                     IsChecked="{x:Bind ThemeNow,Converter={StaticResource IsEqual},ConverterParameter=TDefault}"/>
+                        <RadioButton Tag="1" Background="#1DB0B8" Style="{StaticResource ColorRadioButton}" Click="ThemeButton_Click"
+                                     Command="{StaticResource ChangeColor}" CommandParameter="ms-appx:///Themes/TBlueStyle.xaml"
+                                     IsChecked="{x:Bind ThemeNow,Converter={StaticResource IsEqual},ConverterParameter=TBlueStyle}"/>
+                        <RadioButton Tag="2" Background="#323232" Style="{StaticResource ColorRadioButton}" Click="ThemeButton_Click"
+                                     Command="{StaticResource ChangeColor}" CommandParameter="ms-appx:///Themes/TGrayStyle.xaml"
+                                     IsChecked="{x:Bind ThemeNow,Converter={StaticResource IsEqual},ConverterParameter=TGrayStyle}"/>
                     </VariableSizedWrapGrid>
+                </Grid>
+                <Grid x:Name="Help" Margin="0,0,0,20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock x:Name="Help_Title" Text="Help" Style="{StaticResource SettingTitle}"/>
+                    <Rectangle x:Name="Help_HSeperator" Style="{StaticResource SettingSeperator}"/>
+                    <TextBlock x:Name="Help_Content" Grid.Row="1" Text="Here is a brief instruction of this App" Style="{StaticResource SettingTextContent}"/>
+                    <StackPanel x:Name="Help_Conntrols" Grid.Row="2" Margin="0,4,0,0">
+                      
+                    </StackPanel>
                 </Grid>
             </StackPanel>
         </ScrollViewer>

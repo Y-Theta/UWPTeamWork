@@ -16,34 +16,38 @@ namespace UWPTeamWork
     /// </summary>
     public sealed partial class TimerPage : Page ,IDisposable
     {
+        private ToastNotification Toast;
 
         public TimerPage()
         {
-            InitTitleBar();
+            InitToast();
             this.InitializeComponent();
+            SlideClock.TimeOutEvent += SlideClock_TimeOutEvent;
         }
 
-        private void InitTitleBar()
+        private void SlideClock_TimeOutEvent(object sender, EventArgs e)
         {
+            ToastNotificationManager.CreateToastNotifier().Show(Toast);
+        }
 
+        private void InitToast()
+        {
+            XmlDocument XmlDocument = new XmlDocument();
+            string xml = "<toast>" +
+                   "<visual>" +
+                               "<binding template=\"ToastGeneric\">" +
+                                   "<text>Timer</text>" +
+                                   "<text>Time Out</text>" +
+                                   "<image placement=\"appLogoOverride\" src=\"ms-appx:///Assets/Square150x150Logo.scale-200.png\" />" +
+                               "</binding>" +
+                           "</visual>" +
+                    "</toast>";
+            XmlDocument.LoadXml(xml);
+            Toast = new ToastNotification(XmlDocument);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            //XmlDocument doc = new XmlDocument();
-            ////在模板添加xml要的标题  
-            //string xml = "<toast>" +
-            //       "<visual>" +
-            //                   "<binding template=\"ToastGeneric\">" +
-            //                       "<text>Title</text>" +
-            //                       "<text>Content</text>" +
-            //                       "<image placement=\"appLogoOverride\" src=\"ms-appx:///Assets/Square150x150Logo.scale-200.png\" />" +
-            //                   "</binding>" +
-            //               "</visual>" +
-            //        "</toast>";
-            //doc.LoadXml(xml); 
-            //ToastNotification toast = new ToastNotification(doc);
-            //ToastNotificationManager.CreateToastNotifier().Show(toast);
             SlideClock.PopTipChanged += SlideClock_PopTipChanged;
         }
 

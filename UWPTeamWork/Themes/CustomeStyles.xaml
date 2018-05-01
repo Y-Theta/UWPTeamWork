@@ -214,20 +214,20 @@
     <!--SettingTitle-->
     <Style x:Key="SettingTitle" TargetType="TextBlock">
         <Setter Property="Margin" Value="0,0,0,4"/>
-        <Setter Property="Foreground" Value="{ThemeResource BrightMask_A0}"/>
+        <Setter Property="Foreground" Value="{ThemeResource SettingTextContentFg}"/>
         <Setter Property="FontWeight" Value="ExtraLight"/>
         <Setter Property="FontSize" Value="24"/>
     </Style>
 
     <Style x:Key="SettingTextContent" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{ThemeResource BrightMask_A0}"/>
+        <Setter Property="Foreground" Value="{ThemeResource SettingTextContentFg}"/>
         <Setter Property="FontWeight" Value="ExtraLight"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
         <Setter Property="FontSize" Value="16"/>
     </Style>
 
     <Style x:Key="SettingSeperator" TargetType="Rectangle">
-        <Setter Property="Fill" Value="{ThemeResource BrightMask_A0}"/>
+        <Setter Property="Fill" Value="{ThemeResource SettingTextContentFg}"/>
         <Setter Property="Height" Value="1"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="VerticalAlignment" Value="Bottom"/>
@@ -1076,6 +1076,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Thumb">
                     <Rectangle x:Name="Rect"
+                               RadiusX="5" RadiusY="5"
                                Fill="{ThemeResource MainThemeColorD1}"
                                Width="{TemplateBinding Height}"
                                Height="{TemplateBinding Height}" >

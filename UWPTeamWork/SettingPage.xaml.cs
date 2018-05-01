@@ -22,10 +22,26 @@ namespace UWPTeamWork
     /// </summary>
     public sealed partial class SettingPage : Page
     {
+        private String ThemeNow
+        {
+            get => OverallConfigManger.Instence.OverallTheme;
+            set { OverallConfigManger.Instence.OverallTheme = value; }
+        }
         
         public SettingPage()
         {
+            
             this.InitializeComponent();
+        }
+
+        private void ThemeButton_Click(object sender, RoutedEventArgs e)
+        {
+            switch (((RadioButton)sender).Tag)
+            {
+                case "0":ThemeNow = "TDefault"; break;
+                case "1": ThemeNow = "TBlueStyle"; break;
+                case "2": ThemeNow = "TGrayStyle"; break;
+            }
         }
     }
 }

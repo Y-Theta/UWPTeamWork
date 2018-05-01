@@ -141,6 +141,7 @@ namespace UWPTeamWork
         #endregion
 
         #region 主计时 /s 
+        public event EventHandler TimeOutEvent;
         public int MainSeconds
         {
             get { return (int)GetValue(MainSecondsProperty); }
@@ -156,6 +157,7 @@ namespace UWPTeamWork
             {
                 s.Pause();
                 //发出通知
+                s.TimeOutEvent?.Invoke(s, EventArgs.Empty);
             }
                 
         }

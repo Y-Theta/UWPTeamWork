@@ -4,11 +4,14 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -25,14 +28,16 @@ namespace UWPTeamWork
     /// </summary>
     sealed partial class App : Application
     {
+        private bool FileSaveComplete = false;
         /// <summary>
         /// 初始化单一实例应用程序对象。这是执行的创作代码的第一行，
         /// 已执行，逻辑上等同于 main() 或 WinMain()。
         /// </summary>
         public App()
         {
+            LoadLocalSettings();
             this.InitializeComponent();
-            this.Suspending += OnSuspending;       
+            this.Suspending += OnSuspending;   
         }
 
         /// <summary>
@@ -43,7 +48,8 @@ namespace UWPTeamWork
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
-            
+
+            ApplySettings();
             // 不要在窗口已包含内容时重复应用程序初始化，
             // 只需确保窗口处于活动状态
             if (rootFrame == null)
@@ -57,7 +63,7 @@ namespace UWPTeamWork
                 {
                     //TODO: 从之前挂起的应用程序加载状态
                 }
-
+                
                 // 将框架放在当前窗口中
                 Window.Current.Content = rootFrame;
             }
@@ -76,6 +82,44 @@ namespace UWPTeamWork
             }
         }
 
+        private async void SaveLocalSettings()
+        {
+            StorageFolder folder = ApplicationData.Current.LocalFolder;
+            StorageFile f = await folder.CreateFileAsync("Setting.dat", CreationCollisionOption.ReplaceExisting);
+
+            using (FileStream stream = new FileStream(f.CreateSafeFileHandle(), FileAccess.Write))
+            {
+                BinaryFormatter binaryFormatter = new BinaryFormatter();
+                binaryFormatter.Serialize(stream, OverallConfigManger.Instence);
+            }
+            FileSaveComplete = true;
+        }
+
+        private async void LoadLocalSettings()
+        {
+            StorageFolder folder = ApplicationData.Current.LocalFolder;
+            StorageFile f = await folder.TryGetItemAsync("Setting.dat") as StorageFile;
+            if (f != null)
+            {
+                BinaryFormatter binaryFormatter = new BinaryFormatter();
+                using (FileStream stream = new FileStream(f.CreateSafeFileHandle(), FileAccess.Read))
+                {
+                    if (stream.CanRead && stream.Length != 0)
+                        OverallConfigManger.Instence = (OverallConfigManger)binaryFormatter.Deserialize(stream);
+                }
+            }
+        }
+
+        private void ApplySettings()
+        {
+            #region 应用主题
+            var dics = App.Current.Resources.ThemeDictionaries;
+            var dic = (ResourceDictionary)dics["Light"];
+            dic.MergedDictionaries.Clear();
+            dic.MergedDictionaries.Add(new ResourceDictionary()
+            { Source = new Uri(@"ms-appx:///Themes/" + OverallConfigManger.Instence.OverallTheme + ".xaml") });
+            #endregion
+        }
 
         /// <summary>
         /// 导航到特定页失败时调用
@@ -96,9 +140,13 @@ namespace UWPTeamWork
         /// <param name="e">有关挂起请求的详细信息。</param>
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
+            SaveLocalSettings();
+            while (!FileSaveComplete) ;
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: 保存应用程序状态并停止任何后台活动
             deferral.Complete();
         }
+
+        
     }
 }

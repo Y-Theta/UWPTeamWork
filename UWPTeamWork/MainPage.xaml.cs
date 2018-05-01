@@ -53,7 +53,6 @@ namespace UWPTeamWork
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             Window.Current.SetTitleBar(TitleBarBack);
-            OverallConfig.Instence.OverallThemeChanged += Instence_OverallThemeChanged;
         }
 
         private void Instence_OverallThemeChanged(object sender, EventArgs e)

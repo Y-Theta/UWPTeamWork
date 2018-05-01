@@ -21,6 +21,7 @@
     <SolidColorBrush x:Key="BrightMask_80" Color="#80FFFFFF"/>
     <SolidColorBrush x:Key="BrightMask_40" Color="#40FFFFFF"/>
 
+    <SolidColorBrush x:Key="SettingTextContentFg" Color="#C0000000" />
     <SolidColorBrush x:Key="NotifyTextBlockForeground" Color="#A0000000"/>
     <SolidColorBrush x:Key="MinHButtonForeGround" Color="#e0ffffff"/>
     <SolidColorBrush x:Key="ClockdeskBg_L2" Color="#80ffffff"/>

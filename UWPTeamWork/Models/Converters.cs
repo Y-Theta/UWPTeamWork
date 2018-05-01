@@ -85,5 +85,17 @@ namespace UWPTeamWork
         }
     }
 
-    
+    //判断是否为当前主题
+    public class IsEqualConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            return ((String)value).Equals((String)parameter);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

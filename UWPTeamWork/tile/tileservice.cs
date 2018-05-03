@@ -11,6 +11,19 @@ namespace UWPTeamWork.tile
 {
     public class TileService
     {
+
+        //更新磁贴
+        public static void UpdatePrimaryTile(string title,string text)
+        {
+            PrimaryTile t = new PrimaryTile();
+            t.setValue(DateTime.Now.ToLongDateString(),title,text);
+            XmlDocument xmlDoc = TileService.CreateTiles(t);
+
+            TileUpdater updater = TileUpdateManager.CreateTileUpdaterForApplication();
+            TileNotification notification = new TileNotification(xmlDoc);
+            updater.Update(notification);
+        }
+
         public static void SetBadgeCountOnTile(int count)
         {
             // Update the badge on the real tile  

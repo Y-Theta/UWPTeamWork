@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using UWPTeamWork.tile;
 using xBindDataExample.Models;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
@@ -62,6 +63,9 @@ namespace UWPTeamWork
         {
             note.MyText = ShowBox.Text;
             note.summary = Title.Text;
+            //更新磁贴
+            TileService.UpdatePrimaryTile(note.summary,note.MyText);
+
             Frame.Navigate(typeof(NotePage));
         }
 

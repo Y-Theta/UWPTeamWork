@@ -13,6 +13,16 @@ namespace UWPTeamWork
 {
     public sealed class StopList : ListView
     {
+
+        #region Listholder
+        public UIElement Holder {
+            get { return (UIElement)GetValue(HolderProperty); }
+            set { SetValue(HolderProperty, value); }
+        }
+        public static readonly DependencyProperty HolderProperty =
+            DependencyProperty.Register("Holder", typeof(UIElement), typeof(StopList), new PropertyMetadata(null));
+        #endregion
+
         protected override void OnTapped(TappedRoutedEventArgs e)
         {
             e.Handled = true;

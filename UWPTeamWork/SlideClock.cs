@@ -214,10 +214,10 @@ namespace UWPTeamWork
                 PopTip = "You need to stop Timer first";
                 return;
             }
+            Mode = mode;
             VisualStateManager.GoToState(this, "SecNormal", false);
             VisualStateManager.GoToState(this, "SecToO", false);
             InitTimer();
-            Mode = mode;
         }
 
         //秒表重置

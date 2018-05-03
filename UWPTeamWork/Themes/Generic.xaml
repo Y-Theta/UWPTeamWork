@@ -7,6 +7,7 @@
     <local:MinAngConverter x:Key="MinAngConverter"/>
     <local:MinAngConverterSim x:Key="MinAngConverterSim"/>
     <local:TimeFormatdConverter x:Key="TimeFormat"/>
+    <local:ShowStopListCommand x:Key="ShowStopList"/>
 
     <local:ShowAdditionsCommand x:Key="ShowAdditionsCommand"/>
     <local:NavigateToClockCommand x:Key="NavigateToClockCommand"/>
@@ -679,10 +680,6 @@
                             </Grid>
                             <TextBlock x:Name="MiniIcon" Text="&#xEDB5;" FontSize="80" Opacity="0" Style="{StaticResource IconTextblock}"/>
                         </Grid>
-                        <Grid x:Name="StopPointsGrid" Height="120" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" 
-                              Background="{ThemeResource MainThemeColorD1}" Visibility="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=StopListVisibility}">
-                            <local:StopList ItemsSource="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=StopList}" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
-                        </Grid>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -792,7 +789,7 @@
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <Grid Width="300" IsHitTestVisible="False">
+                    <Grid Width="280" IsHitTestVisible="False">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="40"/>
                             <ColumnDefinition Width="*"/>
@@ -823,8 +820,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:StopList">
-                    <Border BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}">
-                        <ScrollViewer x:Name="ScrollViewer"
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="32"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Button Style="{StaticResource IconButton}" Content="&#xE72B;" Foreground="{ThemeResource BrightMask_A0}" HorizontalAlignment="Left" Margin="10,0,0,0"
+                                Command="{StaticResource ShowStopList}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Holder,Mode=OneWay}"/>
+                        <ScrollViewer x:Name="ScrollViewer" Grid.Row="1"
                             TabNavigation="{TemplateBinding TabNavigation}"
                             HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
                             HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
@@ -847,7 +850,7 @@
                                 FooterTransitions="{TemplateBinding FooterTransitions}"
                                 Padding="{TemplateBinding Padding}" />
                         </ScrollViewer>
-                    </Border>
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

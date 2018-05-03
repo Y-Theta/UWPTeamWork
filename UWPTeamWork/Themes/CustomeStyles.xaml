@@ -1117,13 +1117,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RepeatButton">
-                    <Grid x:Name="Root" Background="Transparent">
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                    </Grid>
+                    <Grid x:Name="Root" Background="Transparent"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -1210,8 +1204,7 @@
                                 <Thumb.RenderTransform>
                                     <CompositeTransform x:Name="VerticalThumbTransform"
                                                         ScaleX="0.2"
-                                                        TranslateX="-2"
-                                                        />
+                                                        TranslateX="-2"/>
                                 </Thumb.RenderTransform>
                             </Thumb>
                             <RepeatButton x:Name="VerticalLargeIncrease"

@@ -9,6 +9,7 @@
     <Page.Resources>
         <local:SwitchCommand x:Key="Switch"/>
         <local:ShowStopListCommand x:Key="ShowStopList"/>
+        <local:MinAngConverterSim x:Key="MinAngConverterSim"/>
     </Page.Resources>
 
     <Grid x:Name="RootGrid" Background="{ThemeResource MainThemeColor}">
@@ -23,24 +24,27 @@
                 </VisualState>
             </VisualStateGroup>
             <VisualStateGroup x:Name="SwitchButtonState">
-                <VisualState x:Name="Timerstate">
+                <VisualState>
                     <VisualState.StateTriggers>
                         <local:SlideClockModeTrigger Mode="{Binding ElementName=SlideClock,Path=Mode,Mode=OneWay}" Reference="Timer"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="SwitchButton.Label" Value="Tostopwatch"/>
-                        <Setter Target="SwitchButton_Icon.Glyph" Value="&#xE916;"/>
+                        <Setter Target="ShowStop.Visibility" Value="Collapsed"/>
+                        <Setter Target="Switch.Label" Value="ToStopwatch"/>
+                        <Setter Target="Switch_Icon.Glyph" Value="&#xE916;"/>
                     </VisualState.Setters>
                 </VisualState>
-                <VisualState x:Name="Stopwatchstate">
+                <VisualState>
                     <VisualState.StateTriggers>
                         <local:SlideClockModeTrigger Mode="{Binding ElementName=SlideClock,Path=Mode,Mode=OneWay}" Reference="StopWatch"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="SwitchButton.Label" Value="ToTimer"/>
-                        <Setter Target="SwitchButton_Icon.Glyph" Value="&#xE81C;"/>
+                        <Setter Target="ShowStop.Visibility" Value="Visible"/>
+                        <Setter Target="Switch.Label" Value="ToTimer"/>
+                        <Setter Target="Switch_Icon.Glyph" Value="&#xE81C;"/>
                     </VisualState.Setters>
                 </VisualState>
+                <VisualState/>
             </VisualStateGroup>
             <VisualStateGroup x:Name="NotifyGridState">
                 <VisualState x:Name="PopTipShow">
@@ -64,24 +68,32 @@
                 <VisualState x:Name="PopTipHide"/>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <Viewbox x:Name="ClockLayer"  Grid.ColumnSpan="3" MaxHeight="600" MaxWidth="600">
+        <Viewbox x:Name="ClockLayer" Grid.ColumnSpan="3" Grid.RowSpan="2" MaxHeight="600" MaxWidth="600">
             <local:SlideClock x:Name="SlideClock" Background="{Binding ElementName=RootGrid,Path=Background,Mode=OneWay}" />
         </Viewbox>
-        <Grid x:Name="NotifyGrid" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{ThemeResource MainThemeColorD1}" Visibility="Collapsed" Opacity="0">
+        <Grid x:Name="StopPointsGrid" Grid.Row="1" Background="{ThemeResource MainThemeColor}" Visibility="{Binding ElementName=SlideClock,Path=StopListVisibility,Mode=OneWay}">
+            <local:StopList Grid.Row="1" ItemsSource="{Binding ElementName=SlideClock,Path=StopList,Mode=OneWay}" Holder="{Binding ElementName=SlideClock}"/>
+        </Grid>
+        <Grid x:Name="NotifyGrid" Grid.ColumnSpan="3" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{ThemeResource MainThemeColorD1}" 
+              Visibility="Collapsed" Opacity="0">
             <TextBlock x:Name="NotifyText" Text="{Binding ElementName=SlideClock,Path=PopTip}" Style="{StaticResource NotifyTextBlock}"/>
         </Grid>
-        <CommandBar Grid.Row="1" Grid.ColumnSpan="3" x:Name="MainControl" Style="{StaticResource ControlBarSettingPanel}">
+        <CommandBar Grid.ColumnSpan="3" Grid.Row="1" x:Name="MainControl" Style="{StaticResource ControlBarSettingPanel}">
             <AppBarButton x:Name="Switch" Label="ToStopwatch" Command="{StaticResource Switch}" CommandParameter="{Binding ElementName=SlideClock}" Foreground="{ThemeResource ClockdeskBg_L2}">
                 <AppBarButton.Icon>
-                    <FontIcon x:Name="SwitchButton_Icon" Glyph="&#xE916;" Foreground="{ThemeResource ClockdeskBg_L2}"/>
+                    <FontIcon x:Name="Switch_Icon" Glyph="&#xE916;" Foreground="{ThemeResource ClockdeskBg_L2}"/>
                 </AppBarButton.Icon>
             </AppBarButton>
-            <AppBarButton x:Name="ShowStop" Label="" Command="{StaticResource ShowStopList}" CommandParameter="{Binding ElementName=SlideClock}" Foreground="{ThemeResource ClockdeskBg_L2}">
+            <AppBarButton x:Name="ShowStop" Label="" Command="{StaticResource ShowStopList}" CommandParameter="{Binding ElementName=SlideClock}" Foreground="{ThemeResource ClockdeskBg_L2}" Visibility="Collapsed">
                 <AppBarButton.Icon>
                     <FontIcon x:Name="ShowStop_Icon" Glyph="&#xE916;" Foreground="{ThemeResource ClockdeskBg_L2}"/>
                 </AppBarButton.Icon>

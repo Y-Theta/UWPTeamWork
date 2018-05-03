@@ -80,6 +80,7 @@ namespace UWPTeamWork
         }
     }
 
+    //窗口大小变化触发
     public class WindowSizeOverTrigger : StateTriggerBase
     {
         private bool flag = false;
@@ -159,6 +160,7 @@ namespace UWPTeamWork
         }
     }
 
+    //计时模式触发
     public class SlideClockModeTrigger : StateTriggerBase
     {
         public TimerMode Mode
@@ -167,11 +169,13 @@ namespace UWPTeamWork
             set { SetValue(modeProperty, value); }
         }
         public static readonly DependencyProperty modeProperty =
-            DependencyProperty.Register("Mode", typeof(TimerMode), typeof(SlideClockModeTrigger), new PropertyMetadata(TimerMode.Timer,new PropertyChangedCallback(OnModeChanged)));
-
+            DependencyProperty.Register("Mode", typeof(TimerMode), typeof(SlideClockModeTrigger),
+                new PropertyMetadata(TimerMode.Timer,new PropertyChangedCallback(OnModeChanged)));
         private static void OnModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((SlideClockModeTrigger)d).SetActive(((SlideClockModeTrigger)d).Mode.Equals(((SlideClockModeTrigger)d).Reference));
+            SlideClockModeTrigger st = (SlideClockModeTrigger)d;
+           // Debug.WriteLine((TimerMode)e.NewValue + "  " + st.Reference +"  " + ((TimerMode)e.NewValue).Equals(st.Reference));
+            st.SetActive(((TimerMode)e.NewValue).Equals(st.Reference));
         }
 
         public TimerMode Reference
@@ -184,6 +188,7 @@ namespace UWPTeamWork
 
     }
 
+    //可见性触发
     public class OverallStateBarStateTrigger : StateTriggerBase
     {
         public Visibility TargetStatus

@@ -33,5 +33,12 @@ namespace UWPTeamWork.tile
             set;
             get;
         } = "UWP";
+
+        public void setValue(String time, String message1, String message2)
+        {
+            this.time = time;
+            this.message = message1;
+            this.message2 = message2;
+        }
     }
 }

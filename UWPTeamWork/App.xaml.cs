@@ -50,6 +50,8 @@ namespace UWPTeamWork
             Frame rootFrame = Window.Current.Content as Frame;
 
             ApplySettings();
+            ApplicationView.PreferredLaunchViewSize = new Size(520, 700);
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
             // 不要在窗口已包含内容时重复应用程序初始化，
             // 只需确保窗口处于活动状态
             if (rootFrame == null)
@@ -141,7 +143,6 @@ namespace UWPTeamWork
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             SaveLocalSettings();
-            while (!FileSaveComplete) ;
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: 保存应用程序状态并停止任何后台活动
             deferral.Complete();

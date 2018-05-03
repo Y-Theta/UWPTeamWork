@@ -21,6 +21,9 @@
     <SolidColorBrush x:Key="BrightMask_80" Color="#80FFFFFF"/>
     <SolidColorBrush x:Key="BrightMask_40" Color="#40FFFFFF"/>
 
+    <SolidColorBrush x:Key="DefaultThumb_N" Color="#328084"/>
+    <SolidColorBrush x:Key="DefaultThumb_R" Color="#39907f"/>
+    <SolidColorBrush x:Key="DefaultThumb_P" Color="#256e52"/>
     <SolidColorBrush x:Key="SettingTextContentFg" Color="#C0000000" />
     <SolidColorBrush x:Key="NotifyTextBlockForeground" Color="#A0000000"/>
     <SolidColorBrush x:Key="MinHButtonForeGround" Color="#e0ffffff"/>

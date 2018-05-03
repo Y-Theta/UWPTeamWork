@@ -1071,26 +1071,26 @@
 
     <!--Thumb-->
     <Style x:Key="DefaultThumb" TargetType="Thumb">
-        <Setter Property="Margin" Value="0,5,0,5"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Thumb">
                     <Rectangle x:Name="Rect"
-                               RadiusX="5" RadiusY="5"
-                               Fill="{ThemeResource MainThemeColorD1}"
-                               Width="{TemplateBinding Height}"
+                               Fill="{ThemeResource DefaultThumb_N}"
+                               Width="{TemplateBinding Width}"
                                Height="{TemplateBinding Height}" >
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
                                 <VisualState x:Name="PointerOver">
                                     <VisualState.Setters>
-                                        <Setter Target="Rect.Fill" Value="{ThemeResource MainThemeColorD2}"/>
+                                        <Setter Target="Rect.Fill" Value="{ThemeResource DefaultThumb_R}"/>
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <VisualState.Setters>
-                                        <Setter Target="Rect.Fill" Value="{ThemeResource MainThemeColorD3}"/>
+                                        <Setter Target="Rect.Fill" Value="{ThemeResource DefaultThumb_P}"/>
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
@@ -1151,13 +1151,7 @@
                                     <VisualTransition From="PointerOver" To="Normal">
                                         <Storyboard>
                                             <DoubleAnimation Storyboard.TargetName="VerticalThumbTransform" Storyboard.TargetProperty="ScaleX"
-                                                         From="1" To="0.2" Duration="0:0:0.4">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <CubicEase EasingMode="EaseOut"/>
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                            <DoubleAnimation Storyboard.TargetName="VerticalThumbTransform" Storyboard.TargetProperty="TranslateX"
-                                                         From="0" To="-2" Duration="0:0:0.4">
+                                                         From="0.8" To="0.2" Duration="0:0:0.4">
                                                 <DoubleAnimation.EasingFunction>
                                                     <CubicEase EasingMode="EaseOut"/>
                                                 </DoubleAnimation.EasingFunction>
@@ -1169,13 +1163,7 @@
                                 <VisualState x:Name="PointerOver">
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="VerticalThumbTransform" Storyboard.TargetProperty="ScaleX"
-                                                         From="0.2" To="1" Duration="0:0:0.4">
-                                            <DoubleAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut"/>
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
-                                        <DoubleAnimation Storyboard.TargetName="VerticalThumbTransform" Storyboard.TargetProperty="TranslateX"
-                                                         From="-2" To="0" Duration="0:0:0.4">
+                                                         From="0.2" To="0.8" Duration="0:0:0.4">
                                             <DoubleAnimation.EasingFunction>
                                                 <CubicEase EasingMode="EaseOut"/>
                                             </DoubleAnimation.EasingFunction>
@@ -1212,17 +1200,18 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Thumb x:Name="VerticalThumb"
-                                   AutomationProperties.AccessibilityView="Raw"
                                    MinHeight="{StaticResource DefaultScrollBarSize}"
                                    Opacity="0"
                                    RenderTransformOrigin="1,0.5"
                                    Grid.Row="2"
                                    Style="{StaticResource DefaultThumb}"
-                                   Width="{StaticResource DefaultScrollBarSize}">
+                                   HorizontalAlignment="Stretch"
+                                   >
                                 <Thumb.RenderTransform>
                                     <CompositeTransform x:Name="VerticalThumbTransform"
                                                         ScaleX="0.2"
-                                                        TranslateX="-2"/>
+                                                        TranslateX="-2"
+                                                        />
                                 </Thumb.RenderTransform>
                             </Thumb>
                             <RepeatButton x:Name="VerticalLargeIncrease"
@@ -1346,7 +1335,7 @@
                         <Grid Background="{TemplateBinding Background}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" MaxWidth="20"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />

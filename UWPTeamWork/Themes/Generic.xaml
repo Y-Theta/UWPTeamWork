@@ -673,7 +673,7 @@
                             </Grid>
                             <Grid x:Name="TextLayer_Mini">
                                 <TextBlock x:Name="SimpleTimer" Text="{Binding MainSeconds, RelativeSource={RelativeSource Mode=TemplatedParent},Mode=OneWay,Converter={StaticResource MinAngConverterSim}}" Style="{StaticResource NumberTextblock}" Visibility="Visible"/>
-                                <TextBlock x:Name="ComplexTimer" Text="{Binding MainSeconds, RelativeSource={RelativeSource Mode=TemplatedParent},Mode=OneWay,Converter={StaticResource MinAngConverter}}" Style="{StaticResource NumberTextblock}" Visibility="Visible" />
+                                <TextBlock x:Name="ComplexTimer" Text="{Binding MainSeconds, RelativeSource={RelativeSource Mode=TemplatedParent},Mode=OneWay,Converter={StaticResource MinAngConverter}}" Style="{StaticResource NumberTextblock}" Visibility="Collapsed" />
                                 <TextBlock x:Name="ComplexTimerMil" Text="{Binding HMsec, RelativeSource={RelativeSource Mode=TemplatedParent},Mode=OneWay,Converter={StaticResource MinAngConverter},ConverterParameter=tt}" 
                                        Style="{StaticResource NumberTextblock}" Visibility ="Collapsed" />
                             </Grid>

@@ -45,9 +45,13 @@
                             Grid.Column="1"
                             Grid.Row="1"
                             >
-                <Image Width="150" 
-                        Source="{x:Bind CoverImage}" 
-                    />
+                <Viewbox Width="200" Height="200">
+                    <Canvas Width="500" Height="500">
+                        <Path Data="M66.14,138.36v300h300v-300Zm46,55a10,10,0,1,1,10-10A10,10,0,0,1,112.14,193.36Z" Fill="{ThemeResource SettingTextContentFg}"/>
+                        <Path  Data="M349.14,73.89l72.47,270.46L151.15,416.82,78.68,146.36,349.14,73.89m7.07-12.25L66.43,139.29l77.65,289.78,289.78-77.65L356.21,61.64Z" Stroke="{ThemeResource SettingTextContentFg}"/>
+                    </Canvas>
+                </Viewbox>
+
                 <TextBlock FontSize="20" 
                             Text="{x:Bind summary}" 
                             HorizontalAlignment="Center"
@@ -61,13 +65,13 @@
 
         </DataTemplate>
     </Page.Resources>
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource MainThemeColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="32"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
             
-        <Grid Grid.Row="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid Grid.Row="1" Background="{ThemeResource MainThemeColor}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="80"/>
                 <RowDefinition Height="*" />
@@ -85,7 +89,8 @@
                   ItemsSource="{x:Bind Notes}" 
                   IsItemClickEnabled="True" 
                   ItemClick="GridView_ItemClick"
-                  ItemTemplate="{StaticResource NoteDataTemplate}">
+                  ItemTemplate="{StaticResource NoteDataTemplate}"
+                   Style="{StaticResource DefaultGridView}">
             </GridView>
             <AppBarButton Icon ="Add" 
                       Grid.Row="2" 

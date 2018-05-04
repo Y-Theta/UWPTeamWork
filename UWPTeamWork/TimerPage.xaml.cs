@@ -16,7 +16,7 @@ namespace UWPTeamWork
     /// </summary>
     public sealed partial class TimerPage : Page ,IDisposable
     {
-        private ToastNotification Toast;
+        XmlDocument XmlDocument = new XmlDocument();
 
         public TimerPage()
         {
@@ -27,14 +27,14 @@ namespace UWPTeamWork
 
         private void SlideClock_TimeOutEvent(object sender, EventArgs e)
         {
+            ToastNotification Toast = new ToastNotification(XmlDocument);
             ToastNotificationManager.CreateToastNotifier().Show(Toast);
         }
 
         private void InitToast()
         {
-            XmlDocument XmlDocument = new XmlDocument();
             string xml = "<toast>" +
-                   "<visual>" +
+                             "<visual>" +
                                "<binding template=\"ToastGeneric\">" +
                                    "<text>Timer</text>" +
                                    "<text>Time Out</text>" +
@@ -43,7 +43,6 @@ namespace UWPTeamWork
                            "</visual>" +
                     "</toast>";
             XmlDocument.LoadXml(xml);
-            Toast = new ToastNotification(XmlDocument);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

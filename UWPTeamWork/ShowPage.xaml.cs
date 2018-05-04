@@ -39,9 +39,7 @@ namespace UWPTeamWork
         public ShowPage()
         {
             this.InitializeComponent();
-            ImageBrush imageBrush = new ImageBrush();
-            imageBrush.ImageSource = new BitmapImage(new Uri("ms-appx:///Assets/backg.jpg", UriKind.Absolute));
-            grid.Background = imageBrush;
+            
 
             this.Loaded += ShowPage_Loaded;
             

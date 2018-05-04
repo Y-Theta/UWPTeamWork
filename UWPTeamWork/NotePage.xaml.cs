@@ -27,8 +27,9 @@ namespace UWPTeamWork
 
         public NotePage()
         {
-            this.InitializeComponent();
             Notes = NoteManager.GetNotes();
+            this.InitializeComponent();
+            
         }
         private void GridView_ItemClick(object sender, ItemClickEventArgs ee)
         {
@@ -67,6 +68,11 @@ namespace UWPTeamWork
         private void Return_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(MainPage));
+        }
+
+        private void Page_Loading(FrameworkElement sender, object args)
+        {
+            Notes = NoteManager.GetNotes();
         }
 
         /*private void delete_button(object sender, RoutedEventArgs e)

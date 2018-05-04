@@ -20,6 +20,7 @@
     <SolidColorBrush x:Key="BrightMask_A0" Color="#A0FFFFFF"/>
     <SolidColorBrush x:Key="BrightMask_80" Color="#80FFFFFF"/>
     <SolidColorBrush x:Key="BrightMask_40" Color="#40FFFFFF"/>
+    <SolidColorBrush x:Key="FontColor" Color="#A0000000"/>
 
     <SolidColorBrush x:Key="DefaultThumb_N" Color="#328084"/>
     <SolidColorBrush x:Key="DefaultThumb_R" Color="#39907f"/>

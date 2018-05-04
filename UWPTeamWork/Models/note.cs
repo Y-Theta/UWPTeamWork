@@ -22,11 +22,11 @@ namespace xBindDataExample.Models
     public class NoteManager
     {
         static List<Note> notes = new List<Note>();
-        static int id;
+        static int id=0;
         static bool isloaded = false;
         public static void init()
         {
-            id=0;
+            id = 0;
         }
         public static void add(Note x)
         {
@@ -86,6 +86,7 @@ namespace xBindDataExample.Models
                     notes = (List<Note>)binaryFormatter.Deserialize(stream);
                 }
             }
+            id = notes[notes.Count-1].NoteID+1;
         }
     }
 }

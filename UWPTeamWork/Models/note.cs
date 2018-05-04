@@ -84,9 +84,10 @@ namespace xBindDataExample.Models
                 using (FileStream stream = new FileStream(f.CreateSafeFileHandle(), FileAccess.Read))
                 {
                     notes = (List<Note>)binaryFormatter.Deserialize(stream);
+                    if (notes.Count != 0)
+                        id = notes[notes.Count - 1].NoteID + 1;
                 }
             }
-            id = notes[notes.Count-1].NoteID+1;
         }
     }
 }

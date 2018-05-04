@@ -10,6 +10,7 @@
         <local:SwitchCommand x:Key="Switch"/>
         <local:ShowStopListCommand x:Key="ShowStopList"/>
         <local:MinAngConverterSim x:Key="MinAngConverterSim"/>
+        <local:KeepTopCommand x:Key="KeepTop"/>
     </Page.Resources>
 
     <Grid x:Name="RootGrid" Background="{ThemeResource MainThemeColor}">
@@ -20,6 +21,7 @@
                         <AdaptiveTrigger MinWindowWidth="768"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="StopPoints.HorizontalAlignment" Value="Stretch"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -30,7 +32,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="ShowStop.Visibility" Value="Collapsed"/>
-                        <Setter Target="Switch.Label" Value="ToStopwatch"/>
+                        <Setter Target="Switch.Label" Value="转到秒表"/>
                         <Setter Target="Switch_Icon.Glyph" Value="&#xE916;"/>
                     </VisualState.Setters>
                 </VisualState>
@@ -40,7 +42,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="ShowStop.Visibility" Value="Visible"/>
-                        <Setter Target="Switch.Label" Value="ToTimer"/>
+                        <Setter Target="Switch.Label" Value="转到计时"/>
                         <Setter Target="Switch_Icon.Glyph" Value="&#xE81C;"/>
                     </VisualState.Setters>
                 </VisualState>
@@ -67,6 +69,26 @@
                 </VisualState>
                 <VisualState x:Name="PopTipHide"/>
             </VisualStateGroup>
+            <VisualStateGroup x:Name="IsTop">
+                <VisualState >
+                    <VisualState.StateTriggers>
+                        <local:AppViewStateTrigger ReferenceValue="CompactOverlay"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="OnTop_Icon.Glyph" Value="&#xE196;"/>
+                        <Setter Target="OnTop.Label" Value="普通显示"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <local:AppViewStateTrigger ReferenceValue="Default"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="OnTop_Icon.Glyph" Value="&#xE718;"/>
+                        <Setter Target="OnTop.Label" Value="置顶显示"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
             <RowDefinition Height="32"/>
@@ -81,19 +103,24 @@
             <local:SlideClock x:Name="SlideClock" Background="{Binding ElementName=RootGrid,Path=Background,Mode=OneWay}" />
         </Viewbox>
         <Grid x:Name="StopPointsGrid" Grid.Row="1" Background="{ThemeResource MainThemeColor}" Visibility="{Binding ElementName=SlideClock,Path=StopListVisibility,Mode=OneWay}">
-            <local:StopList Grid.Row="1" ItemsSource="{Binding ElementName=SlideClock,Path=StopList,Mode=OneWay}" Holder="{Binding ElementName=SlideClock}"/>
+            <local:StopList x:Name="StopPoints" Grid.Row="1" ItemsSource="{Binding ElementName=SlideClock,Path=StopList,Mode=OneWay}" Holder="{Binding ElementName=SlideClock}" />
         </Grid>
         <Grid x:Name="NotifyGrid" Grid.ColumnSpan="3" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{ThemeResource MainThemeColorD1}" 
               Visibility="Collapsed" Opacity="0">
             <TextBlock x:Name="NotifyText" Text="{Binding ElementName=SlideClock,Path=PopTip}" Style="{StaticResource NotifyTextBlock}"/>
         </Grid>
         <CommandBar Grid.ColumnSpan="3" Grid.Row="1" x:Name="MainControl" Style="{StaticResource ControlBarSettingPanel}">
-            <AppBarButton x:Name="Switch" Label="ToStopwatch" Command="{StaticResource Switch}" CommandParameter="{Binding ElementName=SlideClock}" Foreground="{ThemeResource ClockdeskBg_L2}">
+            <AppBarToggleButton x:Name="OnTop" Label="置顶显示"  Command="{StaticResource KeepTop}" Style="{StaticResource DefaultAppBerToggleButton}">
+                <AppBarToggleButton.Icon>
+                    <FontIcon x:Name="OnTop_Icon" Glyph="&#xE718;" Foreground="{ThemeResource ClockdeskBg_L2}"/>
+                </AppBarToggleButton.Icon>
+            </AppBarToggleButton>
+            <AppBarButton x:Name="Switch" Label="转到秒表" Command="{StaticResource Switch}" CommandParameter="{Binding ElementName=SlideClock}" Style="{StaticResource DefaultAppBerButton}" >
                 <AppBarButton.Icon>
                     <FontIcon x:Name="Switch_Icon" Glyph="&#xE916;" Foreground="{ThemeResource ClockdeskBg_L2}"/>
                 </AppBarButton.Icon>
             </AppBarButton>
-            <AppBarButton x:Name="ShowStop" Label="" Command="{StaticResource ShowStopList}" CommandParameter="{Binding ElementName=SlideClock}" Foreground="{ThemeResource ClockdeskBg_L2}" Visibility="Collapsed">
+            <AppBarButton x:Name="ShowStop" Label="显示停点" Command="{StaticResource ShowStopList}" CommandParameter="{Binding ElementName=SlideClock}" Style="{StaticResource DefaultAppBerButton}" Visibility="Collapsed">
                 <AppBarButton.Icon>
                     <FontIcon x:Name="ShowStop_Icon" Glyph="&#xE916;" Foreground="{ThemeResource ClockdeskBg_L2}"/>
                 </AppBarButton.Icon>

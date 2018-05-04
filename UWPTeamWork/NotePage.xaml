@@ -12,58 +12,17 @@
 
     <Page.Resources>
         <DataTemplate x:DataType="data:Note" x:Key="NoteDataTemplate">
-        <!--    <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="20"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="20" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <StackPanel HorizontalAlignment="Center"
-                            Grid.Column="1"
-                            Grid.Row="1"
-                            >
-                    <Image Width="150" 
-                        Source="{x:Bind CoverImage}" 
-                    />
-                    <TextBlock FontSize="20" 
-                            Text="{x:Bind summary}" 
-                            HorizontalAlignment="Center"
-                    />
-                    <TextBlock FontSize="16" 
-                            Text="{x:Bind MyTime}" 
-                            HorizontalAlignment="Center" 
-                    />
-                    
-                </StackPanel>
-                <CheckBox Name="myBox">
-                    
-                </CheckBox>
-            </Grid>
-            -->
-            <StackPanel HorizontalAlignment="Center"
-                            Grid.Column="1"
-                            Grid.Row="1"
-                            >
+            <Grid >
                 <Viewbox Width="200" Height="200">
                     <Canvas Width="500" Height="500">
-                        <Path Data="M66.14,138.36v300h300v-300Zm46,55a10,10,0,1,1,10-10A10,10,0,0,1,112.14,193.36Z" Fill="{ThemeResource SettingTextContentFg}"/>
-                        <Path  Data="M349.14,73.89l72.47,270.46L151.15,416.82,78.68,146.36,349.14,73.89m7.07-12.25L66.43,139.29l77.65,289.78,289.78-77.65L356.21,61.64Z" Stroke="{ThemeResource SettingTextContentFg}"/>
+                        <Path Data="M349.14,73.89l72.47,270.46L151.15,416.82,78.68,146.36,349.14,73.89m7.07-12.25L66.43,139.29l77.65,289.78,289.78-77.65L356.21,61.64Z" Fill="{ThemeResource BrightMask_80}"/>
+                        <Rectangle Canvas.Left="66.14" Canvas.Top="138.36" Width="300" Height="300" Fill="White"/>
+                        <Ellipse Canvas.Left="102.14" Canvas.Top="173.36" Width="20" Height="20" Fill="{ThemeResource MainThemeColor}"/>
                     </Canvas>
                 </Viewbox>
-
-                <TextBlock FontSize="20" 
-                            Text="{x:Bind summary}" 
-                            HorizontalAlignment="Center"
-                    />
-                <TextBlock FontSize="16" 
-                            Text="{x:Bind MyTime}" 
-                            HorizontalAlignment="Center" 
-                    />
-
-            </StackPanel>
+                <TextBlock FontSize="18" Text="{x:Bind summary}" TextDecorations="Underline" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,65,0,0"/>
+                <TextBlock FontSize="12" Text="{x:Bind MyTime}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,20,30"/>
+            </Grid>
 
         </DataTemplate>
     </Page.Resources>
@@ -73,7 +32,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
             
-        <Grid Grid.Row="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid Grid.Row="1" Background="{ThemeResource MainThemeColor}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="80"/>
                 <RowDefinition Height="*" />
@@ -85,21 +44,14 @@
                 <ColumnDefinition Width="80" />
             </Grid.ColumnDefinitions>
             <AppBarButton Icon="Back" Click="Return_Click"></AppBarButton>
-            <GridView Grid.Column="1" 
-                  Grid.Row="1"
-                  Name="myGridView"
-                  ItemsSource="{x:Bind Notes}" 
-                  IsItemClickEnabled="True" 
-                  ItemClick="GridView_ItemClick"
-                  ItemTemplate="{StaticResource NoteDataTemplate}"
-                   Style="{StaticResource DefaultGridView}">
+            <GridView Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Name="myGridView" ItemsSource="{x:Bind Notes}" IsItemClickEnabled="True" ItemClick="GridView_ItemClick" ItemTemplate="{StaticResource NoteDataTemplate}" 
+                      Style="{StaticResource DefaultGridview}">
             </GridView>
             <AppBarButton Icon ="Add" 
                       Grid.Row="2" 
                       Click="Button_Click"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center">
-
             </AppBarButton>
             <!--
         <AppBarButton Icon="Delete"

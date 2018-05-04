@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -115,6 +116,27 @@ namespace UWPTeamWork
         {
             ((OverallStateBar)parameter).AdditionButtonVisiblity =
                 ((OverallStateBar)parameter).AdditionButtonVisiblity.Equals(Visibility.Collapsed) ? Visibility.Visible : Visibility.Collapsed;
+        }
+    }
+
+    public class KeepTopCommand /*窗口置顶与取消*/ : ICommand {
+        public event EventHandler CanExecuteChanged;
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public async void Execute(object parameter)
+        {
+            if (ApplicationView.GetForCurrentView().ViewMode.Equals(ApplicationViewMode.Default)) {
+                await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay);
+                OverallConfigManger.Instence.WindowMode = ApplicationViewMode.CompactOverlay;
+            }
+            else {
+                await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.Default);
+                OverallConfigManger.Instence.WindowMode = ApplicationViewMode.Default;
+            }
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using static UWPTeamWork.SlideClock;
@@ -214,6 +215,7 @@ namespace UWPTeamWork
         }
     }
 
+    //秒表停点触发
     public class StopNodesTrigger : StateTriggerBase
     {
         public TimeSpan ReferenceValue
@@ -239,4 +241,24 @@ namespace UWPTeamWork
         }
     }
 
+    //置顶触发
+    public class AppViewStateTrigger : StateTriggerBase {
+        public ApplicationViewMode ReferenceValue {
+            get { return (ApplicationViewMode)GetValue(ReferenceValueProperty); }
+            set { SetValue(ReferenceValueProperty, value); }
+        }
+        public static readonly DependencyProperty ReferenceValueProperty =
+            DependencyProperty.Register("ReferenceValue", typeof(ApplicationViewMode), typeof(AppViewStateTrigger),
+                new PropertyMetadata(ApplicationViewMode.Default));
+
+        public AppViewStateTrigger()
+        {
+            OverallConfigManger.Instence.WindowModeChanged += Instence_WindowModeChanged;
+        }
+
+        private void Instence_WindowModeChanged(object sender, EventArgs e)
+        {
+            SetActive(((OverallConfigManger)sender).WindowMode.Equals(ReferenceValue));
+        }
+    }
 }

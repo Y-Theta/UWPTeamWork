@@ -53,11 +53,7 @@ namespace UWPTeamWork
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             Window.Current.SetTitleBar(TitleBarBack);
-        }
-
-        private void Instence_OverallThemeChanged(object sender, EventArgs e)
-        {
-            RequestedTheme = ElementTheme.Light;
+            Container.Navigate(typeof(TimerPage));
         }
 
     }

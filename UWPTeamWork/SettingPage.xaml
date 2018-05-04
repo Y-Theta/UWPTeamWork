@@ -18,24 +18,24 @@
         </Grid.RowDefinitions>
         <ScrollViewer Grid.Row="1" Style="{StaticResource DefaultScrollViewer}">
             <StackPanel Margin="20,0,20,0">
-                <Grid x:Name="General" Margin="0,0,0,20" Height="1000">
+                <Grid x:Name="General" Margin="0,0,0,40">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <TextBlock x:Name="General_Title" Text="General" Style="{StaticResource SettingTitle}"/>
+                    <TextBlock x:Name="General_Title" Text="通用" Style="{StaticResource SettingTitle}"/>
                     <Rectangle x:Name="General_HSeperator" Style="{StaticResource SettingSeperator}"/>
-                    <TextBlock x:Name="General_Content" Grid.Row="1" Text="This is an App that..." Style="{StaticResource SettingTextContent}"/>
+                    <TextBlock x:Name="General_Content" Grid.Row="1" Text="这是一款旨在操作简洁，界面美观的效率软件，通过这款软件，你可以：&#13;1.  定时&#13;2.  计时&#13;3.  记录一些重要事项&#13;有关各种功能的使用请参阅下方的帮助模块" Style="{StaticResource SettingTextContent}"/>
                 </Grid>
-                <Grid x:Name="Themes" Margin="0,0,0,20">
+                <Grid x:Name="Themes" Margin="0,0,0,40">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <TextBlock x:Name="Themes_Title" Text="Themes" Style="{StaticResource SettingTitle}"/>
+                    <TextBlock x:Name="Themes_Title" Text="主题" Style="{StaticResource SettingTitle}"/>
                     <Rectangle x:Name="Themes_HSeperator" Style="{StaticResource SettingSeperator}"/>
-                    <TextBlock x:Name="Themes_Content" Grid.Row="1" Text="Select a color as theme from colors below " Style="{StaticResource SettingTextContent}"/>
+                    <TextBlock x:Name="Themes_Content" Grid.Row="1" Text="从下方颜色中选择一个作为主题" Style="{StaticResource SettingTextContent}"/>
                     <VariableSizedWrapGrid x:Name="Themes_Conntrols" Grid.Row="2" Orientation="Horizontal" MaximumRowsOrColumns="8" ItemHeight="50" ItemWidth="50" Margin="0,4,0,0">
                         <RadioButton Tag="0" Background="#42A881" Style="{StaticResource ColorRadioButton}" Click="ThemeButton_Click"
                                      Command="{StaticResource ChangeColor}" CommandParameter="ms-appx:///Themes/TDefault.xaml"
@@ -48,17 +48,22 @@
                                      IsChecked="{x:Bind ThemeNow,Converter={StaticResource IsEqual},ConverterParameter=TGrayStyle}"/>
                     </VariableSizedWrapGrid>
                 </Grid>
-                <Grid x:Name="Help" Margin="0,0,0,20">
+                <Grid x:Name="Help" Margin="0,0,0,40">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <TextBlock x:Name="Help_Title" Text="Help" Style="{StaticResource SettingTitle}"/>
+                    <TextBlock x:Name="Help_Title" Text="帮助" Style="{StaticResource SettingTitle}"/>
                     <Rectangle x:Name="Help_HSeperator" Style="{StaticResource SettingSeperator}"/>
-                    <TextBlock x:Name="Help_Content" Grid.Row="1" Text="Here is a brief instruction of this App" Style="{StaticResource SettingTextContent}"/>
+                    <TextBlock x:Name="Help_Content" Grid.Row="1" Text="这里是关于软件用法的简单介绍" Style="{StaticResource SettingTextContent}"/>
                     <StackPanel x:Name="Help_Conntrols" Grid.Row="2" Margin="0,4,0,0">
-                      
+                        <Grid x:Name="TimerIns">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                        </Grid>
                     </StackPanel>
                 </Grid>
             </StackPanel>

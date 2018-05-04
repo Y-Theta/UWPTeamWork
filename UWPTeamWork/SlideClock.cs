@@ -211,7 +211,7 @@ namespace UWPTeamWork
         {
             if (IsTimerRuning)
             {
-                PopTip = "You need to stop Timer first";
+                PopTip = "请先停止计时";
                 return;
             }
             Mode = mode;
@@ -262,7 +262,7 @@ namespace UWPTeamWork
         {
             if (MainSeconds == 0)
             {
-                PopTip = "You must set a Timespan first";
+                PopTip = "请先设置时间间隔";
                 return;
             }
             IsTimerRuning = true;

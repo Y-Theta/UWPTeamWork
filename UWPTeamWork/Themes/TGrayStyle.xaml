@@ -25,6 +25,14 @@
     <SolidColorBrush x:Key="DefaultThumb_N" Color="#808080"/>
     <SolidColorBrush x:Key="DefaultThumb_R" Color="#a0a0a0"/>
     <SolidColorBrush x:Key="DefaultThumb_P" Color="#404040"/>
+
+    <SolidColorBrush x:Key="DefaultAppBerButton_Fg" Color="#C0FFFFFF"/>
+    <SolidColorBrush x:Key="DefaultAppBerButton_Fg_R" Color="#C0FFFFFF"/>
+    <SolidColorBrush x:Key="DefaultAppBerButton_Fg_P" Color="#202020"/>
+    <SolidColorBrush x:Key="DefaultAppBerButton_Bg" Color="Transparent"/>
+    <SolidColorBrush x:Key="DefaultAppBerButton_Bg_R" Color="#20000000"/>
+    <SolidColorBrush x:Key="DefaultAppBerButton_Bg_P" Color="#40000000"/>
+    
     <SolidColorBrush x:Key="SettingTextContentFg" Color="#A0FFFFFF" />
     <SolidColorBrush x:Key="NotifyTextBlockForeground" Color="#707070"/>
     <SolidColorBrush x:Key="MinHButtonForeGround" Color="#e0ffffff"/>

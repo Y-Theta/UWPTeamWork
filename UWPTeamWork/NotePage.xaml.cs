@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -73,6 +74,16 @@ namespace UWPTeamWork
         private void Page_Loading(FrameworkElement sender, object args)
         {
             Notes = NoteManager.GetNotes();
+            
+        }
+
+
+        private void del1(object sender, RoutedEventArgs e)
+        {
+            Button ls = (Button)sender;
+            NoteManager.Delet(ls.Name);
+            Frame.Navigate(typeof(NotePage));
+
         }
 
         /*private void delete_button(object sender, RoutedEventArgs e)

@@ -67,6 +67,18 @@ namespace xBindDataExample.Models
             Save("timer");//文件名
         }
 
+        public static void Delet(String s)
+        {
+            for (int i = 0; i < notes.Count; i++)
+            {
+                if (notes[i].NoteID == Convert.ToInt32(s))
+                {
+                    notes.Remove(notes[i]);
+                }
+            }
+            Save("timer");//文件名
+        }
+
         public async static void Save(string filename)
         {
             StorageFolder folder = ApplicationData.Current.LocalFolder;

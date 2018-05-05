@@ -18,10 +18,13 @@
             <VisualStateGroup x:Name="LayoutStyle">
                 <VisualState>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="768"/>
+                        <local:WindowSizeOverTrigger MinWidowWidth="820" MinWindowHeight="500"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="StopPoints.HorizontalAlignment" Value="Stretch"/>
+                        <Setter Target="StopPointsGrid.(Grid.Row)" Value="1"/>
+                        <Setter Target="StopPointsGrid.(Grid.ColumnSpan)" Value="1"/>
+                        <Setter Target="StopPointsGrid.(Grid.RowSpan)" Value="3"/>
+                        <Setter Target="StopPointsGrid.MaxHeight" Value="1080"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -93,23 +96,24 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="32"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <Viewbox x:Name="ClockLayer" Grid.ColumnSpan="3" Grid.RowSpan="2" MaxHeight="600" MaxWidth="600">
+        <Viewbox x:Name="ClockLayer" Grid.ColumnSpan="2" Grid.RowSpan="3" MaxHeight="600" MaxWidth="600">
             <local:SlideClock x:Name="SlideClock" Background="{Binding ElementName=RootGrid,Path=Background,Mode=OneWay}" />
         </Viewbox>
-        <Grid x:Name="StopPointsGrid" Grid.Row="1" Background="{ThemeResource MainThemeColor}" Visibility="{Binding ElementName=SlideClock,Path=StopListVisibility,Mode=OneWay}">
+        <Grid x:Name="StopPointsGrid" Grid.Row="2" Grid.RowSpan="1" Grid.ColumnSpan="2" MaxHeight="160" Background="{ThemeResource MainThemeColor}" Visibility="{Binding ElementName=SlideClock,Path=StopListVisibility,Mode=OneWay}">
             <local:StopList x:Name="StopPoints" Grid.Row="1" ItemsSource="{Binding ElementName=SlideClock,Path=StopList,Mode=OneWay}" Holder="{Binding ElementName=SlideClock}" />
         </Grid>
-        <Grid x:Name="NotifyGrid" Grid.ColumnSpan="3" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{ThemeResource MainThemeColorD1}" 
+        <Grid x:Name="NotifyGrid" Grid.ColumnSpan="2" Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{ThemeResource MainThemeColorD1}" 
               Visibility="Collapsed" Opacity="0">
             <TextBlock x:Name="NotifyText" Text="{Binding ElementName=SlideClock,Path=PopTip}" Style="{StaticResource NotifyTextBlock}"/>
         </Grid>
-        <CommandBar Grid.ColumnSpan="3" Grid.Row="1" x:Name="MainControl" Style="{StaticResource ControlBarSettingPanel}">
+        <CommandBar Grid.ColumnSpan="2" Grid.Row="3" VerticalAlignment="Bottom" x:Name="MainControl" Style="{StaticResource ControlBarSettingPanel}">
             <AppBarToggleButton x:Name="OnTop" Label="置顶显示"  Command="{StaticResource KeepTop}" Style="{StaticResource DefaultAppBerToggleButton}">
                 <AppBarToggleButton.Icon>
                     <FontIcon x:Name="OnTop_Icon" Glyph="&#xE718;" Foreground="{ThemeResource ClockdeskBg_L2}"/>

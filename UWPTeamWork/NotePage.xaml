@@ -9,21 +9,19 @@
     mc:Ignorable="d"
     Loading="Page_Loading"
     >
-
     <Page.Resources>
         <DataTemplate x:DataType="data:Note" x:Key="NoteDataTemplate">
             <Grid >
                 <Viewbox Width="200" Height="200">
                     <Canvas Width="500" Height="500">
-                        <Path Data="M349.14,73.89l72.47,270.46L151.15,416.82,78.68,146.36,349.14,73.89m7.07-12.25L66.43,139.29l77.65,289.78,289.78-77.65L356.21,61.64Z" Fill="{ThemeResource BrightMask_80}"/>
-                        <Rectangle Canvas.Left="66.14" Canvas.Top="138.36" Width="300" Height="300" Fill="White"/>
+                        <Path Data="M349.14,73.89l72.47,270.46L151.15,416.82,78.68,146.36,349.14,73.89m7.07-12.25L66.43,139.29l77.65,289.78,289.78-77.65L356.21,61.64Z" Fill="{ThemeResource MainThemeColorD1}"/>
+                        <Rectangle Canvas.Left="66.14" Canvas.Top="138.36" Width="300" Height="300" Fill="{ThemeResource MainThemeColorD1}"/>
                         <Ellipse Canvas.Left="102.14" Canvas.Top="173.36" Width="20" Height="20" Fill="{ThemeResource MainThemeColor}"/>
                     </Canvas>
                 </Viewbox>
-                <TextBlock FontSize="18" Text="{x:Bind summary}" TextDecorations="Underline" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,65,0,0"/>
-                <TextBlock FontSize="12" Text="{x:Bind MyTime}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,20,30"/>
+                <TextBlock FontSize="18" Text="{x:Bind summary}" Foreground="{ThemeResource MainThemeColorB1}" TextDecorations="Underline" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,65,0,0"/>
+                <TextBlock FontSize="12" Text="{x:Bind MyTime}" Foreground="{ThemeResource MainThemeColorB1}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,20,30"/>
             </Grid>
-
         </DataTemplate>
     </Page.Resources>
     <Grid Background="{ThemeResource MainThemeColor}">

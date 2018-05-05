@@ -27,7 +27,7 @@
                             <VisualStateGroup x:Name="WindowState">
                                 <VisualState x:Name="Large">
                                     <VisualState.StateTriggers>
-                                        <local:WindowSizeOverTrigger MinWidowWidth="500" MinWindowHeight="500"/>
+                                        <local:WindowSizeOverTrigger MinWidowWidth="450" MinWindowHeight="450"/>
                                     </VisualState.StateTriggers>
                                     <VisualState.Storyboard>
                                         <Storyboard>
@@ -46,7 +46,7 @@
                                 </VisualState>
                                 <VisualState x:Name="Mini">
                                     <VisualState.StateTriggers>
-                                        <local:WindowSizeLessTrigger MinWidowWidth="500" MinWindowHeight="500"/>
+                                        <local:WindowSizeLessTrigger MinWidowWidth="450" MinWindowHeight="450"/>
                                     </VisualState.StateTriggers>
                                     <VisualState.Storyboard>
                                         <Storyboard>
@@ -749,7 +749,8 @@
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <ToggleButton x:Name="MenuButton" Grid.Column="0" Width="40" VerticalAlignment="Stretch" Content="&#xE713;" Style="{StaticResource IconToggleButton}" Command="{StaticResource ShowAdditionsCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                        <ToggleButton x:Name="MenuButton" Grid.Column="0" Width="40" VerticalAlignment="Stretch" Content="&#xE713;"                      Style="{StaticResource IconToggleButton}" Command="{StaticResource ShowAdditionsCommand}" 
+                                      Foreground="{ThemeResource OverallStateBar_Fg}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                         <Grid x:Name="AdditionButtons" Grid.Column="1" Visibility="Collapsed" >
                             <Grid.RenderTransform>
                                 <TranslateTransform x:Name="AdditionButtons_TranslateTransform" X="0"/>
@@ -759,21 +760,24 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="Timer" Content="&#xE916;" Grid.Column="0" Style="{StaticResource IconButton}" Opacity="0"  CommandParameter="{TemplateBinding CommandParameter}" Command="{StaticResource NavigateToClockCommand}" >
+                            <Button x:Name="Timer" Content="&#xE916;" Grid.Column="0" Style="{StaticResource IconButton}" Opacity="0"  CommandParameter="{TemplateBinding CommandParameter}" Command="{StaticResource NavigateToClockCommand}" 
+                                    Foreground="{ThemeResource OverallStateBar_Fg}">
                                 <ToolTipService.ToolTip>
                                     <ToolTip>
                                         <TextBlock Text="计时器" Style="{StaticResource ToolTipTextBlock}"/>
                                     </ToolTip>
                                 </ToolTipService.ToolTip>
                             </Button>
-                            <Button x:Name="Note" Content="&#xE70B;" Grid.Column="1" Style="{StaticResource IconButton}" Opacity="0"   CommandParameter="{TemplateBinding CommandParameter}" Command="{StaticResource ShowPage}">
+                            <Button x:Name="Note" Content="&#xE70B;" Grid.Column="1" Style="{StaticResource IconButton}" Opacity="0"   CommandParameter="{TemplateBinding CommandParameter}" Command="{StaticResource ShowPage}"
+                                     Foreground="{ThemeResource OverallStateBar_Fg}">
                                 <ToolTipService.ToolTip>
                                     <ToolTip>
                                         <TextBlock Text="记事本" Style="{StaticResource ToolTipTextBlock}"/>
                                     </ToolTip>
                                 </ToolTipService.ToolTip>
                             </Button>
-                            <Button x:Name="Settings" Content="&#xE90F;" Grid.Column="2" Style="{StaticResource IconButton}" Opacity="0"   CommandParameter="{TemplateBinding CommandParameter}" Command="{StaticResource SettingPage}">
+                            <Button x:Name="Settings" Content="&#xE90F;" Grid.Column="2" Style="{StaticResource IconButton}" Opacity="0"   CommandParameter="{TemplateBinding CommandParameter}" Command="{StaticResource SettingPage}"
+                                     Foreground="{ThemeResource OverallStateBar_Fg}">
                                 <ToolTipService.ToolTip>
                                     <ToolTip>
                                         <TextBlock Text="设置" Style="{StaticResource ToolTipTextBlock}"/>

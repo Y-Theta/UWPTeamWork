@@ -58,11 +58,14 @@
                     <Rectangle x:Name="Help_HSeperator" Style="{StaticResource SettingSeperator}"/>
                     <TextBlock x:Name="Help_Content" Grid.Row="1" Text="这里是关于软件用法的简单介绍" Style="{StaticResource SettingTextContent}"/>
                     <StackPanel x:Name="Help_Conntrols" Grid.Row="2" Margin="0,4,0,0">
-                        <Grid x:Name="TimerIns">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="1 计时器：&#13;单击设置按钮，单击时钟按钮，进入计时器页面.默认为倒计时页面.&#13;  1.1 倒计时：选中圆形图标顺时针拖动即可设置时间，时间以分为单位设置。设置时间之后双击页面即可进行倒计时。再次双击，停止倒计时。双击用来开始和停止.&#13;  1.2 秒表器：进入计时器页面，单击右下方&quot;...&quot;图标，单击&quot;ToStopwatch&quot;时钟图标，即可进入秒表页面，双击即可进行计时，单击进行计数，可多次单击，在右下
+      方&quot;...&quot;内单击时钟图标显示计数时间，再次双击停止计时。双击用来开始和停止.&#13;  1.3 单击&quot;...&quot;图标可进行倒计时和秒表器的切换." Style="{StaticResource SettingTextContent}"/>
+                            <TextBlock Grid.Row="1" Text="2 便签：&#13;单击设置按钮，单击便签图标，进入便签页面.&#13;  2.1 创建新便签：进入便签页面，单击左下角&quot;+&quot;号，即可创建新便签。在最上方可自由定义标题，在下方的即可写入记录事件。右下方滑动条选中拖动即可改变字体大小，默认向右逐渐增大。单击返回图标←，即可保持新便签.&#13;  2.2 打开便签：进入便签页面，单击图标，即可打开已有便签.&#13;  2.3 删除便签：进入便签页面，打开已有便签，单击右边删除图标，即可删除便签." Style="{StaticResource SettingTextContent}" Margin="0,5,0,0"/>
                         </Grid>
                     </StackPanel>
                 </Grid>

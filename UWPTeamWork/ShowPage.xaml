@@ -67,9 +67,7 @@
                  FontSize="36"
                  AcceptsReturn="True" 
                  TextWrapping="Wrap"
-                 Foreground="{ThemeResource FontColor}"
-                 
-            >
+                 Foreground="{ThemeResource FontColor}" >
             </TextBox>
         </Grid>
     </Grid>

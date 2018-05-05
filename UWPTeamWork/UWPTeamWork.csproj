@@ -139,7 +139,6 @@
     <Content Include="Assets\add.jpg" />
     <Content Include="Assets\backg.jpg" />
     <Content Include="Assets\ClockDeskbg.png" />
-    <Content Include="Assets\timg.jpg" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

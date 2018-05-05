@@ -131,7 +131,7 @@ namespace UWPTeamWork
             set { SetValue(MinWindowHeightProperty, value); }
         }
         public static readonly DependencyProperty MinWindowHeightProperty =
-            DependencyProperty.Register("MinWindowHeight", typeof(double), typeof(WindowSizeLessTrigger), new PropertyMetadata(0.0));
+            DependencyProperty.Register("MinWindowHeight", typeof(double), typeof(WindowSizeLessTrigger), new PropertyMetadata(200.0));
 
         public double MinWidowWidth
         {
@@ -139,7 +139,7 @@ namespace UWPTeamWork
             set { SetValue(MinWidowWidthProperty, value); }
         }
         public static readonly DependencyProperty MinWidowWidthProperty =
-            DependencyProperty.Register("MinWidowWidth", typeof(double), typeof(WindowSizeLessTrigger), new PropertyMetadata(0.0));
+            DependencyProperty.Register("MinWidowWidth", typeof(double), typeof(WindowSizeLessTrigger), new PropertyMetadata(200.0));
         #endregion
         public WindowSizeLessTrigger()
         {

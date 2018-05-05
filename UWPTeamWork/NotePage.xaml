@@ -17,10 +17,11 @@
                         <Path Data="M349.14,73.89l72.47,270.46L151.15,416.82,78.68,146.36,349.14,73.89m7.07-12.25L66.43,139.29l77.65,289.78,289.78-77.65L356.21,61.64Z" Fill="{ThemeResource Note_Bg}"/>
                         <Rectangle Canvas.Left="66.14" Canvas.Top="138.36" Width="300" Height="300" Fill="{ThemeResource Note_Bg}"/>
                         <Ellipse Canvas.Left="102.14" Canvas.Top="173.36" Width="20" Height="20" Fill="{ThemeResource MainThemeColor}"/>
+                        
                     </Canvas>
                 </Viewbox>
-                <TextBlock FontSize="18" Text="{x:Bind summary}" Foreground="{ThemeResource MainThemeColorD1}" TextDecorations="Underline" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,65,0,0"/>
-                <TextBlock FontSize="12" Text="{x:Bind MyTime}" Foreground="{ThemeResource MainThemeColorD1}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,20,30"/>
+                <TextBlock FontSize="18" Text="{x:Bind summary}" Foreground="{ThemeResource MainThemeColorB1}" TextDecorations="Underline" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,65,0,0"/>
+                <TextBlock FontSize="12" Text="{x:Bind MyTime}" Foreground="{ThemeResource MainThemeColorB1}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,20,30"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>

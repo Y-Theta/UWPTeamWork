@@ -35,6 +35,8 @@
 
     <SolidColorBrush x:Key="OverallStateBar_Fg" Color="#a3e3cc"/>
 
+    <SolidColorBrush x:Key="Note_Bg" Color="#80202020"/>
+
     <SolidColorBrush x:Key="SettingTextContentFg" Color="#C0000000" />
     <SolidColorBrush x:Key="NotifyTextBlockForeground" Color="#A0000000"/>
     <SolidColorBrush x:Key="MinHButtonForeGround" Color="#e0ffffff"/>

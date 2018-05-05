@@ -8,6 +8,7 @@ using Windows.UI.Notifications;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace UWPTeamWork
 {
@@ -49,6 +50,11 @@ namespace UWPTeamWork
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             SlideClock.PopTipChanged += SlideClock_PopTipChanged;
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            SlideClock.Reset();
         }
 
         private void SlideClock_PopTipChanged(object sender, EventArgs e)

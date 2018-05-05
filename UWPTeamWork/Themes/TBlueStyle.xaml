@@ -33,8 +33,10 @@
     <SolidColorBrush x:Key="DefaultAppBerButton_Bg_R" Color="#20000000"/>
     <SolidColorBrush x:Key="DefaultAppBerButton_Bg_P" Color="#40000000"/>
 
-    <SolidColorBrush x:Key="OverallStateBar_Fg" Color="#0b3d40"/>
-    
+    <SolidColorBrush x:Key="OverallStateBar_Fg" Color="#e0ffffff"/>
+
+    <SolidColorBrush x:Key="Note_Bg" Color="#80202020"/>
+
     <SolidColorBrush x:Key="SettingTextContentFg" Color="#C0000000" />
     <SolidColorBrush x:Key="NotifyTextBlockForeground" Color="#A0000000"/>
     <SolidColorBrush x:Key="MinHButtonForeGround" Color="#e0ffffff"/>

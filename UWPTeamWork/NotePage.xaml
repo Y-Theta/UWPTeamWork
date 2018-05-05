@@ -22,6 +22,7 @@
                 </Viewbox>
                 <TextBlock FontSize="18" Text="{x:Bind summary}" Foreground="{ThemeResource MainThemeColorB1}" TextDecorations="Underline" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,65,0,0"/>
                 <TextBlock FontSize="12" Text="{x:Bind MyTime}" Foreground="{ThemeResource MainThemeColorB1}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,20,30"/>
+                <Button Click="del1" Name="{x:Bind NoteID}" Style="{StaticResource IconButton}" Content="&#xE711;" HorizontalAlignment="Right" VerticalAlignment="Top"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>

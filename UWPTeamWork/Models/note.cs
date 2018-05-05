@@ -26,13 +26,17 @@ namespace xBindDataExample.Models
         static bool isloaded = false;
         public static void init()
         {
-            id = 0;
+            if (isloaded == false)
+            {
+                isloaded = true;
+                Load("timer");//提供文件名或指定一常量文件名,不用加类型（.note）
+            }
         }
         public static void add(Note x)
         {
             notes.Add(x);
             id++;
-            Save("");//需要文件名
+            Save("timer");//需要文件名
         }
         public static int getid()
         {
@@ -46,7 +50,7 @@ namespace xBindDataExample.Models
            if(isloaded == false)
             {
                 isloaded = true;
-                Load("");//提供文件名或指定一常量文件名,不用加类型（.note）
+                Load("timer");//提供文件名或指定一常量文件名,不用加类型（.note）
             }
             return notes;
         }
@@ -60,7 +64,7 @@ namespace xBindDataExample.Models
                     notes.Remove(notes[i]);
                 }
             }
-            Save("");//文件名
+            Save("timer");//文件名
         }
 
         public async static void Save(string filename)

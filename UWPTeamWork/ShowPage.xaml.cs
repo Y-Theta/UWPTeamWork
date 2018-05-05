@@ -61,6 +61,7 @@ namespace UWPTeamWork
         {
             note.MyText = ShowBox.Text;
             note.summary = Title.Text;
+            NoteManager.Save("timer");
             //更新磁贴
             TileService.UpdatePrimaryTile(note.summary,note.MyText);
 
